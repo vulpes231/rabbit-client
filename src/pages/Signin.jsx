@@ -3,7 +3,7 @@ import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { logo } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
-import { signinUser } from "../features/signinSlice";
+import { reset, signinUser } from "../features/signinSlice";
 
 const Signin = () => {
   const initialState = {
@@ -37,6 +37,7 @@ const Signin = () => {
     if (accessToken) {
       console.log(accessToken);
       timeout = setTimeout(() => {
+        dispatch(reset());
         navigate("/dashboard");
       }, 3000);
     }

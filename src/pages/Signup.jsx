@@ -3,7 +3,7 @@ import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { logo } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser } from "../features/signupSlice";
+import { signupUser, reset } from "../features/signupSlice";
 
 const Signup = () => {
   const initialState = {
@@ -37,6 +37,7 @@ const Signup = () => {
     let timeout;
     if (success) {
       timeout = setTimeout(() => {
+        dispatch(reset());
         navigate("/signin");
       }, 3000);
     }

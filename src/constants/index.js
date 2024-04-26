@@ -5,4 +5,12 @@ export const navLinks = [
   { id: "contact", title: "Contact", path: "" },
 ];
 
+export const loggedLinks = [
+  { id: "dash", title: "Dash", path: "/dashboard" },
+  { id: "rdp", title: "RDPs", path: "" },
+  { id: "product", title: "Products", path: "" },
+  { id: "service", title: "Services", path: "" },
+  { id: "account", title: "Accounts", path: "" },
+];
+
 export const server = "https://rabbit-server.onrender.com";
