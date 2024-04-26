@@ -5,4 +5,4 @@ export const navLinks = [
   { id: "contact", title: "Contact", path: "" },
 ];
 
-export const server = "http://localhost:4000";
+export const server = "https://rabbit-server.onrender.com";
