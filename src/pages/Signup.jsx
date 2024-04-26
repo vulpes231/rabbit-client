@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logo } from "../assets";
+import { useDispatch, useSelector } from "react-redux";
+import { signupUser } from "../features/signupSlice";
 
 const Signup = () => {
   const initialState = {
-    username: "",
-    password: "",
-    email: "",
+    member: "",
+    pass: "",
+    mail: "",
   };
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [form, setForm] = useState(initialState);
+
+  const { loading, error, success } = useSelector((state) => state.signup);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -23,7 +30,18 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(form);
+    dispatch(signupUser(form));
   };
+
+  useEffect(() => {
+    let timeout;
+    if (success) {
+      timeout = setTimeout(() => {
+        navigate("/signin");
+      }, 3000);
+    }
+    () => clearTimeout(timeout);
+  }, [success, dispatch]);
 
   return (
     <section className="bg-[#333] h-screen flex items-center justify-center p-2">
@@ -32,34 +50,41 @@ const Signup = () => {
         <img src={logo} alt="" className="w-[60px]" />
         <form action="" className="flex flex-col gap-4 w-full">
           <Input
-            name={"username"}
-            value={form.username}
+            name={"member"}
+            value={form.member}
             onChange={handleInput}
             placeHolder={"username"}
             type={"text"}
           />
           <Input
-            name={"email"}
-            value={form.email}
+            name={"mail"}
+            value={form.mail}
             onChange={handleInput}
             placeHolder={"email"}
-            type={"text"}
+            type={"email"}
           />
           <Input
-            name={"password"}
-            value={form.password}
+            name={"pass"}
+            value={form.pass}
             onChange={handleInput}
-            placeHolder={"password"}
-            type={"text"}
+            placeHolder={"pass"}
+            type={"password"}
           />
-
+          <span className={error ? "flex text-red-500 font-bold" : "hidden"}>
+            {error}
+          </span>
+          <span
+            className={success ? "flex text-green-500 font-bold" : "hidden"}
+          >
+            Account created successfully.
+          </span>
           <button
             className="bg-red-500 text-white font-bold py-3 cursor-pointer"
             onClick={handleSubmit}
           >
-            Sign up
+            {loading ? "Creating account..." : "Sign up"}
           </button>
-          <p className="text-center font-light ">
+          <p className="text-center font-light text-sm ">
             Already have an account?{" "}
             <Link className="text-red-500" to={"/signin"}>
               Login now

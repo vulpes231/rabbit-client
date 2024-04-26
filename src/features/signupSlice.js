@@ -5,20 +5,20 @@ import { server } from "../constants";
 const initialState = {
   loading: false,
   error: false,
-  accessToken: null,
   success: false,
 };
 
-export const signinUser = createAsyncThunk(
-  "signin/signinUser",
+export const signupUser = createAsyncThunk(
+  "signup/signupUser",
   async (formData) => {
     try {
-      const url = `${server}/signin`;
+      const url = `${server}/signup`;
       const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -32,36 +32,33 @@ export const signinUser = createAsyncThunk(
   }
 );
 
-const signinSlice = createSlice({
-  name: "signin",
+const signupSlice = createSlice({
+  name: "signup",
   initialState,
   reducers: {
     reset(state) {
-      state.accessToken = null;
+      state.success = false;
       state.loading = false;
       state.error = false;
-      state.success = false;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(signinUser.pending, (state) => {
+      .addCase(signupUser.pending, (state) => {
         state.loading = true;
       })
-      .addCase(signinUser.fulfilled, (state, action) => {
-        state.accessToken = action.payload;
+      .addCase(signupUser.fulfilled, (state, action) => {
         state.loading = false;
+        state.success = action.payload;
         state.error = false;
-        state.success = true;
       })
-      .addCase(signinUser.rejected, (state, action) => {
-        state.accessToken = null;
+      .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
         state.success = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export const { reset } = signinSlice.actions;
-export default signinSlice.reducer;
+export const { reset } = signupSlice.actions;
+export default signupSlice.reducer;
