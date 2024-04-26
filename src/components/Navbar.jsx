@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { logo } from "../assets";
 import { Link } from "react-router-dom";
-import {
-  MdBusiness,
-  MdClose,
-  MdHome,
-  MdMenu,
-  MdNote,
-  MdPhone,
-} from "react-icons/md";
+import { MdClose, MdHome, MdMenu, MdNote, MdPhone } from "react-icons/md";
 import { GrChannel } from "react-icons/gr";
 import { FaInstagram, FaTelegram, FaTwitter } from "react-icons/fa";
 import { navLinks } from "../constants";
@@ -57,7 +50,10 @@ const Navbar = () => {
         </span>
 
         <span className="uppercase  flex items-center gap-10">
-          <Link className="uppercase border-2 border-red-500 py-2 px-6 rounded-2xl hover:bg-red-500 hover:text-black">
+          <Link
+            className="uppercase border-2 border-red-500 py-2 px-6 rounded-2xl hover:bg-red-500 hover:text-black"
+            to={"/signup"}
+          >
             join us
           </Link>
           <span
@@ -71,7 +67,7 @@ const Navbar = () => {
         <div
           className={
             toggle
-              ? "fixed top-[90px] right-0 w-[80%] md:w-[50%] bg-black h-screen p-6 flex flex-col gap-10 text-xl font-black pl-10 md:pl-20 pt-20 "
+              ? "fixed top-[90px] right-0 w-[80%] md:w-[50%] bg-[#101010] h-screen p-6 flex flex-col gap-10 text-xl font-black pl-10 md:pl-20 pt-20 "
               : "hidden"
           }
         >
