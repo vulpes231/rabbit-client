@@ -20,7 +20,7 @@ const Dash = () => {
       <div className="flex flex-col lg:max-w-[1000px] mx-auto">
         <Authnav />
         <div className="flex flex-col gap-4 mt-10 lg:flex-row lg:max-w-[900px] lg:mx-auto">
-          <article className="flex flex-col gap-4 border border-[#fff] border-t-red-500 border-l-red-500 border-r-green-500 border-b-green-500 p-4 rounded-xl w-full">
+          <article className="flex flex-col gap-4 border-2 border-[#fff] border-t-red-500 border-l-red-500 border-r-green-500 border-b-green-500 p-4 rounded-xl w-full">
             <h3 className="text-xl font-bold">Welcome User</h3>
             <p className="text-sm font-light leading-7 lg:text-md lg:font-extralight">
               If you have any question, suggestion, complaint or request feel
@@ -30,12 +30,12 @@ const Dash = () => {
               <FaPlus /> New Ticket
             </span>
           </article>
-          <article className="flex flex-col gap-3 border border-[#fff] p-4 rounded-xl w-full lg:justify-center border-b-red-500 border-r-red-500 border-l-green-500 border-t-green-500">
+          <article className="flex flex-col gap-3 border-2 border-[#fff] p-4 rounded-xl w-full lg:justify-center border-b-red-500 border-r-red-500 border-l-green-500 border-t-green-500">
             <Statistic detail={"Balance"} value={"0.00"} title={"Add funds"} />
             <Statistic detail={"Tickets"} value={"0"} title={"View"} />
             <Statistic detail={"Orders"} value={"0"} title={"View"} />
           </article>
-          <article className="flex flex-col gap-4 border border-[#fff] p-4 rounded-xl w-full lg:justify-center lg:text-md lg:font-extralight border-t-red-500 border-l-red-500 border-r-green-500 border-b-green-500">
+          <article className="flex flex-col gap-4 border-2 border-[#fff] p-4 rounded-xl w-full lg:justify-center lg:text-md lg:font-extralight border-t-red-500 border-l-red-500 border-r-green-500 border-b-green-500">
             <p>Available payment methods</p>
             <p>coming soon...</p>
           </article>

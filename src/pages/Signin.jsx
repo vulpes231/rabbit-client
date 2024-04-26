@@ -37,7 +37,7 @@ const Signin = () => {
     if (accessToken) {
       console.log(accessToken);
       timeout = setTimeout(() => {
-        dispatch(reset());
+        // dispatch(reset());
         navigate("/dashboard");
       }, 3000);
     }
