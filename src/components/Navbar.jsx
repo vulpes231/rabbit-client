@@ -43,18 +43,24 @@ const Navbar = () => {
 
   return (
     <header className="p-6 bg-black text-white h-[90px]">
-      <nav className="flex items-center justify-between w-full lg:max-w-[1000px] mx-auto">
+      <nav className="flex items-center justify-between w-full lg:max-w-[1200px] mx-auto">
         <span className="flex gap-16 items-center">
           <img src={logo} alt="" className="w-[30px]" />
           <span className="hidden lg:flex gap-8">{links}</span>
         </span>
 
-        <span className="uppercase  flex items-center gap-10">
+        <span className="uppercase  flex items-center gap-6">
           <Link
-            className="uppercase border-2 border-red-500 py-2 px-6 rounded-2xl hover:bg-red-500 hover:text-black"
+            className="uppercase border-2 border-red-500 py-2 px-5 rounded-lg hover:bg-red-500 hover:text-white lg:font-bold"
+            to={"/signin"}
+          >
+            sign in
+          </Link>
+          <Link
+            className="uppercase border-2 border-red-500 bg-red-500 py-2 px-6 rounded-lg hover:bg-white hover:border-white hover:text-red-500 lg:font-bold"
             to={"/signup"}
           >
-            join us
+            sign up
           </Link>
           <span
             onClick={handleToggle}
