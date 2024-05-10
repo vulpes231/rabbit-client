@@ -33,6 +33,13 @@ const Signin = () => {
   };
 
   useEffect(() => {
+    document.title = "RH4OGS - Client login";
+    return () => {
+      document.title = "RH4OGS";
+    };
+  }, []);
+
+  useEffect(() => {
     let timeout;
     if (accessToken) {
       console.log(accessToken);

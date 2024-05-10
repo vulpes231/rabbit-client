@@ -34,6 +34,13 @@ const Signup = () => {
   };
 
   useEffect(() => {
+    document.title = "RH4OGS - New user";
+    return () => {
+      document.title = "RH4OGS";
+    };
+  }, []);
+
+  useEffect(() => {
     let timeout;
     if (success) {
       timeout = setTimeout(() => {

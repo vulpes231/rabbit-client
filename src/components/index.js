@@ -6,6 +6,7 @@ import Statistic from "./Statistic";
 import User from "./User";
 import Products from "./Products";
 import LabelIcon from "./LabelIcon";
+import Sidebar from "./Sidebar";
 
 export {
   Landing,
@@ -16,4 +17,5 @@ export {
   User,
   Products,
   LabelIcon,
+  Sidebar,
 };
