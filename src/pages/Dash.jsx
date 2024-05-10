@@ -17,11 +17,11 @@ const Dash = () => {
   const navigate = useNavigate();
   const { accessToken } = useSelector((state) => state.signin);
 
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/signin");
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/signin");
+    }
+  }, [accessToken]);
 
   return (
     <section className="bg-black text-white min-h-screen w-full p-6">

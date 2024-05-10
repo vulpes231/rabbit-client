@@ -57,11 +57,20 @@ const Authnav = () => {
   return (
     <header className="w-full font-bold bg-black flex flex-col gap-6 lg:px-20 ">
       <div className="flex justify-between w-full items-center mb-5 lg:mb-3">
-        <span className="lg:hidden text-2xl" onClick={handleToggle}>
+        <span
+          className={
+            toggle
+              ? "lg:hidden text-2xl z-50 text-black"
+              : "lg:hidden text-2xl z-50 text-white"
+          }
+          onClick={handleToggle}
+        >
           {!toggle ? <MdMenu /> : <MdClose />}
         </span>
         <span>
-          <h3 className="text-2xl">RH4OGS</h3>
+          <h3 className="text-2xl caveat-regular capitalize text-red-500 font-bold">
+            rh4ogs
+          </h3>
         </span>
         <div className="hidden lg:flex gap-10">{authLinks}</div>
         <span className="flex gap-6">

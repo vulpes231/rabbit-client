@@ -12,13 +12,13 @@ export const loggedLinks = [
   { id: "faq", title: "FAQ", path: "" },
   { id: "status", title: "Status", path: "" },
 ];
-export const sidebarLinks = [
-  { id: "dash", title: "Dashboard", path: "/dashboard" },
-  { id: "invoice", title: "Invoice", path: "" },
-  { id: "ticket", title: "Ticket", path: "" },
-  { id: "faq", title: "FAQ", path: "" },
-  { id: "status", title: "Status", path: "" },
-];
+// export const sidebarLinks = [
+//   { id: "dash", title: "Dashboard", path: "/dashboard" },
+//   { id: "service", title: "Services", path: "" },
+//   { id: "tool", title: "Tools", path: "" },
+//   { id: "faq", title: "FAQ", path: "" },
+//   { id: "status", title: "Status", path: "" },
+// ];
 
 export const server = "https://rabbit-server.onrender.com";
 
