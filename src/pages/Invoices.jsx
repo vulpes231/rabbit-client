@@ -4,13 +4,13 @@ import Construction from "../components/Construction";
 
 const Invoices = () => {
   const { accessToken } = useSelector((state) => state.signin);
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/signin");
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/signin");
+    }
+  }, [accessToken]);
   return (
-    <section className="min-h-screen w-full bg-slate-700 bg-opacity-30 rounded-xl ">
+    <section className="min-h-screen w-full bg-slate-700 bg-opacity-30 rounded-xl p-6">
       <div className="w-full">
         <span>
           <h3 className="uppercase font-semibold text-xl text-center pt-10">

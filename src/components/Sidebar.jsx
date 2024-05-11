@@ -7,11 +7,11 @@ import {
   FaMoneyBill,
   FaRibbon,
   FaServer,
-  FaToolbox,
   FaTools,
 } from "react-icons/fa";
 import { sidebarLinks } from "../constants";
 import { FaGear } from "react-icons/fa6";
+import Logout from "./Logout";
 
 const Sidebar = ({ toggle, handleLinks, activeLink }) => {
   const sidebarMenus = sidebarLinks.map((link) => {
@@ -43,10 +43,13 @@ const Sidebar = ({ toggle, handleLinks, activeLink }) => {
   });
   return (
     <aside>
-      <h3 className="lg:pl-6 text-2xl caveat-regular capitalize text-red-500 font-bold">
+      <h3 className="hidden lg:pl-6 text-2xl caveat-regular capitalize text-red-500 font-bold">
         rh4ogs
       </h3>
-      <div className="mt-20 p-4 flex flex-col gap-4">{sidebarMenus}</div>
+      <div className="mt-20 p-4 flex flex-col gap-4">
+        {sidebarMenus}
+        <Logout />
+      </div>
     </aside>
   );
 };

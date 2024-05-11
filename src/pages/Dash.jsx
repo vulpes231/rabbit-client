@@ -15,6 +15,8 @@ const Dash = () => {
   const navigate = useNavigate();
   const { accessToken, user } = useSelector((state) => state.signin);
 
+  // console.log(user);
+
   const [toggle, setToggle] = useState(false);
 
   const handleToggle = () => {
@@ -41,11 +43,11 @@ const Dash = () => {
     setActiveLink(linkId);
   };
 
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/signin");
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/signin");
+    }
+  }, [accessToken]);
 
   return (
     <section className="bg-black text-white min-h-screen w-full p-6 lg:flex ">

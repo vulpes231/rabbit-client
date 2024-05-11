@@ -49,7 +49,7 @@ const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
         <span
           className={
             toggle
-              ? "lg:hidden text-2xl z-50 text-black"
+              ? "lg:hidden text-2xl z-50 text-black w-full flex justify-end pr-5 "
               : "lg:hidden text-2xl z-50 text-white"
           }
           onClick={handleToggle}

@@ -8,22 +8,33 @@ const initialState = {
   success: false,
 };
 
-export const logoutUser = createAsyncThunk("logout/logoutUser", async () => {
-  try {
-    const url = `${devserver}/logout`;
-    const response = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    if (error.response) {
-      const errorMessage = error.response.data.message;
-      throw new Error(errorMessage);
+export const logoutUser = createAsyncThunk(
+  "logout/logoutUser",
+  async (_, { getState }) => {
+    const { accessToken } = getState().signin;
+
+    // console.log(accessToken);
+    try {
+      const url = `${server}/logout`;
+      const response = await axios.put(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        const errorMessage = error.response.data.message;
+        throw new Error(errorMessage);
+      }
     }
   }
-});
+);
 
 const logoutSlice = createSlice({
   name: "logout",
