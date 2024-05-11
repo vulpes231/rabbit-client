@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logo } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
 import { reset, signinUser } from "../features/signinSlice";
+import { FaEye, FaEyeSlash, FaKey, FaUser } from "react-icons/fa";
 
 const Signin = () => {
   const initialState = {
@@ -15,6 +16,7 @@ const Signin = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState(initialState);
+  const [showPass, setShowPass] = useState(false);
 
   const { accessToken, loading, error } = useSelector((state) => state.signin);
 
@@ -30,6 +32,10 @@ const Signin = () => {
     e.preventDefault();
     // console.log(form);
     dispatch(signinUser(form));
+  };
+
+  const handlePass = () => {
+    setShowPass((prev) => !prev);
   };
 
   useEffect(() => {
@@ -57,21 +63,33 @@ const Signin = () => {
         <h3 className="capitalize text-3xl font-black">sign in</h3>
         <img src={logo} alt="" className="w-[60px]" />
         <form action="" className="flex flex-col gap-4 w-full">
-          <Input
-            name={"username"}
-            value={form.username}
-            onChange={handleInput}
-            placeHolder={"username"}
-            type={"text"}
-          />
+          <div className="relative">
+            <Input
+              name={"username"}
+              value={form.username}
+              onChange={handleInput}
+              placeHolder={"username"}
+              type={"text"}
+            />
+            <FaUser className="absolute top-4 right-3 text-red-500" />
+          </div>
+          <div className="relative">
+            <Input
+              name={"password"}
+              value={form.password}
+              onChange={handleInput}
+              placeHolder={"password"}
+              type={showPass ? "text" : "password"}
+            />
+            <span onClick={handlePass} className="cursor-pointer">
+              {showPass ? (
+                <FaEye className="absolute top-4 right-3 text-red-500" />
+              ) : (
+                <FaEyeSlash className="absolute top-4 right-3 text-red-500" />
+              )}
+            </span>
+          </div>
 
-          <Input
-            name={"password"}
-            value={form.password}
-            onChange={handleInput}
-            placeHolder={"password"}
-            type={"text"}
-          />
           <span className={error ? "flex text-red-500 font-bold" : "hidden"}>
             {error}
           </span>

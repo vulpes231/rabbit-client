@@ -8,7 +8,7 @@ const Input = ({ type, placeHolder, name, value, onChange, customClass }) => {
       name={name}
       value={value}
       onChange={onChange}
-      className={`w-full bg-[#333] bg-opacity-10 px-4 py-3 font-bold ${customClass} outline-red-500`}
+      className={`w-full bg-[#333] bg-opacity-10 px-4 py-3 font-bold ${customClass} outline-red-500 text-black placeholder:text-black placeholder:font-thin`}
       autoComplete="off"
       autoCapitalize="off"
     />

@@ -74,8 +74,8 @@ const Authnav = () => {
         </span>
         <div className="hidden lg:flex gap-10">{authLinks}</div>
         <span className="flex gap-6">
-          <MdNotifications />
-          <FaUser />
+          <MdNotifications className="hover:text-red-500 cursor-pointer" />
+          <FaUser className="hover:text-red-500 cursor-pointer" />
         </span>
       </div>
 
