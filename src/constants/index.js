@@ -10,15 +10,18 @@ export const loggedLinks = [
   { id: "invoice", title: "Invoice", path: "" },
   { id: "ticket", title: "Ticket", path: "" },
   { id: "faq", title: "FAQ", path: "" },
-  { id: "status", title: "Status", path: "" },
+  { id: "status", title: "Profile", path: "" },
 ];
-// export const sidebarLinks = [
-//   { id: "dash", title: "Dashboard", path: "/dashboard" },
-//   { id: "service", title: "Services", path: "" },
-//   { id: "tool", title: "Tools", path: "" },
-//   { id: "faq", title: "FAQ", path: "" },
-//   { id: "status", title: "Status", path: "" },
-// ];
+
+export const sidebarLinks = [
+  { id: "dash", title: "Dashboard", path: "/dashboard" },
+  { id: "service", title: "Services", path: "" },
+  { id: "tool", title: "Tools", path: "" },
+  { id: "rdp", title: "RDPs", path: "" },
+  { id: "transaction", title: "Transactions", path: "" },
+  { id: "setting", title: "Settings", path: "" },
+  { id: "refer", title: "Referral", path: "" },
+];
 
 export const server = "https://rabbit-server.onrender.com";
 export const devserver = "http://localhost:4000";
