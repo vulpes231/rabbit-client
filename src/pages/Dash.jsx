@@ -15,13 +15,15 @@ import Footer from "../components/Footer";
 
 const Dash = () => {
   const navigate = useNavigate();
-  const { accessToken } = useSelector((state) => state.signin);
+  const { accessToken, user } = useSelector((state) => state.signin);
 
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/signin");
-  //   }
-  // }, [accessToken]);
+  console.log(user);
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/signin");
+    }
+  }, [accessToken]);
 
   return (
     <section className="bg-black text-white min-h-screen w-full p-6">

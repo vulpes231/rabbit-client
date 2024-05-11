@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { server } from "../constants";
+import { devserver, server } from "../constants";
 
 const initialState = {
   loading: false,
@@ -12,7 +12,7 @@ export const signupUser = createAsyncThunk(
   "signup/signupUser",
   async (formData) => {
     try {
-      const url = `${server}/signup`;
+      const url = `${devserver}/signup`;
       const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "application/json",

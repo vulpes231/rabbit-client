@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { server } from "../constants";
+import { devserver, server } from "../constants";
 
 const initialState = {
   loading: false,
@@ -10,7 +10,7 @@ const initialState = {
 
 export const logoutUser = createAsyncThunk("logout/logoutUser", async () => {
   try {
-    const url = `${server}/logout`;
+    const url = `${devserver}/logout`;
     const response = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",

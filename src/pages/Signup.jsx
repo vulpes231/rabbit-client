@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { logo } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser, reset } from "../features/signupSlice";
+import { FaEye, FaUser, FaEyeSlash } from "react-icons/fa";
+import { MdMail } from "react-icons/md";
 
 const Signup = () => {
   const initialState = {
@@ -16,6 +18,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState(initialState);
+  const [showPass, setShowPass] = useState(false);
 
   const { loading, error, success } = useSelector((state) => state.signup);
 
@@ -27,6 +30,10 @@ const Signup = () => {
     }));
   };
 
+  const handlePass = () => {
+    setShowPass((prev) => !prev);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(form);
@@ -34,7 +41,7 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    document.title = "RH4OGS - New user";
+    document.title = "RH4OGS - Create account";
     return () => {
       document.title = "RH4OGS";
     };
@@ -57,27 +64,42 @@ const Signup = () => {
         <h3 className="capitalize text-3xl font-black">create account</h3>
         <img src={logo} alt="" className="w-[60px]" />
         <form action="" className="flex flex-col gap-4 w-full">
-          <Input
-            name={"member"}
-            value={form.member}
-            onChange={handleInput}
-            placeHolder={"username"}
-            type={"text"}
-          />
-          <Input
-            name={"mail"}
-            value={form.mail}
-            onChange={handleInput}
-            placeHolder={"email"}
-            type={"email"}
-          />
-          <Input
-            name={"pass"}
-            value={form.pass}
-            onChange={handleInput}
-            placeHolder={"pass"}
-            type={"password"}
-          />
+          <div className="relative">
+            <Input
+              name={"member"}
+              value={form.member}
+              onChange={handleInput}
+              placeHolder={"username"}
+              type={"text"}
+            />
+            <FaUser className="absolute top-4 right-3 text-red-500" />
+          </div>
+          <div className="relative">
+            <Input
+              name={"mail"}
+              value={form.mail}
+              onChange={handleInput}
+              placeHolder={"email"}
+              type={"email"}
+            />
+            <MdMail className="absolute top-4 right-3 text-red-500" />
+          </div>
+          <div className="relative">
+            <Input
+              name={"pass"}
+              value={form.pass}
+              onChange={handleInput}
+              placeHolder={"password"}
+              type={showPass ? "text" : "password"}
+            />
+            <span onClick={handlePass} className="cursor-pointer">
+              {showPass ? (
+                <FaEye className="absolute top-4 right-3 text-red-500" />
+              ) : (
+                <FaEyeSlash className="absolute top-4 right-3 text-red-500" />
+              )}
+            </span>
+          </div>
           <span className={error ? "flex text-red-500 font-bold" : "hidden"}>
             {error}
           </span>

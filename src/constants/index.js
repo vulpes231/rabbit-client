@@ -21,6 +21,7 @@ export const loggedLinks = [
 // ];
 
 export const server = "https://rabbit-server.onrender.com";
+export const devserver = "http://localhost:4000";
 
 export const products = [
   {
