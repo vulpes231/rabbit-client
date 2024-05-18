@@ -10,6 +10,12 @@ import Invoices from "./Invoices";
 import Ticket from "./Ticket";
 import Faq from "./Faq";
 import Profile from "./Profile";
+import Tools from "./Tools";
+import Refferal from "./Refferal";
+import Server from "./Server";
+import Services from "./Services";
+import Setting from "./Setting";
+import Transaction from "./Transaction";
 
 const Dash = () => {
   const navigate = useNavigate();
@@ -21,6 +27,10 @@ const Dash = () => {
 
   const handleToggle = () => {
     setToggle((prev) => !prev);
+  };
+
+  const resetToggle = () => {
+    setToggle(false);
   };
 
   const lastLogin = new Date();
@@ -43,11 +53,11 @@ const Dash = () => {
     setActiveLink(linkId);
   };
 
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/signin");
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if (!accessToken) {
+  //     navigate("/signin");
+  //   }
+  // }, [accessToken]);
 
   return (
     <section className="bg-black text-white min-h-screen w-full p-6 lg:flex ">
@@ -58,7 +68,12 @@ const Dash = () => {
             : "hidden lg:flex w-[250px]"
         }
       >
-        <Sidebar toggle={toggle} />
+        <Sidebar
+          toggle={toggle}
+          handleLinks={handleLinks}
+          activeLink={activeLink}
+          resetClick={resetToggle}
+        />
       </div>
       <div className="flex flex-col w-full">
         <div>
@@ -81,6 +96,12 @@ const Dash = () => {
           {activeLink === "ticket" && <Ticket />}
           {activeLink === "faq" && <Faq />}
           {activeLink === "status" && <Profile />}
+          {activeLink === "tool" && <Tools />}
+          {activeLink === "rdp" && <Server />}
+          {activeLink === "transaction" && <Transaction />}
+          {activeLink === "refer" && <Refferal />}
+          {activeLink === "setting" && <Setting />}
+          {activeLink === "service" && <Services />}
 
           <Footer />
         </div>

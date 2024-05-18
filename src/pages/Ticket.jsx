@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Construction from "../components/Construction";
+import Content from "../components/ticket/Content";
 
 const Ticket = () => {
   const { accessToken } = useSelector((state) => state.signin);
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/signin");
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if (!accessToken) {
+  //     navigate("/signin");
+  //   }
+  // }, [accessToken]);
 
   return (
     <section className="min-h-screen w-full  bg-slate-700 bg-opacity-30 rounded-xl p-6">
@@ -18,7 +19,7 @@ const Ticket = () => {
             tickets
           </h3>
         </span>
-        <Construction />
+        <Content />
       </div>
     </section>
   );

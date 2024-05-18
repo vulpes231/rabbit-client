@@ -13,15 +13,20 @@ import { sidebarLinks } from "../constants";
 import { FaGear } from "react-icons/fa6";
 import Logout from "./Logout";
 
-const Sidebar = ({ toggle, handleLinks, activeLink }) => {
+const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
   const sidebarMenus = sidebarLinks.map((link) => {
     return (
       <span
         key={link.id}
         className={
-          activeLink === link.id ? " font-thin pb-2" : " font-thin pb-2"
+          activeLink === link.id
+            ? " font-thin pb-2  border-b-2 border-b-red-500"
+            : " font-thin pb-2"
         }
-        onClick={() => handleLinks(link.id)}
+        onClick={() => {
+          handleLinks(link.id);
+          resetClick();
+        }}
       >
         {link.id.includes("dash") ? (
           <Sidelink icon={<FaHome />} title={link.title} />
@@ -41,6 +46,7 @@ const Sidebar = ({ toggle, handleLinks, activeLink }) => {
       </span>
     );
   });
+
   return (
     <aside>
       <h3 className="hidden lg:pl-6 text-2xl caveat-regular capitalize text-red-500 font-bold">
