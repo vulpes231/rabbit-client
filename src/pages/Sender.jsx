@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Construction from "../components/Construction";
+import { useNavigate } from "react-router-dom";
+const navigate = useNavigate();
 
-const Settings = () => {
+const Sender = () => {
   const { accessToken } = useSelector((state) => state.signin);
   useEffect(() => {
     if (!accessToken) {
@@ -14,7 +16,7 @@ const Settings = () => {
       <div>
         <span>
           <h3 className="uppercase font-semibold text-xl text-center pt-10">
-            settings
+            Sender
           </h3>
         </span>
         <Construction />
@@ -23,4 +25,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Sender;

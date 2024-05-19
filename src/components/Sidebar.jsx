@@ -1,7 +1,7 @@
 import React from "react";
 import Sidelink from "./Sidelink";
-import { MdHomeMini } from "react-icons/md";
 import {
+  FaCookie,
   FaExchangeAlt,
   FaHome,
   FaMoneyBill,
@@ -10,8 +10,9 @@ import {
   FaTools,
 } from "react-icons/fa";
 import { sidebarLinks } from "../constants";
-import { FaGear } from "react-icons/fa6";
+import { FaCoins, FaGear, FaGears } from "react-icons/fa6";
 import Logout from "./Logout";
+import { MdAccountBox, MdArchive, MdMail, MdSend } from "react-icons/md";
 
 const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
   const sidebarMenus = sidebarLinks.map((link) => {
@@ -20,7 +21,7 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
         key={link.id}
         className={
           activeLink === link.id
-            ? " font-thin pb-2  border-b-2 border-b-red-500"
+            ? " font-thin pb-2  border-b border-b-slate-500"
             : " font-thin pb-2"
         }
         onClick={() => {
@@ -30,17 +31,25 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
       >
         {link.id.includes("dash") ? (
           <Sidelink icon={<FaHome />} title={link.title} />
-        ) : link.title.includes("Services") ? (
-          <Sidelink icon={<FaExchangeAlt />} title={link.title} />
-        ) : link.title.includes("Tools") ? (
+        ) : link.id.includes("resume") ? (
+          <Sidelink icon={<MdArchive />} title={link.title} />
+        ) : link.id.includes("link") ? (
           <Sidelink icon={<FaTools />} title={link.title} />
-        ) : link.title.includes("RDPs") ? (
+        ) : link.id.includes("rdp") ? (
           <Sidelink icon={<FaServer />} title={link.title} />
-        ) : link.title.includes("Transactions") ? (
-          <Sidelink icon={<FaMoneyBill />} title={link.title} />
-        ) : link.title.includes("Settings") ? (
-          <Sidelink icon={<FaGear />} title={link.title} />
-        ) : link.title.includes("Referral") ? (
+        ) : link.id.includes("log") ? (
+          <Sidelink icon={<MdMail />} title={link.title} />
+        ) : link.id.includes("sender") ? (
+          <Sidelink icon={<MdSend />} title={link.title} />
+        ) : link.id.includes("account") ? (
+          <Sidelink icon={<MdAccountBox />} title={link.title} />
+        ) : link.id.includes("rat") ? (
+          <Sidelink icon={<FaGears />} title={link.title} />
+        ) : link.id.includes("web3") ? (
+          <Sidelink icon={<FaCoins />} title={link.title} />
+        ) : link.id.includes("cookie") ? (
+          <Sidelink icon={<FaCookie />} title={link.title} />
+        ) : link.id.includes("service") ? (
           <Sidelink icon={<FaRibbon />} title={link.title} />
         ) : null}
       </span>
@@ -48,11 +57,11 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
   });
 
   return (
-    <aside>
-      <h3 className="hidden lg:pl-6 text-2xl caveat-regular capitalize text-red-500 font-bold">
+    <aside className="z-50">
+      {/* <h3 className="hidden lg:pl-6 text-2xl caveat-regular capitalize text-red-500 font-bold">
         rh4ogs
-      </h3>
-      <div className="mt-20 p-4 flex flex-col gap-4">
+      </h3> */}
+      <div className="mt-10 p-4 flex flex-col gap-4">
         {sidebarMenus}
         <Logout />
       </div>

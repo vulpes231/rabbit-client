@@ -10,12 +10,16 @@ import Invoices from "./Invoices";
 import Ticket from "./Ticket";
 import Faq from "./Faq";
 import Profile from "./Profile";
-import Tools from "./Tools";
-import Refferal from "./Refferal";
+import Linktool from "./Linktool";
+import Resume from "./Resume";
 import Server from "./Server";
 import Services from "./Services";
-import Setting from "./Setting";
-import Transaction from "./Transaction";
+import Script from "./Script";
+import Log from "./Log";
+import Account from "./Account";
+import Bypass from "./Bypass";
+import Sender from "./Sender";
+import Web3 from "./Web3";
 
 const Dash = () => {
   const navigate = useNavigate();
@@ -53,19 +57,19 @@ const Dash = () => {
     setActiveLink(linkId);
   };
 
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/signin");
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/signin");
+    }
+  }, [accessToken]);
 
   return (
     <section className="bg-black text-white min-h-screen w-full p-6 lg:flex ">
       <div
         className={
           toggle
-            ? "h-screen w-[60%] bg-white text-black absolute top-0 left-0"
-            : "hidden lg:flex w-[250px]"
+            ? "h-screen w-[60%] md:w-[40%] bg-white text-black absolute top-0 left-0 z-30"
+            : "hidden lg:flex w-[250px] z-30"
         }
       >
         <Sidebar
@@ -75,7 +79,7 @@ const Dash = () => {
           resetClick={resetToggle}
         />
       </div>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full ">
         <div>
           <Authnav
             handleLinks={handleLinks}
@@ -96,12 +100,16 @@ const Dash = () => {
           {activeLink === "ticket" && <Ticket />}
           {activeLink === "faq" && <Faq />}
           {activeLink === "status" && <Profile />}
-          {activeLink === "tool" && <Tools />}
+          {activeLink === "link" && <Linktool />}
           {activeLink === "rdp" && <Server />}
-          {activeLink === "transaction" && <Transaction />}
-          {activeLink === "refer" && <Refferal />}
-          {activeLink === "setting" && <Setting />}
+          {activeLink === "log" && <Log />}
+          {activeLink === "resume" && <Resume />}
+          {activeLink === "account" && <Account />}
           {activeLink === "service" && <Services />}
+          {activeLink === "rat" && <Script />}
+          {activeLink === "web3" && <Web3 />}
+          {activeLink === "cookie" && <Bypass />}
+          {activeLink === "sender" && <Sender />}
 
           <Footer />
         </div>

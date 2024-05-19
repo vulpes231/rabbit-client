@@ -1,9 +1,9 @@
 import React from "react";
 
-const Button = ({ title, handleClick }) => {
+const Button = ({ title, handleClick, customClass }) => {
   return (
     <button
-      className="p-2 border border-slate-400 text-slate-400 rounded-sm cursor-pointer"
+      className={`p-2 bg-red-500 text-white rounded-sm cursor-pointer capitalize text-xs font-thin ${customClass}`}
       onClick={handleClick}
     >
       {title}

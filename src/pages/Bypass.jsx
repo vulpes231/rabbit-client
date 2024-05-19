@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import Construction from "../components/Construction";
 import { useNavigate } from "react-router-dom";
 const navigate = useNavigate();
-const Faq = () => {
+
+const Bypass = () => {
   const { accessToken } = useSelector((state) => state.signin);
   useEffect(() => {
     if (!accessToken) {
@@ -11,11 +12,11 @@ const Faq = () => {
     }
   }, [accessToken]);
   return (
-    <section className="min-h-screen w-full bg-slate-700 bg-opacity-30 rounded-xl p-6">
+    <section className="min-h-screen w-full  bg-slate-700 bg-opacity-30 rounded-xl p-6">
       <div>
         <span>
           <h3 className="uppercase font-semibold text-xl text-center pt-10">
-            Frequently asked questions
+            Bypass
           </h3>
         </span>
         <Construction />
@@ -24,4 +25,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default Bypass;
