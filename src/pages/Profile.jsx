@@ -6,9 +6,9 @@ import Topup from "../components/profile/Topup";
 import Contactus from "../components/profile/Contactus";
 
 import { useNavigate } from "react-router-dom";
-const navigate = useNavigate();
 
 const Status = () => {
+  const navigate = useNavigate();
   const { accessToken } = useSelector((state) => state.signin);
   useEffect(() => {
     if (!accessToken) {

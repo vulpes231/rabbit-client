@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Construction from "../components/Construction";
 import { useNavigate } from "react-router-dom";
-const navigate = useNavigate();
 
 const Web3 = () => {
+  const navigate = useNavigate();
   const { accessToken } = useSelector((state) => state.signin);
   useEffect(() => {
     if (!accessToken) {

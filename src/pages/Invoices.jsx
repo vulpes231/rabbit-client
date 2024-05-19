@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Content from "../components/invoice/Content";
 import { useNavigate } from "react-router-dom";
-const navigate = useNavigate();
 
 const Invoices = () => {
+  const navigate = useNavigate();
   const { accessToken } = useSelector((state) => state.signin);
   useEffect(() => {
     if (!accessToken) {

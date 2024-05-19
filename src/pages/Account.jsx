@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Account = () => {
   const { accessToken } = useSelector((state) => state.signin);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
