@@ -29,6 +29,7 @@ const Dash = () => {
   const [toggle, setToggle] = useState(false);
 
   const { accessToken, user } = useSelector((state) => state.signin);
+  // const accessToken = localStorage.getItem("accessToken")
 
   const handleToggle = () => {
     setToggle((prev) => !prev);

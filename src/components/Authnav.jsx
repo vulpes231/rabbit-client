@@ -61,7 +61,7 @@ const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
             rh4ogs
           </h3>
         </span>
-        <div className="hidden lg:flex gap-10">{authLinks}</div>
+        <div className="hidden lg:flex gap-6">{authLinks}</div>
         <span className="flex gap-6">
           <MdNotifications className="hover:text-red-500 cursor-pointer" />
 

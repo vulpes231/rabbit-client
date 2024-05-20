@@ -13,7 +13,7 @@ const initialState = {
 export const getProducts = createAsyncThunk(
   "products/getProducts",
   async (_, { getState }) => {
-    const url = `${devserver}/products`;
+    const url = `${server}/products`;
     const { accessToken } = getState().signin;
     try {
       const response = await axios.get(url, {

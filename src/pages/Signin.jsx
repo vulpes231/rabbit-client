@@ -49,6 +49,7 @@ const Signin = () => {
     let timeout;
     if (accessToken) {
       console.log(accessToken);
+      localStorage.setItem("accessToken", accessToken);
       timeout = setTimeout(() => {
         // dispatch(reset());
         navigate("/dashboard");
