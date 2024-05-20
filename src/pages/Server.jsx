@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Construction from "../components/Construction";
 import { useNavigate } from "react-router-dom";
+import ProductTable from "../components/ProductTable";
 
 const Server = () => {
   const navigate = useNavigate();
@@ -13,13 +13,8 @@ const Server = () => {
   }, [accessToken]);
   return (
     <section className="min-h-screen w-full bg-slate-700 bg-opacity-30 rounded-xl p-6">
-      <div>
-        <span>
-          <h3 className="uppercase font-semibold text-xl  text-center pt-10">
-            Servers
-          </h3>
-        </span>
-        <Construction />
+      <div className="ssize h-[500px] overflow-y-scroll">
+        <ProductTable productName={"rdp"} />
       </div>
     </section>
   );

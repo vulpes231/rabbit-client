@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Authnav, Sidebar } from "../components";
 
@@ -20,14 +20,15 @@ import Account from "./Account";
 import Bypass from "./Bypass";
 import Sender from "./Sender";
 import Web3 from "./Web3";
+import { getProducts } from "../features/dashSlice";
 
 const Dash = () => {
   const navigate = useNavigate();
-  const { accessToken, user } = useSelector((state) => state.signin);
-
-  // console.log(user);
+  const dispatch = useDispatch();
 
   const [toggle, setToggle] = useState(false);
+
+  const { accessToken, user } = useSelector((state) => state.signin);
 
   const handleToggle = () => {
     setToggle((prev) => !prev);
@@ -62,6 +63,13 @@ const Dash = () => {
       navigate("/signin");
     }
   }, [accessToken]);
+
+  useEffect(() => {
+    if (accessToken) {
+      console.log("Dispatching get products...");
+      dispatch(getProducts());
+    }
+  }, [accessToken, dispatch]);
 
   return (
     <section className="bg-black text-white min-h-screen w-full p-6 lg:flex ">

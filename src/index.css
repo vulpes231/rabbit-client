@@ -16,3 +16,13 @@
   font-style: normal;
   font-variation-settings: "wdth" 100;
 }
+
+.ssize {
+  max-width: 100vw;
+}
+
+@media (min-width: 1000px) {
+  .ssize {
+    max-width: calc(100vw - 250px);
+  }
+}

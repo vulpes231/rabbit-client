@@ -21,7 +21,7 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
         key={link.id}
         className={
           activeLink === link.id
-            ? " font-thin pb-2  border-b border-b-slate-500"
+            ? " font-thin pb-2  text-red-500"
             : " font-thin pb-2"
         }
         onClick={() => {
@@ -61,7 +61,7 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
       {/* <h3 className="hidden lg:pl-6 text-2xl caveat-regular capitalize text-red-500 font-bold">
         rh4ogs
       </h3> */}
-      <div className="mt-10 p-4 flex flex-col gap-4">
+      <div className="mt-16 p-4 flex flex-col gap-4">
         {sidebarMenus}
         <Logout />
       </div>
