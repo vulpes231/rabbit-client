@@ -16,7 +16,7 @@ const Invoices = () => {
       <div className="w-full">
         <span>
           <h3 className="uppercase font-semibold text-xl text-center pt-10">
-            invoices
+            channels
           </h3>
         </span>
         <div>

@@ -15,13 +15,13 @@ const Dashcontent = ({ user, formattedDate, memberSince }) => {
     <div className="flex flex-col lg:max-w-[1000px] mx-auto gap-10 lg:flex-row lg:flex-wrap lg:mt-10">
       <div className="flex flex-col gap-10  lg:w-[300px]">
         <article className="flex flex-col gap-6 items-center justify-center bg-slate-400 bg-opacity-10 w-full mx-auto p-4 rounded-md">
-          <LabelIcon icon={<Md10Mp />} title={"total orders"} />
+          <LabelIcon icon={<Md10Mp />} title={"pending orders"} />
           <span className="flex items-center gap-2">
             {user?.orders || 0} <Md18Mp />
           </span>
         </article>
         <article className="flex flex-col gap-6 items-center justify-center bg-slate-400 bg-opacity-10 w-full mx-auto p-4 rounded-md">
-          <LabelIcon icon={<FaTrophy />} title={"earned XP"} />
+          <LabelIcon icon={<FaTrophy />} title={"completed orders"} />
           <span className="flex items-center gap-2">
             {user?.earnedXP || 0} <FaAward />
           </span>

@@ -7,7 +7,7 @@ export const navLinks = [
 
 export const loggedLinks = [
   { id: "dash", title: "Dashboard", path: "/dashboard" },
-  { id: "invoice", title: "Invoice", path: "" },
+  { id: "invoice", title: "Channels", path: "" },
   { id: "ticket", title: "Ticket", path: "" },
   { id: "faq", title: "FAQ", path: "" },
   { id: "status", title: "Profile", path: "" },
@@ -18,7 +18,7 @@ export const sidebarLinks = [
   { id: "log", title: "Email Logs", path: "" },
   { id: "sender", title: "Senders", path: "" },
   { id: "rdp", title: "RDPs", path: "" },
-  { id: "link", title: "Link Tools", path: "" },
+  { id: "link", title: "Redirect", path: "" },
   { id: "resume", title: "Resumes", path: "" },
   { id: "account", title: "Social Accounts", path: "" },
   { id: "service", title: "Services", path: "" },
