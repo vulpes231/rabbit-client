@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import FaqComp from "../components/faq/FaqComp";
 
+import { MdChecklist } from "react-icons/md";
 const Faq = () => {
-  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(null);
-  const { accessToken } = useSelector((state) => state.signin);
   const questionsAndAnswers = [
     {
       question: "What happens when my 2fa link is red?",
@@ -77,11 +75,7 @@ const Faq = () => {
   const toggleAnswer = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/signin");
-  //   }
-  // }, [accessToken]);
+
   return (
     <section className="min-h-screen w-full bg-slate-700 bg-opacity-30 rounded-xl p-6">
       <div>
@@ -108,6 +102,28 @@ const Faq = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div className="text-xs font-thin text-slate-400 md:flex flex-wrap md:items-center md:justify-center gap-4 my-5">
+          <FaqComp
+            title={"Admin support on Telegram"}
+            icon={<MdChecklist className="text-red-500" />}
+          />
+          <FaqComp
+            title={"Main Channel"}
+            icon={<MdChecklist className="text-green-500" />}
+          />
+          <FaqComp
+            title={"Telegram Bot"}
+            icon={<MdChecklist className="text-yellow-500" />}
+          />
+          <FaqComp
+            title={"Whatsapp"}
+            icon={<MdChecklist className="text-blue-500" />}
+          />
+          <FaqComp
+            title={"Vendors Onboarding and inquiries  "}
+            icon={<MdChecklist className="text-purple-500" />}
+          />
         </div>
       </div>
     </section>
