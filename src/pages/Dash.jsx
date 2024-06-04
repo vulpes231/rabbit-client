@@ -21,6 +21,7 @@ import Bypass from "./Bypass";
 import Sender from "./Sender";
 import Web3 from "./Web3";
 import { getProducts } from "../features/dashSlice";
+import { getServerPlans } from "../features/serverSlice";
 
 const Dash = () => {
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ const Dash = () => {
     if (accessToken) {
       console.log("Dispatching get products...");
       dispatch(getProducts());
+      dispatch(getServerPlans());
     }
   }, [accessToken, dispatch]);
 
