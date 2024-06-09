@@ -2,14 +2,15 @@ import React from "react";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import Products from "./Products";
+import Section from "./Section";
 
 const Landing = () => {
   return (
-    <section className="min-h-screen w-full bg-[#333]">
+    <Section>
       <Navbar />
       <Hero />
       <Products />
-    </section>
+    </Section>
   );
 };
 

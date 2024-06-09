@@ -2,6 +2,7 @@ import React from "react";
 import Product from "./Product";
 import { FaUsersCog } from "react-icons/fa";
 import { products } from "../constants";
+import Section from "./Section";
 
 const Products = () => {
   const myProducts = products.map((prod) => {
@@ -12,7 +13,7 @@ const Products = () => {
         content={prod.availability.map((av, index) => {
           return (
             <span
-              className=" text-white font-semibold text-sm uppercase ml-2"
+              className="  font-semibold text-sm uppercase ml-2"
               key={index}
             >
               {av}
@@ -22,10 +23,7 @@ const Products = () => {
         price={prod.price}
         features={prod.features.map((ft, index) => {
           return (
-            <li
-              key={index}
-              className="text-[#fff] text-xs uppercase font-thin ml-2"
-            >
+            <li key={index} className=" text-xs uppercase font-thin ml-2">
               {ft || "None."}
             </li>
           );
@@ -33,10 +31,7 @@ const Products = () => {
         info={prod.info || "None."}
         requirements={prod.requirements.map((rq, index) => {
           return (
-            <p
-              key={index}
-              className="text-[#fff] text-xs uppercase font-thin ml-2"
-            >
+            <p key={index} className=" text-xs uppercase font-thin ml-2">
               {rq || "None."}
             </p>
           );
@@ -45,16 +40,16 @@ const Products = () => {
     );
   });
   return (
-    <section className="bg-[#333]">
-      <div className="lg:max-w-[1100px] lg:mx-auto p-6 flex flex-col gap-10">
-        <h3 className="text-xl lg:text-2xl font-black text-center uppercase text-[#fff] my-20">
+    <Section>
+      <div className="container px-3 font-[Montserrat]">
+        <h3 className="text-xl lg:text-2xl font-black text-center uppercase my-10">
           Products
         </h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {myProducts}
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

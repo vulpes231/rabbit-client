@@ -1,20 +1,24 @@
 import React from "react";
 import { RiSecurePaymentFill } from "react-icons/ri";
+import Section from "./Section";
 
 const Hero = () => {
   return (
-    <section className="text-[#fff] bg-black flex flex-col items-center justify-center p-6 h-screen md:h-auto">
-      <div className="flex flex-col items-center justify-center text-center gap-8">
-        <h3 className="text-3xl leading-loose font-bold tracking-wider capitalize">
-          Your One Stop Shop <br /> for Everything an OG needs.
-        </h3>
-        <p className="font-extralight text-xs">💜💜💜💜💜 c:/Bishop.</p>
-        <p className="flex items-center gap-2 font-extralight bg-[#101010] p-4 rounded-2xl text-xl justify-between">
-          <RiSecurePaymentFill />
-          <small className="text-xs">we don't keep logs</small>
-        </p>
+    <Section>
+      <div className="container px-3">
+        <div className="flex justify-center -mx-3 flex-col items-center">
+          <h3 className="text-3xl leading-tight font-bold tracking-wider text-center inline-flex font-[Montserrat] text-gradient">
+            Your one stop shop for <br />
+            everything an OG needs
+          </h3>
+          <p className="font-extralight text-xs py-2">💜💜💜💜💜 c:/Bishop.</p>
+          <p className="flex items-center gap-2 font-extralight p-4 rounded-2xl text-xl justify-between py-2 bg-slate-900 text-slate-200 dark:text-slate-900 dark:bg-slate-200">
+            <RiSecurePaymentFill />
+            <small className="text-xs font-medium ">we don't keep logs</small>
+          </p>
+        </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

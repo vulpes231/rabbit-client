@@ -4,10 +4,12 @@ import { Landing } from "./components";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dash from "./pages/Dash";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16 undefined">
+      <Navbar />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />

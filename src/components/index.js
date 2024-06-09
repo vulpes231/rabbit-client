@@ -7,6 +7,7 @@ import User from "./User";
 import Products from "./Products";
 import LabelIcon from "./LabelIcon";
 import Sidebar from "./Sidebar";
+import Section from "./Section";
 
 export {
   Landing,
@@ -18,4 +19,5 @@ export {
   Products,
   LabelIcon,
   Sidebar,
+  Section,
 };
