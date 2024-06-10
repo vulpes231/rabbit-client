@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Authnav, Sidebar } from "../components";
+import { Authnav, Sidebar, Section } from "../components";
 
 import Footer from "../components/Footer";
 import { getJoinedTimeAgo } from "../utils/getDate";
@@ -23,22 +23,15 @@ import Web3 from "./Web3";
 import { getProducts } from "../features/dashSlice";
 import { getServerPlans } from "../features/serverSlice";
 
-const Dash = () => {
+const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [toggle, setToggle] = useState(false);
+  const { user } = useSelector((state) => state.signin);
 
-  const { accessToken, user } = useSelector((state) => state.signin);
-  // const accessToken = localStorage.getItem("accessToken")
-
-  const handleToggle = () => {
-    setToggle((prev) => !prev);
-  };
-
-  const resetToggle = () => {
-    setToggle(false);
-  };
+  let accessToken;
+  const storedAccessToken = localStorage.getItem("accessToken");
+  accessToken = JSON.parse(storedAccessToken);
 
   const lastLogin = new Date();
   const formattedDate = lastLogin.toLocaleString("en-US", {
@@ -53,12 +46,6 @@ const Dash = () => {
 
   const joinDate = new Date(user?.createdAt);
   const memberSince = getJoinedTimeAgo(joinDate);
-
-  const [activeLink, setActiveLink] = useState("dash");
-
-  const handleLinks = (linkId) => {
-    setActiveLink(linkId);
-  };
 
   useEffect(() => {
     if (!accessToken) {
@@ -75,31 +62,19 @@ const Dash = () => {
   }, [accessToken, dispatch]);
 
   return (
-    <section className="bg-black text-white min-h-screen w-full p-6 lg:flex ">
-      <div
-        className={
-          toggle
-            ? "h-screen w-[60%] md:w-[40%] bg-white text-black absolute top-0 left-0 z-30"
-            : "hidden lg:flex w-[250px] z-30"
-        }
-      >
+    <section
+      className="relative py-10  pt-20 sm:pt-16 lg:pt-2"
+      style={{ scrollMarginTop: "var(--topbar-height, 69px)" }}
+    >
+      <div className="flex">
         <Sidebar
           toggle={toggle}
           handleLinks={handleLinks}
           activeLink={activeLink}
           resetClick={resetToggle}
         />
-      </div>
-      <div className="flex flex-col w-full ">
-        <div>
-          <Authnav
-            handleLinks={handleLinks}
-            activeLink={activeLink}
-            toggle={toggle}
-            handleToggle={handleToggle}
-          />
-        </div>
-        <div>
+
+        <>
           {activeLink === "dash" && (
             <Dashcontent
               formattedDate={formattedDate}
@@ -121,10 +96,9 @@ const Dash = () => {
           {activeLink === "web3" && <Web3 />}
           {activeLink === "cookie" && <Bypass />}
           {activeLink === "sender" && <Sender />}
-
-          <Footer />
-        </div>
+        </>
       </div>
+      <Footer />
     </section>
   );
 };

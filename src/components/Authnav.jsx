@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { MdClose, MdMenu, MdNotifications } from "react-icons/md";
+import { MdClose, MdMenu, MdNightlightRound, MdSunny } from "react-icons/md";
 import { loggedLinks } from "../constants";
 import { Link } from "react-router-dom";
 import { FaMailBulk, FaQuestion, FaUser, FaUserCog } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
-// import { Link } from "react-router-dom";
 
-import { FaHeartPulse, FaMoneyBillTrendUp } from "react-icons/fa6";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
 const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
+  const [darkMode, setDarkMode] = useState(false);
+  const handleModeToggle = () => {
+    setDarkMode(!darkMode);
+  };
+
   const authLinks = loggedLinks.map((link) => {
     return (
       <Link
@@ -43,33 +47,50 @@ const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
     };
   }, []);
 
+  useEffect(() => {
+    // Apply dark mode class to the body
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   return (
-    <header className="w-full font-bold bg-black flex flex-col gap-6  ">
-      <div className="flex justify-between w-full items-center mb-5 lg:mb-3">
-        <span
-          className={
-            toggle
-              ? "lg:hidden text-2xl z-50 text-black absolute left-[180px] top-5 sm:left-[250px] sm:top-8 w-full pr-5 cursor-pointer"
-              : "lg:hidden text-2xl z-50 text-white cursor-pointer"
-          }
-          onClick={handleToggle}
-        >
-          {!toggle ? <MdMenu /> : <MdClose />}
-        </span>
+    <header className="isolate fixed top-0 start-0 w-full py-4 xl:py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-[1020] px-3">
+      <div className="flex items-center w-100 justify-between">
+        <h3 className="text-2xl caveat-regular capitalize text-red-500 font-bold hidden lg:flex">
+          rh4ogs
+        </h3>
+        <div className="lg:hidden -ms-1.">
+          <button
+            onClick={handleToggle}
+            className="inline-flex items-center justify-center h-8 w-8 rounded-full overflow-hidden transition-all text-slate-400 hover:bg-slate-200 hover:dark:bg-slate-800 hover:text-slate-600 hover:dark:text-slate-200 ui-open:bg-slate-200 ui-open:dark:bg-slate-800 ui-open:text-slate-600 ui-open:dark:text-slate-200"
+          >
+            {!toggle ? <MdMenu /> : <MdClose />}
+          </button>
+        </div>
+
         <span className="lg:hidden">
           <h3 className="text-2xl caveat-regular capitalize text-red-500 font-bold ">
             rh4ogs
           </h3>
         </span>
-        <div className="hidden lg:flex gap-6">{authLinks}</div>
-        <span className="flex gap-6">
-          <MdNotifications className="hover:text-red-500 cursor-pointer" />
 
-          <FaUser className="hover:text-red-500 cursor-pointer" />
-        </span>
+        <div className="hidden lg:flex gap-6 text-xs font-medium">
+          {authLinks}
+        </div>
+
+        <div className="flex gap-3 items-center">
+          <span onClick={handleModeToggle} className="inline-flex relative">
+            <button className="inline-flex items-center justify-center h-8 w-8 rounded-full overflow-hidden transition-all text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800">
+              {darkMode ? <MdNightlightRound /> : <MdSunny />}
+            </button>
+          </span>
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-6 justify-center mb-10 md:gap-10 lg:hidden">
+      <div className="flex flex-wrap gap-2 justify-center md:gap-10 lg:hidden pt-2 text-xs font-medium">
         {authLinks}
       </div>
     </header>

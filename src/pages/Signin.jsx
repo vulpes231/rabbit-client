@@ -50,13 +50,13 @@ const Signin = () => {
     let timeout;
     if (accessToken) {
       console.log(accessToken);
-      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("accessToken", JSON.stringify(accessToken));
       timeout = setTimeout(() => {
         // dispatch(reset());
         navigate("/dashboard");
       }, 3000);
     }
-    () => clearTimeout(timeout);
+    return () => clearTimeout(timeout);
   }, [accessToken, dispatch]);
 
   return (
@@ -101,14 +101,18 @@ const Signin = () => {
 
               <span
                 className={
-                  error ? "flex text-red-500 font-bold py-2" : "hidden"
+                  error
+                    ? "flex text-red-500 text-xs bg-red-500 bg-opacity-15 font-medium p-2 rounded-md capitalize"
+                    : "hidden"
                 }
               >
                 {error}
               </span>
               <span
                 className={
-                  accessToken ? "flex text-green-500 font-bold py-2" : "hidden"
+                  accessToken
+                    ? "flex text-green-500 text-xs bg-green-500 bg-opacity-15 font-medium p-2 rounded-md capitalize"
+                    : "hidden"
                 }
               >
                 Login successful.

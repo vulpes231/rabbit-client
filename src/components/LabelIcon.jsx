@@ -1,10 +1,10 @@
 import React from "react";
 
-const LabelIcon = ({ icon, title }) => {
+const LabelIcon = ({ icon, title, iconSize }) => {
   return (
-    <div className="flex gap-2 items-center capitalize">
-      <span>{icon}</span>
-      <p>{title}</p>
+    <div className="flex flex-col gap-2 items-center capitalize">
+      <span className={`${iconSize}`}>{icon}</span>
+      <span className="text-sm font-medium">{title}</span>
     </div>
   );
 };
