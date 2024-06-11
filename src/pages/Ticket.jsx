@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import Content from "../components/ticket/Content";
 import { useNavigate } from "react-router-dom";
+import { getAccessToken } from "../utils/getDate";
 
 const Ticket = () => {
   const navigate = useNavigate();
-  const { accessToken } = useSelector((state) => state.signin);
+  const accessToken = getAccessToken();
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");

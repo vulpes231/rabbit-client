@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import Userinfo from "../components/profile/Userinfo";
 import Changemail from "../components/profile/Changemail";
 import Topup from "../components/profile/Topup";
 import Contactus from "../components/profile/Contactus";
-
 import { useNavigate } from "react-router-dom";
+import { getAccessToken } from "../utils/getDate";
 
 const Status = () => {
   const navigate = useNavigate();
-  const { accessToken } = useSelector((state) => state.signin);
+  const accessToken = getAccessToken();
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");

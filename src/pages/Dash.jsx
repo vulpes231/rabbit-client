@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Authnav, Sidebar, Section } from "../components";
+import { Sidebar } from "../components";
 
 import Footer from "../components/Footer";
-import { getJoinedTimeAgo } from "../utils/getDate";
+import { getAccessToken, getJoinedTimeAgo } from "../utils/getDate";
 import Dashcontent from "../components/Dashcontent";
 import Invoices from "./Invoices";
 import Ticket from "./Ticket";
@@ -27,11 +27,9 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.signin);
+  const accessToken = getAccessToken();
 
-  let accessToken;
-  const storedAccessToken = localStorage.getItem("accessToken");
-  accessToken = JSON.parse(storedAccessToken);
+  const { user } = useSelector((state) => state.signin);
 
   const lastLogin = new Date();
   const formattedDate = lastLogin.toLocaleString("en-US", {

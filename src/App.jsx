@@ -5,12 +5,15 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dash from "./pages/Dash";
 import Navbar from "./components/Navbar";
+import { useSelector } from "react-redux";
+import accessToken from "./constants";
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
   const [activeLink, setActiveLink] = useState("dash");
 
   const handleLinks = (linkId) => {
+    console.log(activeLink);
     setActiveLink(linkId);
   };
 
@@ -21,21 +24,28 @@ const App = () => {
   const resetToggle = () => {
     setToggle(false);
   };
-  // let accessToken;
-  const accessToken = localStorage.getItem("accessToken");
-  // accessToken = JSON.parse(storedAccessToken);
+
+  // const { accessToken } = useSelector((state) => state.signin);
+
+  const token = sessionStorage.getItem("accessToken");
+  // console.log(accessToken);
+  console.log(token);
+
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16 lg:pt-[calc(theme(space.16)+theme(space.1))]">
-      {!accessToken ? (
-        <Navbar />
-      ) : (
-        <Authnav
-          toggle={toggle}
-          handleLinks={handleLinks}
-          handleToggle={handleToggle}
-          activeLink={activeLink}
-        />
-      )}
+      <>
+        {" "}
+        {!token && <Navbar />}
+        {token && (
+          <Authnav
+            toggle={toggle}
+            handleToggle={handleToggle}
+            activeLink={activeLink}
+            handleLinks={handleLinks}
+          />
+        )}
+      </>
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />

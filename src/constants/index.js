@@ -5,6 +5,10 @@ export const navLinks = [
   { id: "contact", title: "Contact", path: "" },
 ];
 
+let accessToken;
+const storedAccessToken = localStorage.getItem("accessToken");
+accessToken = JSON.parse(storedAccessToken);
+
 export const loggedLinks = [
   { id: "dash", title: "Dashboard", path: "/dashboard" },
   { id: "invoice", title: "Channels", path: "" },
@@ -272,3 +276,5 @@ export const products = [
     requirements: [""],
   },
 ];
+
+export default accessToken;

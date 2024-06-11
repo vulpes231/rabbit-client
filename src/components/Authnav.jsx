@@ -23,6 +23,7 @@ const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
             : "flex gap-3 items-center font-thin pb-2"
         }
         onClick={() => handleLinks(link.id)}
+        // to={link.path}
       >
         {link.title.includes("Dash") ? (
           <MdHome />

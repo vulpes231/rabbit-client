@@ -27,3 +27,8 @@ export function getJoinedTimeAgo(joinedDate) {
     return daysAgo + " days ago";
   }
 }
+
+export const getAccessToken = () => {
+  const token = sessionStorage.getItem("accessToken");
+  return token ? JSON.parse(token) : null;
+};

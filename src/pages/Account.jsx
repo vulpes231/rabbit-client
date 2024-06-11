@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
+import { getAccessToken } from "../utils/getDate";
 
 const Account = () => {
-  const { accessToken } = useSelector((state) => state.signin);
   const navigate = useNavigate();
+  const accessToken = getAccessToken();
 
   useEffect(() => {
     if (!accessToken) {

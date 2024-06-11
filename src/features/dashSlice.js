@@ -15,8 +15,15 @@ export const getProducts = createAsyncThunk(
   async () => {
     const url = `${server}/products`;
     let accessToken;
-    const storedAccessToken = localStorage.getItem("accessToken");
-    accessToken = JSON.parse(storedAccessToken);
+    const storedAccessToken = sessionStorage.getItem("accessToken"); // Use sessionStorage as mentioned
+    accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
+
+    console.log("Token from sessionStorage:", accessToken);
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+
     try {
       const response = await axios.get(url, {
         headers: {
@@ -24,12 +31,13 @@ export const getProducts = createAsyncThunk(
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      //   console.log("API response", response);
       return response.data;
     } catch (error) {
       if (error.response) {
-        const errorMsg = error.response.message.data;
+        const errorMsg = error.response.data.message;
         throw new Error(errorMsg);
+      } else {
+        throw new Error("Error fetching products");
       }
     }
   }

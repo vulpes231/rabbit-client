@@ -47,17 +47,21 @@ const Signin = () => {
   }, []);
 
   useEffect(() => {
-    let timeout;
     if (accessToken) {
-      console.log(accessToken);
-      localStorage.setItem("accessToken", JSON.stringify(accessToken));
-      timeout = setTimeout(() => {
-        // dispatch(reset());
+      console.log("Token from state:", accessToken);
+
+      try {
+        // Use sessionStorage or localStorage based on your requirement
+        sessionStorage.setItem("accessToken", JSON.stringify(accessToken));
+      } catch (error) {
+        console.error("Failed to save access token:", error);
+      }
+
+      setTimeout(() => {
         navigate("/dashboard");
-      }, 3000);
+      }, 5000);
     }
-    return () => clearTimeout(timeout);
-  }, [accessToken, dispatch]);
+  }, [accessToken, dispatch, navigate]);
 
   return (
     <Section>

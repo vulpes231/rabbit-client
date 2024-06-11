@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import Construction from "../components/Construction";
 import { useNavigate } from "react-router-dom";
+import accessToken from "../constants";
+import { getAccessToken } from "../utils/getDate";
 
 const Bypass = () => {
   const navigate = useNavigate();
-  const { accessToken } = useSelector((state) => state.signin);
+  const accessToken = getAccessToken();
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");

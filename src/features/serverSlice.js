@@ -10,10 +10,18 @@ const initialState = {
 
 export const getServerPlans = createAsyncThunk(
   "server/getServerPlans",
-  async (_, { getState }) => {
+  async (_, { rejectWithValue }) => {
     const url = `${devserver}/plans`;
-    const { accessToken } = getState().signin;
+    let accessToken;
+
     try {
+      const storedAccessToken = localStorage.getItem("accessToken");
+      if (storedAccessToken) {
+        accessToken = JSON.parse(storedAccessToken);
+      } else {
+        throw new Error("Access token not found");
+      }
+
       const response = await axios.get(url, {
         headers: {
           "Content-Type": "application/json",
@@ -21,14 +29,14 @@ export const getServerPlans = createAsyncThunk(
         },
       });
 
-      console.log(response);
       return response.data;
     } catch (error) {
-      if (error.response) {
-        const errMsg = error.response.message.data;
-        throw new Error(errMsg);
+      if (error.response && error.response.data) {
+        return rejectWithValue(
+          error.response.data.message || "Error fetching server plans"
+        );
       } else {
-        throw error;
+        return rejectWithValue(error.message || "An unknown error occurred");
       }
     }
   }

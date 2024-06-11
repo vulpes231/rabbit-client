@@ -8,33 +8,41 @@ const initialState = {
   success: false,
 };
 
-export const logoutUser = createAsyncThunk(
-  "logout/logoutUser",
-  async (_, { getState }) => {
-    const { accessToken } = getState().signin;
+export const logoutUser = createAsyncThunk("logout/logoutUser", async () => {
+  let accessToken;
+  const storedAccessToken = sessionStorage.getItem("accessToken");
+  accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
 
-    // console.log(accessToken);
-    try {
-      const url = `${server}/logout`;
-      const response = await axios.put(
-        url,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      if (error.response) {
-        const errorMessage = error.response.data.message;
-        throw new Error(errorMessage);
+  if (!accessToken) {
+    throw new Error("No access token found");
+  }
+
+  try {
+    const url = `${server}/logout`;
+    const response = await axios.put(
+      url,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
+    );
+
+    // Clear the token from sessionStorage after successful logout
+    sessionStorage.removeItem("accessToken");
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.message;
+      throw new Error(errorMessage);
+    } else {
+      throw new Error("Error during logout");
     }
   }
-);
+});
 
 const logoutSlice = createSlice({
   name: "logout",

@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
+import { getAccessToken } from "../utils/getDate";
 
 const Log = () => {
   const navigate = useNavigate();
-  const { accessToken } = useSelector((state) => state.signin);
+  const accessToken = getAccessToken();
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
