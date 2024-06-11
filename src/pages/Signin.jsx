@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
-import { logo } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
-import { reset, signinUser } from "../features/signinSlice";
-import { FaEye, FaEyeSlash, FaKey, FaUser } from "react-icons/fa";
+import { signinUser } from "../features/signinSlice";
+import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import Section from "../components/Section";
 
 const Signin = () => {
@@ -19,7 +18,9 @@ const Signin = () => {
   const [form, setForm] = useState(initialState);
   const [showPass, setShowPass] = useState(false);
 
-  const { accessToken, loading, error } = useSelector((state) => state.signin);
+  const { accessToken, loading, error, user } = useSelector(
+    (state) => state.signin
+  );
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -47,12 +48,13 @@ const Signin = () => {
   }, []);
 
   useEffect(() => {
-    if (accessToken) {
-      console.log("Token from state:", accessToken);
+    if (accessToken && user) {
+      // console.log("Token from state:", user);
 
       try {
         // Use sessionStorage or localStorage based on your requirement
         sessionStorage.setItem("accessToken", JSON.stringify(accessToken));
+        sessionStorage.setItem("userInfo", JSON.stringify(user));
       } catch (error) {
         console.error("Failed to save access token:", error);
       }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Authnav, Landing } from "./components";
 import Signup from "./pages/Signup";
@@ -10,6 +10,7 @@ import accessToken from "./constants";
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
+  const [token, setToken] = useState(false);
   const [activeLink, setActiveLink] = useState("dash");
 
   const handleLinks = (linkId) => {
@@ -25,11 +26,13 @@ const App = () => {
     setToggle(false);
   };
 
-  // const { accessToken } = useSelector((state) => state.signin);
+  const accessToken = sessionStorage.getItem("accessToken");
 
-  const token = sessionStorage.getItem("accessToken");
-  // console.log(accessToken);
-  console.log(token);
+  useEffect(() => {
+    if (accessToken) {
+      setToken(accessToken);
+    }
+  }, [accessToken]);
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16 lg:pt-[calc(theme(space.16)+theme(space.1))]">
