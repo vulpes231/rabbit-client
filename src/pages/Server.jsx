@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
 import { getAccessToken } from "../utils/getDate";
+import Cove from "../components/Cove";
 const Server = () => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
@@ -11,11 +12,11 @@ const Server = () => {
     }
   }, [accessToken]);
   return (
-    <section className="min-h-screen w-full bg-slate-700 bg-opacity-30 rounded-xl p-6">
-      <div className="ssize h-[500px] overflow-y-scroll">
+    <Cove>
+      <div className="container px-3">
         <ProductTable productName={"rdp"} />
       </div>
-    </section>
+    </Cove>
   );
 };
 

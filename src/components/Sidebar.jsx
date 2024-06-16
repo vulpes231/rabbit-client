@@ -61,7 +61,7 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
       className={
         toggle
           ? "fixed h-full w-[60%] md:w-[40%] top-[130px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5"
-          : "hidden lg:flex fixed h-full w-[250px] top-16 left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950"
+          : "hidden lg:flex fixed h-full w-[250px] top-[58px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5"
       }
     >
       <div className="p-4 flex flex-col gap-4 h-full">

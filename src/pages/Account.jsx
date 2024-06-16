@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
 import { getAccessToken } from "../utils/getDate";
+import Cove from "../components/Cove";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -14,11 +15,11 @@ const Account = () => {
   }, [accessToken]);
 
   return (
-    <section className="min-h-screen w-full p-6">
-      <div className="ssize h-[500px] overflow-y-scroll">
+    <Cove>
+      <div className="container px-3">
         <ProductTable productName={"account"} />
       </div>
-    </section>
+    </Cove>
   );
 };
 

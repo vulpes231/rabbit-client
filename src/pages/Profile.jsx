@@ -5,6 +5,7 @@ import Topup from "../components/profile/Topup";
 import Contactus from "../components/profile/Contactus";
 import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../utils/getDate";
+import Cove from "../components/Cove";
 
 const Status = () => {
   const navigate = useNavigate();
@@ -15,16 +16,21 @@ const Status = () => {
     }
   }, [accessToken]);
   return (
-    <section className="min-h-screen w-full rounded-xl z-10">
-      <div className="flex flex-col w-full mt-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:flex-wrap ">
+    <Cove>
+      <div className="container px-3">
+        <span>
+          <h3 className="uppercase font-semibold text-lg text-center pt-10">
+            Profile
+          </h3>
+        </span>
+        <div className="flex flex-wrap -m-3 p-3 gap-10">
           <Userinfo />
           <Changemail />
           <Topup />
           <Contactus />
         </div>
       </div>
-    </section>
+    </Cove>
   );
 };
 

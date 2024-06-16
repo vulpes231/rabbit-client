@@ -3,6 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import FaqComp from "../components/faq/FaqComp";
 
 import { MdChecklist } from "react-icons/md";
+import Cove from "../components/Cove";
 const Faq = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const questionsAndAnswers = [
@@ -77,10 +78,10 @@ const Faq = () => {
   };
 
   return (
-    <section className="min-h-screen w-full bg-slate-700 bg-opacity-30 rounded-xl p-6">
-      <div>
+    <Cove>
+      <div className="container px-3 ">
         <span>
-          <h3 className="uppercase font-semibold text-xl text-center pt-10">
+          <h3 className="uppercase font-semibold text-lg text-center pt-10">
             Frequently asked questions
           </h3>
         </span>
@@ -90,12 +91,12 @@ const Faq = () => {
               <div key={index} className=" border-b py-4">
                 <button
                   onClick={() => toggleAnswer(index)}
-                  className="w-full text-left  text-white py-2 px-4 rounded focus:outline-none flex items-center justify-between gap-2"
+                  className="w-full text-left py-2 px-4 rounded focus:outline-none flex items-center justify-between gap-2"
                 >
                   {item.question} <FaPlus />
                 </button>
                 {activeIndex === index && (
-                  <div className=" text-slate-500 p-4 rounded mt-2 text-sm leading-7 font-thin">
+                  <div className="  p-4 rounded mt-2 text-sm leading-7 font-thin">
                     {item.answer}
                   </div>
                 )}
@@ -103,7 +104,7 @@ const Faq = () => {
             ))}
           </div>
         </div>
-        <div className="text-xs font-thin text-slate-400 md:flex flex-wrap md:items-center md:justify-center gap-4 my-5">
+        <div className="text-xs font-thin md:flex flex-wrap md:items-center md:justify-center gap-4 my-5">
           <FaqComp
             title={"Admin support on Telegram"}
             icon={<MdChecklist className="text-red-500" />}
@@ -126,7 +127,7 @@ const Faq = () => {
           />
         </div>
       </div>
-    </section>
+    </Cove>
   );
 };
 

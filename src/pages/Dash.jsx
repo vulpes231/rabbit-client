@@ -6,7 +6,7 @@ import { Sidebar } from "../components";
 import Footer from "../components/Footer";
 import { getAccessToken, getJoinedTimeAgo } from "../utils/getDate";
 import Dashcontent from "../components/Dashcontent";
-import Invoices from "./Invoices";
+import Invoices from "./Channel";
 import Ticket from "./Ticket";
 import Faq from "./Faq";
 import Profile from "./Profile";

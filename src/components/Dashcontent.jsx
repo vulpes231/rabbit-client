@@ -1,19 +1,7 @@
 import React from "react";
-import {
-  Md10Mp,
-  Md18Mp,
-  MdDiscount,
-  MdOutlinePriceChange,
-} from "react-icons/md";
-import {
-  FaAward,
-  FaCalendar,
-  FaClock,
-  FaGift,
-  FaTrophy,
-  FaUserFriends,
-} from "react-icons/fa";
-import { LabelIcon, Section } from "../components";
+import { MdDiscount, MdOutlinePriceChange } from "react-icons/md";
+import { FaCalendar, FaClock, FaGift, FaUserFriends } from "react-icons/fa";
+import { LabelIcon } from "../components";
 import Article from "./dash/Article";
 import Span from "./dash/Span";
 import Dashdiv from "./dash/Dashdiv";
@@ -106,7 +94,7 @@ const Dashcontent = ({ user, formattedDate, memberSince, toggle }) => {
           </Dashdiv>
         </div>
 
-        <div className="flex flex-col gap-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mx-8 p-4 rounded-md ">
+        <div className="flex flex-col gap-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mx-8 p-4 md:w-[45%] rounded-md ">
           <h3 className="capitalize ">invite a friend</h3>
           <hr className="text-white bg-white" />
           <span className="text-sm opacity-80">
