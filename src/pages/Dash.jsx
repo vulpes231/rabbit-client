@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../components";
-
+import { logoutUser } from "../features/logoutSlice";
 import Footer from "../components/Footer";
 import { getAccessToken, getJoinedTimeAgo } from "../utils/getDate";
 import Dashcontent from "../components/Dashcontent";
@@ -22,6 +22,7 @@ import Sender from "./Sender";
 import Web3 from "./Web3";
 import { getProducts } from "../features/dashSlice";
 import { getServerPlans } from "../features/serverSlice";
+import LogoutModal from "../components/dash/LogoutModal";
 
 const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const navigate = useNavigate();
@@ -51,17 +52,37 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
     }
   }, [accessToken]);
 
+  const { loading, error, success } = useSelector((state) => state.logout);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+
   useEffect(() => {
     if (accessToken) {
-      console.log("Dispatching get products...");
+      // console.log("Dispatching get products...");
       dispatch(getProducts());
       dispatch(getServerPlans());
     }
   }, [accessToken, dispatch]);
 
+  useEffect(() => {
+    if (success) {
+      // Clear cookies
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+      });
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.reload();
+    }
+  }, [success]);
+
   return (
     <section
-      className="relative py-10  pt-20 sm:pt-16 lg:pt-2"
+      className="relative py-10  pt-20 sm:pt-16 lg:pt-2  px-3"
       style={{ scrollMarginTop: "var(--topbar-height, 69px)" }}
     >
       <div className="flex">
@@ -70,6 +91,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
           handleLinks={handleLinks}
           activeLink={activeLink}
           resetClick={resetToggle}
+          handleLogout={handleLogout}
         />
 
         <>
@@ -84,17 +106,18 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
           {activeLink === "ticket" && <Ticket />}
           {activeLink === "faq" && <Faq />}
           {activeLink === "status" && <Profile />}
-          {activeLink === "link" && <Linktool />}
-          {activeLink === "rdp" && <Server />}
-          {activeLink === "log" && <Log />}
-          {activeLink === "resume" && <Resume />}
-          {activeLink === "account" && <Account />}
-          {activeLink === "service" && <Services />}
-          {activeLink === "rat" && <Script />}
-          {activeLink === "web3" && <Web3 />}
-          {activeLink === "cookie" && <Bypass />}
-          {activeLink === "sender" && <Sender />}
+          {activeLink === "link" && <Linktool toggle={toggle} />}
+          {activeLink === "rdp" && <Server toggle={toggle} />}
+          {activeLink === "log" && <Log toggle={toggle} />}
+          {activeLink === "resume" && <Resume toggle={toggle} />}
+          {activeLink === "account" && <Account toggle={toggle} />}
+          {activeLink === "service" && <Services toggle={toggle} />}
+          {activeLink === "rat" && <Script toggle={toggle} />}
+          {activeLink === "web3" && <Web3 toggle={toggle} />}
+          {activeLink === "cookie" && <Bypass toggle={toggle} />}
+          {activeLink === "sender" && <Sender toggle={toggle} />}
         </>
+        {loading && <LogoutModal />}
       </div>
       <Footer />
     </section>

@@ -18,7 +18,7 @@ export const getProducts = createAsyncThunk(
     const storedAccessToken = sessionStorage.getItem("accessToken"); // Use sessionStorage as mentioned
     accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
 
-    console.log("Token from sessionStorage:", accessToken);
+    // console.log("Token from sessionStorage:", accessToken);
 
     if (!accessToken) {
       throw new Error("No access token found");

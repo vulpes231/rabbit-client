@@ -6,7 +6,7 @@ import accessToken from "../constants";
 import { getAccessToken } from "../utils/getDate";
 import Cove from "../components/Cove";
 
-const Bypass = () => {
+const Bypass = ({ toggle }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
   useEffect(() => {
@@ -15,8 +15,14 @@ const Bypass = () => {
     }
   }, [accessToken]);
   return (
-    <Cove>
-      <div className="container px-3">
+    <div
+      className={
+        toggle
+          ? "ml-[60%] md:ml-[40%]"
+          : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
+      }
+    >
+      <div className="w-full space-y-5 min-h-screen">
         <span>
           <h3 className="uppercase font-semibold text-xl text-center pt-10">
             Bypass
@@ -24,7 +30,7 @@ const Bypass = () => {
         </span>
         <Construction />
       </div>
-    </Cove>
+    </div>
   );
 };
 

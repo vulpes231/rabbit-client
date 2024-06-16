@@ -4,7 +4,8 @@ import FaqComp from "../components/faq/FaqComp";
 
 import { MdChecklist } from "react-icons/md";
 import Cove from "../components/Cove";
-const Faq = () => {
+
+const Faq = ({ toggle }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const questionsAndAnswers = [
     {
@@ -78,8 +79,14 @@ const Faq = () => {
   };
 
   return (
-    <Cove>
-      <div className="container px-3 ">
+    <div
+      className={
+        toggle
+          ? "ml-[60%] md:ml-[40%]"
+          : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
+      }
+    >
+      <div className="w-full space-y-5 min-h-screen">
         <span>
           <h3 className="uppercase font-semibold text-lg text-center pt-10">
             Frequently asked questions
@@ -127,7 +134,7 @@ const Faq = () => {
           />
         </div>
       </div>
-    </Cove>
+    </div>
   );
 };
 

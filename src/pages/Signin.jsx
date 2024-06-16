@@ -61,7 +61,7 @@ const Signin = () => {
 
       setTimeout(() => {
         navigate("/dashboard");
-      }, 5000);
+      }, 1000);
     }
   }, [accessToken, dispatch, navigate]);
 

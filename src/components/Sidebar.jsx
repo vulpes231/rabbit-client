@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidelink from "./Sidelink";
-import {
-  FaCookie,
-  FaExchangeAlt,
-  FaHome,
-  FaMoneyBill,
-  FaRibbon,
-  FaServer,
-  FaTools,
-} from "react-icons/fa";
+
+import { FaCookie, FaHome, FaRibbon, FaServer, FaTools } from "react-icons/fa";
 import { sidebarLinks } from "../constants";
 import { FaCoins, FaGear, FaGears } from "react-icons/fa6";
 import Logout from "./Logout";
 import { MdAccountBox, MdArchive, MdMail, MdSend } from "react-icons/md";
+// import LogoutModal from "./dash/LogoutModal";
+// import { useDispatch, useSelector } from "react-redux";
 
-const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
+const Sidebar = ({
+  toggle,
+  handleLinks,
+  activeLink,
+  resetClick,
+  handleLogout,
+}) => {
   const sidebarMenus = sidebarLinks.map((link) => {
     return (
       <span
@@ -66,7 +67,7 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
     >
       <div className="p-4 flex flex-col gap-4 h-full">
         {sidebarMenus}
-        <Logout />
+        <Logout resetClick={resetClick} handleLogout={handleLogout} />
       </div>
     </aside>
   );

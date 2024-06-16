@@ -5,7 +5,7 @@ import List from "../components/channel/List";
 import { getAccessToken } from "../utils/getDate";
 import Cove from "../components/Cove";
 
-const Invoices = () => {
+const Invoices = ({ toggle }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
   useEffect(() => {
@@ -14,8 +14,14 @@ const Invoices = () => {
     }
   }, [accessToken]);
   return (
-    <Cove>
-      <div className="container px-3">
+    <div
+      className={
+        toggle
+          ? "ml-[60%] md:ml-[40%]"
+          : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
+      }
+    >
+      <div className="w-full space-y-5 min-h-screen">
         <div className="">
           <span>
             <h3 className="uppercase font-semibold text-xl text-center pt-10">
@@ -51,7 +57,7 @@ const Invoices = () => {
           </ol>
         </div>
       </div>
-    </Cove>
+    </div>
   );
 };
 
