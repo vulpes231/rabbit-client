@@ -13,7 +13,7 @@ const Script = ({ toggle }) => {
     }
   }, [accessToken]);
   return (
-    <Codiv
+    <div
       className={
         toggle
           ? "ml-[60%] md:ml-[40%]"
@@ -24,7 +24,7 @@ const Script = ({ toggle }) => {
       <div className="container px-3">
         <ProductTable productName={"malware"} />
       </div>
-    </Codiv>
+    </div>
   );
 };
 

@@ -16,12 +16,12 @@ const ProductTable = ({ productName }) => {
 
   const ownerProducts = filteredProducts?.products?.map((product) => {
     return (
-      <tr key={product._id} className="">
+      <tr key={product._id} className="text-xs font-medium">
         <td className="px-6 py-4 whitespace-nowrap uppercase font-semibold">
           {product.name}
         </td>
         <td className="px-6 py-4 whitespace-nowrap capitalize">
-          {product.info}
+          {`${product.info.slice(0, 50)}...`}
         </td>
         <td className="px-6 py-4 whitespace-nowrap">$ {product.price}</td>
         <td className="px-6 py-4 whitespace-nowrap">
@@ -43,27 +43,28 @@ const ProductTable = ({ productName }) => {
 
   return (
     <div className="overflow-x-scroll lg:overflow-hidden bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-      <table>
-        <thead className="">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50 dark:bg-slate-900">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-tight">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Name
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-tight">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Info
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-tight">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Price
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-tight">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Action
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-tight">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Order
             </th>
           </tr>
         </thead>
-        <tbody className="divide-x divide-y divide-gray-200 text-xs font-thin">
+        <tbody className="divide-y divide-gray-200">
+          {/* Assuming {ownerProducts} renders rows */}
           {ownerProducts}
         </tbody>
       </table>

@@ -20,7 +20,7 @@ const Services = ({ toggle }) => {
           : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
       }
     >
-      <div className="container px-3">
+      <div className="w-full space-y-5 min-h-screen">
         <ProductTable productName={"service"} />
       </div>
     </div>

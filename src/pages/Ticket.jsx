@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../utils/getDate";
 import Cove from "../components/Cove";
 
-const Ticket = () => {
+const Ticket = ({ toggle }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
   useEffect(() => {
@@ -14,8 +14,14 @@ const Ticket = () => {
   }, [accessToken]);
 
   return (
-    <Cove>
-      <div className="container px-3">
+    <div
+      className={
+        toggle
+          ? "ml-[60%] md:ml-[40%]"
+          : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
+      }
+    >
+      <div className="w-full space-y-5 min-h-screen">
         <span>
           <h3 className="uppercase font-semibold text-lg text-center pt-10">
             tickets
@@ -23,7 +29,7 @@ const Ticket = () => {
         </span>
         <Content />
       </div>
-    </Cove>
+    </div>
   );
 };
 
