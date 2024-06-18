@@ -20,7 +20,7 @@ export const signinUser = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
-      // console.log(response.data);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -55,7 +55,7 @@ const signinSlice = createSlice({
         state.loading = false;
         state.error = false;
         state.success = true;
-        state.user = action.payload.user;
+        state.user = action.payload.userObj;
       })
       .addCase(signinUser.rejected, (state, action) => {
         state.accessToken = null;

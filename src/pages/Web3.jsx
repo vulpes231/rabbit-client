@@ -20,7 +20,7 @@ const Web3 = ({ toggle }) => {
           : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
       }
     >
-      <div className="container px-3">
+      <div className="w-full space-y-5 min-h-screen">
         <span>
           <h3 className="uppercase font-semibold text-xl text-center pt-10">
             Web3

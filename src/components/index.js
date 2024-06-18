@@ -8,7 +8,7 @@ import Products from "./Products";
 import LabelIcon from "./LabelIcon";
 import Sidebar from "./Sidebar";
 import Section from "./Section";
-
+import Walletspan from "./wallet/Walletspan";
 export {
   Landing,
   Hero,
@@ -20,4 +20,5 @@ export {
   LabelIcon,
   Sidebar,
   Section,
+  Walletspan,
 };

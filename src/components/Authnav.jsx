@@ -29,7 +29,7 @@ const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
           <MdHome />
         ) : link.title.includes("Channels") ? (
           <FaMoneyBillTrendUp />
-        ) : link.title.includes("Ticket") ? (
+        ) : link.title.includes("Wallet") ? (
           <FaMailBulk />
         ) : link.title.includes("FAQ") ? (
           <FaQuestion />

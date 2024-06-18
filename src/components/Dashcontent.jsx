@@ -6,7 +6,8 @@ import Article from "./dash/Article";
 import Span from "./dash/Span";
 import Dashdiv from "./dash/Dashdiv";
 
-const Dashcontent = ({ user, formattedDate, memberSince, toggle }) => {
+const Dashcontent = ({ user, formattedDate, memberSince, toggle, userBal }) => {
+  // console.log("balance", userBal);
   return (
     <div
       className={
@@ -21,7 +22,9 @@ const Dashcontent = ({ user, formattedDate, memberSince, toggle }) => {
               title={"pending orders"}
               iconSize={"text-3xl"}
             />
-            <small className="font-bold text-3xl">{user?.orders || 0}</small>
+            <small className="font-bold text-3xl">
+              {user?.pendingOrders || 0}
+            </small>
           </Article>
           <Article>
             <LabelIcon
@@ -29,7 +32,9 @@ const Dashcontent = ({ user, formattedDate, memberSince, toggle }) => {
               title={"completed orders"}
               iconSize={"text-3xl"}
             />
-            <small className="font-bold text-3xl">{user?.earnedXP || 0}</small>
+            <small className="font-bold text-3xl">
+              {user?.completedOrders || 0}
+            </small>
           </Article>
         </div>
 
@@ -53,7 +58,7 @@ const Dashcontent = ({ user, formattedDate, memberSince, toggle }) => {
             Welcome {user?.username}
           </h3>
           <span className="flex flex-col text-xl">
-            $ 0.00{" "}
+            {userBal.toFixed(2)}
             <small className="text-xs capitalize opacity-50">balance</small>
           </span>
         </div>

@@ -4,6 +4,8 @@ import signupReducer from "../features/signupSlice";
 import logoutReducer from "../features/logoutSlice";
 import productReducer from "../features/dashSlice";
 import serverReducer from "../features/serverSlice";
+import walletReducer from "../features/walletSlice";
+import transactionReducer from "../features/transactionSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ const store = configureStore({
     logout: logoutReducer,
     products: productReducer,
     server: serverReducer,
+    wallet: walletReducer,
+    transaction: transactionReducer,
   },
 });
 

@@ -29,11 +29,11 @@ const App = () => {
   useEffect(() => {
     const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
     if (accessToken) {
-      setToken(accessToken); // Set token to true if accessToken exists
+      setToken(accessToken);
     } else {
-      setToken(false); // Ensure token is false if accessToken does not exist
+      setToken(false);
     }
-  }, []); // Only run once on mount
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16 lg:pt-[calc(theme(space.16)+theme(space.1))]">

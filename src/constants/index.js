@@ -12,7 +12,7 @@ accessToken = JSON.parse(storedAccessToken);
 export const loggedLinks = [
   { id: "dash", title: "Dashboard", path: "/dashboard" },
   { id: "invoice", title: "Channels", path: "" },
-  { id: "ticket", title: "Ticket", path: "" },
+  { id: "wallet", title: "Wallet", path: "" },
   { id: "faq", title: "FAQ", path: "" },
   { id: "status", title: "Profile", path: "" },
 ];

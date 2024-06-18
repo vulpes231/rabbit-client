@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import { getAccessToken, getJoinedTimeAgo } from "../utils/getDate";
 import Dashcontent from "../components/Dashcontent";
 import Invoices from "./Channel";
-import Ticket from "./Ticket";
+import Wallet from "./Wallet";
 import Faq from "./Faq";
 import Profile from "./Profile";
 import Linktool from "./Linktool";
@@ -23,14 +23,20 @@ import Web3 from "./Web3";
 import { getProducts } from "../features/dashSlice";
 import { getServerPlans } from "../features/serverSlice";
 import LogoutModal from "../components/dash/LogoutModal";
+import { getTransactions } from "../features/transactionSlice";
+import { getUserBalance } from "../features/walletSlice";
 
 const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [userBal, setUserBal] = useState(0);
   const accessToken = getAccessToken();
 
   const { user } = useSelector((state) => state.signin);
+  const { loading, error, success } = useSelector((state) => state.logout);
+  const { balance } = useSelector((state) => state.wallet);
+
+  console.log("bal:", balance);
 
   const lastLogin = new Date();
   const formattedDate = lastLogin.toLocaleString("en-US", {
@@ -52,8 +58,6 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
     }
   }, [accessToken]);
 
-  const { loading, error, success } = useSelector((state) => state.logout);
-
   const handleLogout = () => {
     dispatch(logoutUser());
   };
@@ -63,6 +67,8 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
       // console.log("Dispatching get products...");
       dispatch(getProducts());
       dispatch(getServerPlans());
+      // dispatch(getTransactions());
+      dispatch(getUserBalance());
     }
   }, [accessToken, dispatch]);
 
@@ -79,6 +85,12 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
       window.location.reload();
     }
   }, [success]);
+
+  useEffect(() => {
+    if (balance) {
+      setUserBal(balance);
+    }
+  }, [balance]);
 
   return (
     <section
@@ -100,10 +112,11 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
               formattedDate={formattedDate}
               user={user}
               memberSince={memberSince}
+              userBal={userBal}
             />
           )}
           {activeLink === "invoice" && <Invoices />}
-          {activeLink === "ticket" && <Ticket />}
+          {activeLink === "wallet" && <Wallet userBal={userBal} />}
           {activeLink === "faq" && <Faq />}
           {activeLink === "status" && <Profile />}
           {activeLink === "link" && <Linktool toggle={toggle} />}

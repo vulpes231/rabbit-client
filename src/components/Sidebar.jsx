@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Sidelink from "./Sidelink";
 
 import { FaCookie, FaHome, FaRibbon, FaServer, FaTools } from "react-icons/fa";
@@ -6,8 +6,6 @@ import { sidebarLinks } from "../constants";
 import { FaCoins, FaGear, FaGears } from "react-icons/fa6";
 import Logout from "./Logout";
 import { MdAccountBox, MdArchive, MdMail, MdSend } from "react-icons/md";
-// import LogoutModal from "./dash/LogoutModal";
-// import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = ({
   toggle,
