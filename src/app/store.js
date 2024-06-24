@@ -6,6 +6,7 @@ import productReducer from "../features/dashSlice";
 import serverReducer from "../features/serverSlice";
 import walletReducer from "../features/walletSlice";
 import transactionReducer from "../features/transactionSlice";
+import orderReducer from "../features/orderSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     server: serverReducer,
     wallet: walletReducer,
     transaction: transactionReducer,
+    order: orderReducer,
   },
 });
 

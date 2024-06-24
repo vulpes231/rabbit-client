@@ -15,7 +15,7 @@ const initialState = {
 export const getUserBalance = createAsyncThunk(
   "wallet/getUserBalance",
   async () => {
-    const url = `${server}/wallet`;
+    const url = `${server}/wallet/balance`;
     let accessToken;
     const storedAccessToken = sessionStorage.getItem("accessToken");
     accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
@@ -94,7 +94,7 @@ const walletSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.success = true;
-      state.balance = action.payload.balance;
+      state.balance = action.payload.walletBalance;
     });
     builder.addCase(getUserBalance.rejected, (state, action) => {
       state.loading = false;

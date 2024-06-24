@@ -49,8 +49,8 @@ const Signin = () => {
 
   useEffect(() => {
     if (accessToken && user) {
-      console.log("Token from state:", user);
-      console.log("Token from state:", accessToken);
+      // console.log("Token from state:", user);
+      // console.log("Token from state:", accessToken);
 
       try {
         // Use sessionStorage or localStorage based on your requirement

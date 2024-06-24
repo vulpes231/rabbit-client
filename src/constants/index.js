@@ -19,16 +19,16 @@ export const loggedLinks = [
 
 export const sidebarLinks = [
   { id: "dash", title: "Dashboard", path: "/dashboard" },
-  { id: "log", title: "Email Logs", path: "" },
+  { id: "spammed logs", title: "Email Logs", path: "" },
   { id: "sender", title: "Senders", path: "" },
   { id: "rdp", title: "RDPs", path: "" },
   { id: "link", title: "Redirect", path: "" },
   { id: "resume", title: "Resumes", path: "" },
-  { id: "account", title: "Social Accounts", path: "" },
+  { id: "social account", title: "Social Accounts", path: "" },
   { id: "service", title: "Services", path: "" },
   { id: "rat", title: "Malware Scripts", path: "" },
-  { id: "web3", title: "Drainers", path: "" },
-  { id: "cookie", title: "2FA Bypassers", path: "" },
+  { id: "drainer", title: "Drainers", path: "" },
+  { id: "2fa", title: "2FA Bypassers", path: "" },
 ];
 
 export const server = "https://rabbit-server.onrender.com";

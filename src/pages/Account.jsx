@@ -23,7 +23,7 @@ const Account = ({ toggle }) => {
       }
     >
       <div className="w-full space-y-5 min-h-screen">
-        <ProductTable productName={"account"} />
+        <ProductTable productName={"social account"} />
       </div>
     </div>
   );

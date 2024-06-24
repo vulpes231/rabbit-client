@@ -22,7 +22,7 @@ const Resume = ({ toggle }) => {
       }
     >
       <div className="w-full space-y-5 min-h-screen">
-        <ProductTable productName={"resumes"} />
+        <ProductTable productName={"resume"} />
       </div>
     </div>
   );

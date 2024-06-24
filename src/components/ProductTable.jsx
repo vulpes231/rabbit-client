@@ -1,45 +1,148 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../features/dashSlice";
+import { getAccessToken } from "../utils/getDate";
+import { buyProduct } from "../features/orderSlice";
 
 const ProductTable = ({ productName }) => {
-  const [storeProducts, setStoreProducts] = useState(null);
+  const dispatch = useDispatch();
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [featuresModal, setFeaturesModal] = useState(false);
+  const [notification, setNotification] = useState(false);
+
   const { data } = useSelector((state) => state.products);
+  const { placeOrderPending, placeOrderError, placeOrderSuccess } = useSelector(
+    (state) => state.order
+  );
 
-  let filteredProducts;
+  const accessToken = getAccessToken();
 
-  storeProducts?.map((prod) => {
-    if (prod.name === productName) {
-      filteredProducts = prod;
-    }
-    return prod;
-  });
+  const placeOrder = (event) => {
+    // Get data attributes from the clicked row
+    const category = event.currentTarget.getAttribute("data-category");
+    const name = event.currentTarget.getAttribute("data-name");
+    const price = event.currentTarget.getAttribute("data-price");
 
-  const ownerProducts = filteredProducts?.products?.map((product) => {
+    const orderFormData = {
+      category,
+      name,
+      price,
+    };
+
+    console.log("Sending order data to backend:", orderFormData);
+
+    dispatch(buyProduct(orderFormData));
+  };
+
+  const handleShowInfo = (event) => {
+    const dataFeatures = event.currentTarget.getAttribute("data-features");
+
+    console.log(dataFeatures);
+    console.log("clicked");
+
+    const featuresArray = dataFeatures.split(",").map((item) => item.trim());
+
+    setFeatures(featuresArray);
+
+    setFeaturesModal(true);
+  };
+
+  const ownerProducts = filteredProducts?.map((prod) => {
     return (
-      <tr key={product._id} className="text-xs font-medium">
+      <tr key={prod._id} className="text-xs font-medium">
         <td className="px-6 py-4 whitespace-nowrap uppercase font-semibold">
-          {product.name}
+          {prod.name}
         </td>
         <td className="px-6 py-4 whitespace-nowrap capitalize">
-          {`${product.info.slice(0, 50)}...`}
+          {prod.description ? `${prod.description.slice(0, 50)}...` : "None"}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap">$ {product.price}</td>
+        <td className="px-6 py-4 whitespace-nowrap">$ {prod.price}</td>
+
         <td className="px-6 py-4 whitespace-nowrap">
-          <button className="bg-red-500 text-white py-2 px-4 rounded-lg cursor-pointer">
+          <button
+            onClick={placeOrder}
+            data-category={prod.category}
+            data-name={prod.name}
+            data-price={prod.price}
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg cursor-pointer capitalize"
+          >
             buy
           </button>
         </td>
-        <td className="px-6 py-4 whitespace-nowrap"></td>
+        <td className="px-6 py-4 whitespace-nowrap">
+          <button
+            onClick={handleShowInfo}
+            data-features={prod.features}
+            className="bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer capitalize"
+          >
+            more info
+          </button>
+        </td>
+        <div
+          className={
+            featuresModal
+              ? "fixed top-[50%] right-0 w-60 dark:text-slate-200 bg-slate-200 rounded-xl  text-slate-900 dark:bg-slate-950 p-6  text-center capitalize tracking-wide leading-5"
+              : "hidden"
+          }
+        >
+          {/* <span>
+            <MdClose className="text-slate-950" />
+          </span> */}
+          <ul className="flex flex-col">
+            {features.map((feature, index) => (
+              <li className="p" key={index}>
+                * {feature} *
+              </li>
+            ))}
+          </ul>
+        </div>
       </tr>
     );
   });
 
+  if (!filteredProducts) {
+    return <div className="w-full space-y-5 min-h-screen">Loading...</div>;
+  }
+
   useEffect(() => {
-    if (data) {
-      const dt = data.myProducts;
-      setStoreProducts(dt);
+    let timeout;
+    if (featuresModal) {
+      timeout = 2000;
+      setTimeout(() => {
+        setFeaturesModal(false);
+      }, timeout);
     }
-  }, [data]);
+    return () => clearTimeout(timeout);
+  }, [featuresModal]);
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getProducts());
+    }
+  }, [accessToken, dispatch]);
+
+  useEffect(() => {
+    if (data && data.products) {
+      const filteredItems = data.products.filter(
+        (prod) => prod.category === productName
+      );
+      setFilteredProducts(filteredItems);
+    }
+  }, [data, productName]);
+
+  useEffect(() => {
+    let timeout;
+    if (placeOrderSuccess || placeOrderError) {
+      setNotification(true);
+      setTimeout(() => {
+        timeout = 3000;
+        setNotification(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [placeOrderSuccess, placeOrderError]);
 
   return (
     <div className="overflow-x-scroll lg:overflow-hidden bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
@@ -63,10 +166,17 @@ const ProductTable = ({ productName }) => {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
-          {/* Assuming {ownerProducts} renders rows */}
-          {ownerProducts}
-        </tbody>
+        <tbody className="divide-y divide-gray-200">{ownerProducts}</tbody>
+        {notification && (
+          <div className="fixed top-0 right-0 p-6 bg-slate-200 dark:bg-slate-950 dark:text-slate-200">
+            <p className={placeOrderSuccess ? "text-green-500" : "hidden"}>
+              Your order has been placed successsfully.
+            </p>
+            <p className={placeOrderError ? "text-red-500" : "hidden"}>
+              {placeOrderError}
+            </p>
+          </div>
+        )}
       </table>
     </div>
   );

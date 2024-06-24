@@ -36,7 +36,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const { loading, error, success } = useSelector((state) => state.logout);
   const { balance } = useSelector((state) => state.wallet);
 
-  console.log("bal:", balance);
+  // console.log("bal:", balance);
 
   const lastLogin = new Date();
   const formattedDate = lastLogin.toLocaleString("en-US", {
@@ -121,13 +121,13 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
           {activeLink === "status" && <Profile />}
           {activeLink === "link" && <Linktool toggle={toggle} />}
           {activeLink === "rdp" && <Server toggle={toggle} />}
-          {activeLink === "log" && <Log toggle={toggle} />}
+          {activeLink === "spammed logs" && <Log toggle={toggle} />}
           {activeLink === "resume" && <Resume toggle={toggle} />}
-          {activeLink === "account" && <Account toggle={toggle} />}
+          {activeLink === "social account" && <Account toggle={toggle} />}
           {activeLink === "service" && <Services toggle={toggle} />}
           {activeLink === "rat" && <Script toggle={toggle} />}
           {activeLink === "web3" && <Web3 toggle={toggle} />}
-          {activeLink === "cookie" && <Bypass toggle={toggle} />}
+          {activeLink === "2fa" && <Bypass toggle={toggle} />}
           {activeLink === "sender" && <Sender toggle={toggle} />}
         </>
         {loading && <LogoutModal />}

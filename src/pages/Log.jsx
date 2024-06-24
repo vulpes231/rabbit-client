@@ -22,7 +22,7 @@ const Log = ({ toggle }) => {
       }
     >
       <div className="w-full space-y-5 min-h-screen ">
-        <ProductTable productName={"log"} />
+        <ProductTable productName={"spammed logs"} />
       </div>
     </div>
   );

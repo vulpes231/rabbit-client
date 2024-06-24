@@ -31,6 +31,8 @@ export const getProducts = createAsyncThunk(
           Authorization: `Bearer ${accessToken}`,
         },
       });
+
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       if (error.response) {
