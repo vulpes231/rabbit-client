@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdDiscount, MdOutlinePriceChange } from "react-icons/md";
 import { FaCalendar, FaClock, FaGift, FaUserFriends } from "react-icons/fa";
 import { LabelIcon } from "../components";
 import Article from "./dash/Article";
 import Span from "./dash/Span";
 import Dashdiv from "./dash/Dashdiv";
+import { useDispatch, useSelector } from "react-redux";
+import { getAccessToken } from "../utils/getDate";
+import { getUser } from "../features/userSlice";
 
 const Dashcontent = ({ user, formattedDate, memberSince, toggle, userBal }) => {
-  // console.log("balance", userBal);
+  // console.log("user", user);
+  const dispatch = useDispatch();
+  const accessToken = getAccessToken();
+
+  // const { user } = useSelector((state) => state.user);
+
+  // console.log("currentUser", user);
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getUser());
+    }
+  }, [accessToken, dispatch]);
+
   return (
     <div
       className={

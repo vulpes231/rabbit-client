@@ -25,6 +25,8 @@ import { getServerPlans } from "../features/serverSlice";
 import LogoutModal from "../components/dash/LogoutModal";
 import { getTransactions } from "../features/transactionSlice";
 import { getUserBalance } from "../features/walletSlice";
+import { format } from "date-fns";
+import { getUser } from "../features/userSlice";
 
 const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const [userBal, setUserBal] = useState(0);
   const accessToken = getAccessToken();
 
-  const { user } = useSelector((state) => state.signin);
+  const { user } = useSelector((state) => state.user);
   const { loading, error, success } = useSelector((state) => state.logout);
   const { balance } = useSelector((state) => state.wallet);
 
@@ -49,8 +51,10 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
     hour12: false,
   });
 
-  const joinDate = new Date(user?.createdAt);
-  const memberSince = getJoinedTimeAgo(joinDate);
+  const myDate = user?.createdAt;
+  const joinDate = format(new Date(myDate), "dd/mm/yyyy");
+
+  console.log(joinDate);
 
   useEffect(() => {
     if (!accessToken) {
@@ -64,7 +68,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
 
   useEffect(() => {
     if (accessToken) {
-      // console.log("Dispatching get products...");
+      dispatch(getUser());
       dispatch(getProducts());
       dispatch(getServerPlans());
       // dispatch(getTransactions());
@@ -111,7 +115,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
             <Dashcontent
               formattedDate={formattedDate}
               user={user}
-              memberSince={memberSince}
+              memberSince={joinDate}
               userBal={userBal}
             />
           )}

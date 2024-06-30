@@ -32,24 +32,39 @@ const Invoices = ({ toggle }) => {
             <List>
               <Link
                 to={"https://rabbithole4ogs.com/channel/main/messages.html"}
+                target="_blank"
               >
-                Main channel{" "}
+                main channel
               </Link>
             </List>
             <List>
-              <Link>2fa channel </Link>
+              <Link to={"https://rabbithole4ogs.com/channel/2fa/messages.html"}>
+                2fa channel
+              </Link>
             </List>
             <List>
-              <Link>letter and attachment channel </Link>
+              <Link
+                to={"https://rabbithole4ogs.com/channel/letters/messages.html"}
+              >
+                letter and attachment channel{" "}
+              </Link>
             </List>
             <List>
               <Link>custom jobs channel</Link>
             </List>
             <List>
-              <Link>logs and account channel</Link>
+              <Link
+                to={"https://rabbithole4ogs.com/channel/logs/messages.html"}
+              >
+                logs and account channel
+              </Link>
             </List>
             <List>
-              <Link>gift item channel </Link>
+              <Link
+                to={"https://rabbithole4ogs.com/channel/gift/messages.html"}
+              >
+                gift item channel{" "}
+              </Link>
             </List>
             <List>
               <Link>visual eyes only channel </Link>

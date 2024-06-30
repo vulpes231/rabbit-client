@@ -7,6 +7,7 @@ import serverReducer from "../features/serverSlice";
 import walletReducer from "../features/walletSlice";
 import transactionReducer from "../features/transactionSlice";
 import orderReducer from "../features/orderSlice";
+import userReducer from "../features/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     wallet: walletReducer,
     transaction: transactionReducer,
     order: orderReducer,
+    user: userReducer,
   },
 });
 

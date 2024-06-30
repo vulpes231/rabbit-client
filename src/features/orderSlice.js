@@ -1,20 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { server, devserver } from "../constants";
 import axios from "axios";
+import { getAccessToken } from "../utils/getDate";
 
 const initialState = {
   placeOrderPending: false,
   placeOrderError: false,
   placeOrderSuccess: false,
+  getOrderPending: false,
+  getOrderError: false,
+  getOrderSuccess: false,
+  orders: [],
 };
 
 export const buyProduct = createAsyncThunk(
   "order/buyProduct",
   async (formData) => {
-    const url = `${server}/order`;
-    let accessToken;
-    const storedAccessToken = sessionStorage.getItem("accessToken");
-    accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
+    const url = `${devserver}/order`;
+    const accessToken = getAccessToken();
 
     if (!accessToken) {
       throw new Error("No access token found");
@@ -27,7 +30,7 @@ export const buyProduct = createAsyncThunk(
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      // console.log("trnx", response.data);
+      // console.log("trnx", response);
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -35,6 +38,36 @@ export const buyProduct = createAsyncThunk(
         throw new Error(errorMsg);
       } else {
         throw new Error("Error placing order.");
+      }
+    }
+  }
+);
+
+export const getUserOrders = createAsyncThunk(
+  "order/getUserOrders",
+  async () => {
+    const url = `${devserver}/order`;
+    const accessToken = getAccessToken();
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      // console.log("orders", response);
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        const errorMsg = error.response.data.message;
+        throw new Error(errorMsg);
+      } else {
+        throw new Error("Error getting user orders.");
       }
     }
   }
@@ -48,6 +81,10 @@ const orderSlice = createSlice({
       state.placeOrderError = false;
       state.placeOrderPending = false;
       state.placeOrderSuccess = false;
+      state.getOrderError = false;
+      state.getOrderPending = false;
+      state.getOrderSuccess = false;
+      state.orders = [];
     },
   },
   extraReducers: (builder) => {
@@ -64,6 +101,22 @@ const orderSlice = createSlice({
         state.placeOrderPending = false;
         state.placeOrderError = action.error.message;
         state.placeOrderSuccess = false;
+      });
+    builder
+      .addCase(getUserOrders.pending, (state) => {
+        state.placeOrderPending = true;
+      })
+      .addCase(getUserOrders.fulfilled, (state, action) => {
+        state.getOrderError = false;
+        state.getOrderPending = false;
+        state.getOrderSuccess = true;
+        state.orders = action.payload.userOrders;
+      })
+      .addCase(getUserOrders.rejected, (state, action) => {
+        state.getOrderError = action.error.message;
+        state.getOrderPending = false;
+        state.getOrderSuccess = false;
+        state.orders = [];
       });
   },
 });

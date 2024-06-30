@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../features/dashSlice";
 import { getAccessToken } from "../utils/getDate";
-import { buyProduct } from "../features/orderSlice";
-
+import { buyProduct, reset } from "../features/orderSlice";
+import { MdClose } from "react-icons/md";
+import { Link } from "react-router-dom";
 const ProductTable = ({ productName }) => {
   const dispatch = useDispatch();
 
@@ -11,6 +12,8 @@ const ProductTable = ({ productName }) => {
   const [features, setFeatures] = useState([]);
   const [featuresModal, setFeaturesModal] = useState(false);
   const [notification, setNotification] = useState(false);
+  const [orderLoading, setorderLoading] = useState(false);
+  const [form, setForm] = useState({});
 
   const { data } = useSelector((state) => state.products);
   const { placeOrderPending, placeOrderError, placeOrderSuccess } = useSelector(
@@ -20,18 +23,20 @@ const ProductTable = ({ productName }) => {
   const accessToken = getAccessToken();
 
   const placeOrder = (event) => {
+    event.stopPropagation();
     // Get data attributes from the clicked row
     const category = event.currentTarget.getAttribute("data-category");
-    const name = event.currentTarget.getAttribute("data-name");
+    const item = event.currentTarget.getAttribute("data-name");
     const price = event.currentTarget.getAttribute("data-price");
 
     const orderFormData = {
       category,
-      name,
+      item,
       price,
     };
 
-    console.log("Sending order data to backend:", orderFormData);
+    setForm(orderFormData);
+    // console.log("Sending order data to backend:", orderFormData);
 
     dispatch(buyProduct(orderFormData));
   };
@@ -49,61 +54,76 @@ const ProductTable = ({ productName }) => {
     setFeaturesModal(true);
   };
 
+  useEffect(() => {
+    if (placeOrderPending) {
+      setorderLoading(true);
+    } else {
+      setorderLoading(false);
+    }
+  }, [placeOrderPending]);
+
   const ownerProducts = filteredProducts?.map((prod) => {
     return (
-      <tr key={prod._id} className="text-xs font-medium">
-        <td className="px-6 py-4 whitespace-nowrap uppercase font-semibold">
-          {prod.name}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap capitalize">
-          {prod.description ? `${prod.description.slice(0, 50)}...` : "None"}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">$ {prod.price}</td>
+      <>
+        <tr key={prod._id} className="text-xs font-medium">
+          <td className="px-6 py-4 whitespace-nowrap uppercase font-semibold">
+            {prod.name}
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap capitalize">
+            {prod.description ? `${prod.description.slice(0, 50)}...` : "None"}
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">$ {prod.price}</td>
 
-        <td className="px-6 py-4 whitespace-nowrap">
-          <button
-            onClick={placeOrder}
-            data-category={prod.category}
-            data-name={prod.name}
-            data-price={prod.price}
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg cursor-pointer capitalize"
+          <td className="px-6 py-4 whitespace-nowrap">
+            <button
+              onClick={placeOrder}
+              data-category={prod.category}
+              data-name={prod.name}
+              data-price={prod.price}
+              className={`py-2 px-4 rounded-lg cursor-pointer capitalize ${
+                orderLoading
+                  ? "bg-gray-400 text-gray-600"
+                  : "bg-blue-500 text-white"
+              }`}
+              disabled={orderLoading}
+            >
+              Buy
+            </button>
+          </td>
+          <td className="px-6 py-4 whitespace-nowrap">
+            <button
+              onClick={handleShowInfo}
+              data-features={prod.features}
+              className="bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer capitalize"
+            >
+              more info
+            </button>
+          </td>
+          <td
+            className={
+              featuresModal
+                ? "fixed top-[50%] right-0 w-60 dark:text-slate-200 bg-slate-200 rounded-xl  text-slate-900 dark:bg-slate-950 p-6  text-center capitalize tracking-wide leading-5"
+                : "hidden"
+            }
           >
-            buy
-          </button>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap">
-          <button
-            onClick={handleShowInfo}
-            data-features={prod.features}
-            className="bg-green-500 text-white py-2 px-4 rounded-lg cursor-pointer capitalize"
-          >
-            more info
-          </button>
-        </td>
-        <div
-          className={
-            featuresModal
-              ? "fixed top-[50%] right-0 w-60 dark:text-slate-200 bg-slate-200 rounded-xl  text-slate-900 dark:bg-slate-950 p-6  text-center capitalize tracking-wide leading-5"
-              : "hidden"
-          }
-        >
-          {/* <span>
-            <MdClose className="text-slate-950" />
-          </span> */}
-          <ul className="flex flex-col">
-            {features.map((feature, index) => (
-              <li className="p" key={index}>
-                * {feature} *
-              </li>
-            ))}
-          </ul>
-        </div>
-      </tr>
+            <ul className="flex flex-col">
+              {features.map((feature, index) => (
+                <li className="" key={index}>
+                  * {feature} *
+                </li>
+              ))}
+            </ul>
+          </td>
+        </tr>
+      </>
     );
   });
 
   if (!filteredProducts) {
     return <div className="w-full space-y-5 min-h-screen">Loading...</div>;
+  }
+  function closeModal() {
+    setNotification(false);
   }
 
   useEffect(() => {
@@ -134,15 +154,16 @@ const ProductTable = ({ productName }) => {
 
   useEffect(() => {
     let timeout;
-    if (placeOrderSuccess || placeOrderError) {
+    if (placeOrderSuccess) {
       setNotification(true);
       setTimeout(() => {
         timeout = 3000;
         setNotification(false);
+        // dispatch(reset());
       }, timeout);
     }
     return () => clearTimeout(timeout);
-  }, [placeOrderSuccess, placeOrderError]);
+  }, [placeOrderSuccess]);
 
   return (
     <div className="overflow-x-scroll lg:overflow-hidden bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
@@ -167,17 +188,31 @@ const ProductTable = ({ productName }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">{ownerProducts}</tbody>
-        {notification && (
-          <div className="fixed top-0 right-0 p-6 bg-slate-200 dark:bg-slate-950 dark:text-slate-200">
-            <p className={placeOrderSuccess ? "text-green-500" : "hidden"}>
-              Your order has been placed successsfully.
-            </p>
-            <p className={placeOrderError ? "text-red-500" : "hidden"}>
-              {placeOrderError}
-            </p>
-          </div>
-        )}
       </table>
+      {notification && (
+        <div className="fixed top-[50%] right-0 p-6 bg-white shadow  dark:bg-slate-950 dark:text-slate-200 text-xs flex flex-col  rounded-lg z-50">
+          <p
+            className={
+              placeOrderSuccess
+                ? "text-green-500 flex flex-col gap-2"
+                : "hidden"
+            }
+          >
+            <span
+              onClick={closeModal}
+              className="flex items-center justify-end text-black cursor-pointer"
+            >
+              close
+              <MdClose />
+            </span>
+            Your order has been placed successsfully.
+            <Link>go to orders</Link>
+          </p>
+          <p className={placeOrderError ? "text-red-500" : "hidden"}>
+            {placeOrderError}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

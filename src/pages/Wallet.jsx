@@ -7,6 +7,8 @@ import Depositmodal from "../components/wallet/Depositmodal";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../features/transactionSlice";
 
+import { format } from "date-fns";
+
 const Ticket = ({ toggle, userBal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,12 +27,17 @@ const Ticket = ({ toggle, userBal }) => {
 
   // console.log("mytrnx", transactions);
 
-  const mytrnx = transactions?.trnx?.map((trnx) => {
+  const mytrnx = transactions?.transactions?.map((trnx) => {
     return (
-      <tr key={transactions.trnx._id}>
-        <td className="border border-slate-300 px-4 py-2">18/06/2024</td>
-        <td className="border border-slate-300 px-4 py-2">{trnx.amount}</td>
+      <tr
+        key={transactions.transactions._id}
+        className="text-center capitalize text-xs font-medium"
+      >
+        <td className="border border-slate-300 px-4 py-2">
+          {format(new Date(trnx.date), "dd/mm/yyyy")}
+        </td>
         <td className="border border-slate-300 px-4 py-2">{trnx.method}</td>
+        <td className="border border-slate-300 px-4 py-2">{trnx.amount}</td>
         <td className="border border-slate-300 px-4 py-2">
           <span className="text-green-600 bg-green-200 px-3 py-1 rounded-xl ">
             {trnx.status}

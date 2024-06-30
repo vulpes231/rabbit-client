@@ -15,7 +15,7 @@ const initialState = {
 export const getUserBalance = createAsyncThunk(
   "wallet/getUserBalance",
   async () => {
-    const url = `${server}/wallet/balance`;
+    const url = `${devserver}/wallet/balance`;
     let accessToken;
     const storedAccessToken = sessionStorage.getItem("accessToken");
     accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
@@ -45,7 +45,7 @@ export const getUserBalance = createAsyncThunk(
 );
 
 export const deposit = createAsyncThunk("wallet/deposit", async (formData) => {
-  const url = `${server}/wallet`;
+  const url = `${devserver}/wallet`;
   let accessToken;
   const storedAccessToken = sessionStorage.getItem("accessToken");
   accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
