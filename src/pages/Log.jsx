@@ -1,30 +1,31 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
 import { getAccessToken } from "../utils/getDate";
-import Cove from "../components/Cove";
+import { useSelector } from "react-redux";
+import TabContainer from "./TabContainer";
 
 const Log = ({ toggle }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
+
+  const { products } = useSelector((state) => state.products);
+
+  // Filter products that have the category "Log"
+  const myLog = products?.products?.filter(
+    (prd) => prd.category.toLowerCase() === "spammed logs"
+  );
+
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
     }
   }, [accessToken]);
+
   return (
-    <div
-      className={
-        toggle
-          ? "ml-[60%] md:ml-[40%]"
-          : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
-      }
-    >
-      <div className="w-full space-y-5 min-h-screen ">
-        <ProductTable productName={"spammed logs"} />
-      </div>
-    </div>
+    <TabContainer toggle={toggle}>
+      <ProductTable title={"buy"} data={myLog} />
+    </TabContainer>
   );
 };
 

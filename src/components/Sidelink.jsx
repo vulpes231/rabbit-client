@@ -1,12 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
-const Sidelink = ({ icon, title }) => {
+const Sidelink = ({ title, icon, active, onClick }) => {
   return (
-    <Link className="flex gap-4 items-center cursor-pointer capitalize text-xs font-extralight hover:text-red-500">
-      <span className="text-slate-800 lg:text-slate-600">{icon}</span>
-      <span className="whitespace-nowrap">{title}</span>
-    </Link>
+    <div
+      className={`cursor-pointer flex items-center justify-start gap-2 py-2 px-4 rounded-lg capitalize text-xs ${
+        active ? "bg-red-500 text-white" : "hover:bg-red-50"
+      }`}
+      onClick={onClick}
+    >
+      {icon}
+      <span>{title}</span>
+    </div>
   );
 };
 

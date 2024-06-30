@@ -10,13 +10,8 @@ import { getAccessToken } from "../utils/getDate";
 import { getUser } from "../features/userSlice";
 
 const Dashcontent = ({ user, formattedDate, memberSince, toggle, userBal }) => {
-  // console.log("user", user);
   const dispatch = useDispatch();
   const accessToken = getAccessToken();
-
-  // const { user } = useSelector((state) => state.user);
-
-  // console.log("currentUser", user);
 
   useEffect(() => {
     if (accessToken) {
@@ -27,7 +22,9 @@ const Dashcontent = ({ user, formattedDate, memberSince, toggle, userBal }) => {
   return (
     <div
       className={
-        toggle ? "ml-[60%] md:ml-[40%]" : "ml-0 lg:ml-[250px] flex-grow"
+        toggle
+          ? "ml-[60%] md:ml-[40%] flex-grow"
+          : "ml-0 lg:ml-[250px] flex-grow"
       }
     >
       <div className="flex flex-col gap-8">

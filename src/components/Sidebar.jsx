@@ -1,12 +1,20 @@
 import React from "react";
 import Sidelink from "./Sidelink";
-
-import { FaCookie, FaHome, FaRibbon, FaServer, FaTools } from "react-icons/fa";
-import { sidebarLinks } from "../constants";
-import { FaCoins, FaGear, FaGears } from "react-icons/fa6";
-import Logout from "./Logout";
-import { MdAccountBox, MdArchive, MdMail, MdSend } from "react-icons/md";
-
+import { MdArchive, MdSend } from "react-icons/md";
+import {
+  GrAddCircle,
+  GrCatalog,
+  GrCloudSoftware,
+  GrHome,
+  GrMail,
+  GrResume,
+  GrSend,
+  GrServerCluster,
+  GrServices,
+  GrUserAdmin,
+} from "react-icons/gr";
+import { useSelector } from "react-redux";
+// Logo;
 const Sidebar = ({
   toggle,
   handleLinks,
@@ -14,46 +22,13 @@ const Sidebar = ({
   resetClick,
   handleLogout,
 }) => {
-  const sidebarMenus = sidebarLinks.map((link) => {
-    return (
-      <span
-        key={link.id}
-        className={
-          activeLink === link.id
-            ? " font-thin pb-2  text-red-500"
-            : " font-thin pb-2"
-        }
-        onClick={() => {
-          handleLinks(link.id);
-          resetClick();
-        }}
-      >
-        {link.id.includes("dash") ? (
-          <Sidelink icon={<FaHome />} title={link.title} />
-        ) : link.id.includes("resume") ? (
-          <Sidelink icon={<MdArchive />} title={link.title} />
-        ) : link.id.includes("link") ? (
-          <Sidelink icon={<FaTools />} title={link.title} />
-        ) : link.id.includes("rdp") ? (
-          <Sidelink icon={<FaServer />} title={link.title} />
-        ) : link.id.includes("log") ? (
-          <Sidelink icon={<MdMail />} title={link.title} />
-        ) : link.id.includes("sender") ? (
-          <Sidelink icon={<MdSend />} title={link.title} />
-        ) : link.id.includes("account") ? (
-          <Sidelink icon={<MdAccountBox />} title={link.title} />
-        ) : link.id.includes("rat") ? (
-          <Sidelink icon={<FaGears />} title={link.title} />
-        ) : link.id.includes("web3") ? (
-          <Sidelink icon={<FaCoins />} title={link.title} />
-        ) : link.id.includes("cookie") ? (
-          <Sidelink icon={<FaCookie />} title={link.title} />
-        ) : link.id.includes("service") ? (
-          <Sidelink icon={<FaRibbon />} title={link.title} />
-        ) : null}
-      </span>
-    );
-  });
+  const { products } = useSelector((state) => state.products);
+
+  const categories = [
+    ...new Set(products?.products?.map((prd) => prd.category)),
+  ];
+
+  // console.log(activeLink);
 
   return (
     <aside
@@ -64,11 +39,60 @@ const Sidebar = ({
       }
     >
       <div className="p-4 flex flex-col gap-4 h-full">
-        {sidebarMenus}
-        <Logout resetClick={resetClick} handleLogout={handleLogout} />
+        <span
+          onClick={() => {
+            handleLinks("dash");
+            resetClick();
+          }}
+        >
+          <Sidelink title={"dash"} icon={<GrHome />} />
+        </span>
+        {categories?.map((category, index) => (
+          <Sidelink
+            active={activeLink === category}
+            key={index}
+            icon={getIconForCategory(category)}
+            title={category}
+            onClick={() => {
+              handleLinks(category);
+              resetClick();
+            }}
+          />
+        ))}
+        {/* <Logout resetClick={resetClick} handleLogout={handleLogout} /> */}
       </div>
     </aside>
   );
+};
+
+// Function to select appropriate icon based on category
+const getIconForCategory = (category) => {
+  switch (category.toLowerCase()) {
+    case "service":
+      return <GrServices />;
+    case "spammed logs":
+      return <GrCatalog />;
+    case "sender":
+      return <GrSend />;
+    case "resume":
+      return <GrResume />;
+    case "drainer":
+      return <MdArchive />;
+    case "social account":
+      return <GrAddCircle />;
+    case "link":
+      return <GrCloudSoftware />;
+    case "custom":
+      return <MdSend />;
+    case "rdp":
+      return <GrServerCluster />;
+    case "2fa":
+      return <GrUserAdmin />;
+    case "office365":
+      return <GrMail />;
+    default:
+      return null; // You can add more cases as needed
+  }
 };
 
 export default Sidebar;

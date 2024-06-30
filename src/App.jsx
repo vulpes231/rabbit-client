@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
-  const [token, setToken] = useState(false); // Initially set to false
+  const [token, setToken] = useState(false);
   const [activeLink, setActiveLink] = useState("dash");
 
   const { accessToken } = useSelector((state) => state.signin);

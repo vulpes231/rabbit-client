@@ -6,7 +6,7 @@ const initialState = {
   loading: false,
   error: false,
   success: false,
-  data: [],
+  products: [],
 };
 // devserver;
 
@@ -50,7 +50,7 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     reset(state) {
-      state.data = [];
+      state.products = [];
       state.error = false;
       state.success = false;
       state.loading = false;
@@ -64,13 +64,13 @@ const productSlice = createSlice({
       state.loading = false;
       state.error = false;
       state.success = true;
-      state.data = action.payload;
+      state.products = action.payload;
     });
     builder.addCase(getProducts.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
       state.success = false;
-      state.data = [];
+      state.products = [];
     });
   },
 });

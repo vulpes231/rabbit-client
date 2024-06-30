@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../components";
 import { logoutUser } from "../features/logoutSlice";
 import Footer from "../components/Footer";
-import { getAccessToken, getJoinedTimeAgo } from "../utils/getDate";
+import { getAccessToken } from "../utils/getDate";
 import Dashcontent from "../components/Dashcontent";
 import Invoices from "./Channel";
 import Wallet from "./Wallet";
@@ -32,6 +32,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userBal, setUserBal] = useState(0);
+  const [joinDate, setJoinDate] = useState(0);
   const accessToken = getAccessToken();
 
   const { user } = useSelector((state) => state.user);
@@ -51,10 +52,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
     hour12: false,
   });
 
-  const myDate = user?.createdAt;
-  const joinDate = format(new Date(myDate), "dd/mm/yyyy");
-
-  console.log(joinDate);
+  // console.log(joinDate);
 
   useEffect(() => {
     if (!accessToken) {
@@ -91,17 +89,20 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   }, [success]);
 
   useEffect(() => {
-    if (balance) {
+    if (balance && user) {
       setUserBal(balance);
+      const myDate = user?.createdAt;
+      const joinDate = format(new Date(myDate), "dd/mm/yyyy");
+      setJoinDate(joinDate);
     }
-  }, [balance]);
+  }, [balance, user]);
 
   return (
     <section
-      className="relative py-10  pt-20 sm:pt-16 lg:pt-2  px-3"
+      className="relative p-6 py-10 pt-20"
       style={{ scrollMarginTop: "var(--topbar-height, 69px)" }}
     >
-      <div className="flex">
+      <div className="flex overflow-hidden min-h-screen">
         <Sidebar
           toggle={toggle}
           handleLinks={handleLinks}
@@ -129,8 +130,8 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
           {activeLink === "resume" && <Resume toggle={toggle} />}
           {activeLink === "social account" && <Account toggle={toggle} />}
           {activeLink === "service" && <Services toggle={toggle} />}
-          {activeLink === "rat" && <Script toggle={toggle} />}
-          {activeLink === "web3" && <Web3 toggle={toggle} />}
+          {activeLink === "custom" && <Script toggle={toggle} />}
+          {activeLink === "drainer" && <Web3 toggle={toggle} />}
           {activeLink === "2fa" && <Bypass toggle={toggle} />}
           {activeLink === "sender" && <Sender toggle={toggle} />}
         </>
