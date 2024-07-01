@@ -6,6 +6,7 @@ import Signin from "./pages/Signin";
 import Dash from "./pages/Dash";
 import Navbar from "./components/Navbar";
 import { useSelector } from "react-redux";
+import Orders from "./pages/Orders";
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
@@ -63,6 +64,7 @@ const App = () => {
             />
           }
         />
+        {/* <Route path="/orders" element={<Orders />} /> */}
       </Routes>
     </div>
   );

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../features/transactionSlice";
 
 import { format } from "date-fns";
+import TabContainer from "./TabContainer";
 
 const Ticket = ({ toggle, userBal }) => {
   const navigate = useNavigate();
@@ -31,15 +32,23 @@ const Ticket = ({ toggle, userBal }) => {
     return (
       <tr
         key={transactions.transactions._id}
-        className="text-center capitalize text-xs font-medium"
+        className="border-b dark:border-slate-700 text-xs font-thin capitalize"
       >
-        <td className="border border-slate-300 px-4 py-2">
+        <td className="py-3 px-4">
           {format(new Date(trnx.date), "dd/mm/yyyy")}
         </td>
-        <td className="border border-slate-300 px-4 py-2">{trnx.method}</td>
-        <td className="border border-slate-300 px-4 py-2">{trnx.amount}</td>
-        <td className="border border-slate-300 px-4 py-2">
-          <span className="text-green-600 bg-green-200 px-3 py-1 rounded-xl ">
+        <td className="py-3 px-4">{trnx.method}</td>
+        <td className="py-3 px-4">${trnx.amount}</td>
+        <td className="py-3 px-4">
+          <span
+            className={`py-2 px-4 rounded-lg capitalize ${
+              trnx.status === "completed"
+                ? "text-green-500 bg-green-100"
+                : trnx.status === "failed"
+                ? "text-red-500 bg-red-100"
+                : "text-yellow-500 bg-yellow-100"
+            }`}
+          >
             {trnx.status}
           </span>
         </td>
@@ -58,13 +67,7 @@ const Ticket = ({ toggle, userBal }) => {
   }, [dispatch]);
 
   return (
-    <div
-      className={
-        toggle
-          ? "ml-[60%] md:ml-[40%]"
-          : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
-      }
-    >
+    <TabContainer toggle={toggle}>
       <div className="w-full py-6 min-h-screen lg:px-10 flex flex-col gap-6">
         <div className="flex justify-between">
           <div>
@@ -87,17 +90,16 @@ const Ticket = ({ toggle, userBal }) => {
             <Walletspan src={eth} title={"Ethereum"} custom={"w-[15px]"} />
           </div>
         </div>
+
         <div className="overflow-hidden mt-5 text-xs font-medium">
-          <div className="overflow-x-scroll lg:overflow-x-hidden">
-            <table className="min-w-full  border-collapse border border-slate-300">
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white dark:bg-slate-900 dark:text-slate-200 text-xs font-medium">
               <thead>
-                <tr className="dark:bg-slate-200 text-slate-200 dark:text-slate-950 bg-slate-950">
-                  <th className="border border-slate-300 px-4 py-2">Date</th>
-                  <th className="border border-slate-300 px-4 py-2">
-                    Payment Method
-                  </th>
-                  <th className="border border-slate-300 px-4 py-2">Amount</th>
-                  <th className="border border-slate-300 px-4 py-2">Status</th>
+                <tr className="bg-red-500 dark:bg-slate-80 text-white uppercase">
+                  <th className="text-left py-2 px-4">Date</th>
+                  <th className="text-left py-2 px-4">Payment Method</th>
+                  <th className="text-left py-2 px-4">Amount</th>
+                  <th className="text-left py-2 px-4">Status</th>
                 </tr>
               </thead>
               <tbody>{mytrnx}</tbody>
@@ -108,7 +110,7 @@ const Ticket = ({ toggle, userBal }) => {
           )}
         </div>
       </div>
-    </div>
+    </TabContainer>
   );
 };
 

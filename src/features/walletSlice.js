@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { devserver, server } from "../constants";
+import { getAccessToken } from "../utils/getDate";
 
 const initialState = {
   loading: false,
@@ -16,9 +17,7 @@ export const getUserBalance = createAsyncThunk(
   "wallet/getUserBalance",
   async () => {
     const url = `${devserver}/wallet/balance`;
-    let accessToken;
-    const storedAccessToken = sessionStorage.getItem("accessToken");
-    accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
+    const accessToken = getAccessToken();
 
     if (!accessToken) {
       throw new Error("No access token found");
@@ -45,10 +44,8 @@ export const getUserBalance = createAsyncThunk(
 );
 
 export const deposit = createAsyncThunk("wallet/deposit", async (formData) => {
-  const url = `${devserver}/wallet`;
-  let accessToken;
-  const storedAccessToken = sessionStorage.getItem("accessToken");
-  accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
+  const url = `${devserver}/wallet/deposit`;
+  const accessToken = getAccessToken();
 
   if (!accessToken) {
     throw new Error("No access token found");

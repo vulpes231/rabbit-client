@@ -1,10 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const List = ({ children }) => {
+const List = ({ icon, channelName, link }) => {
   return (
-    <li className="hover:bg-white hover:text-red-500 rounded-lg px-4 w-[250px] whitespace-nowrap">
-      {children}
-    </li>
+    <div className="flex flex-col gap-4 justify-center items-center bg-white p-6 shadow rounded-xl dark:text-slate-200 dark:bg-slate-950">
+      <span className="text-5xl">{icon}</span>
+      <div className="uppercase font-normal text-xs text-center whitespace-nowrap">
+        {channelName}
+      </div>
+      <Link
+        className="bg-red-500 hover:bg-red-600 text-white py-2 px-8 capitalize font-medium text-xs inline-flex rounded-lg"
+        to={link}
+        target="_blank"
+      >
+        open channel
+      </Link>
+    </div>
   );
 };
 
