@@ -12,7 +12,7 @@ const initialState = {
 export const getTransactions = createAsyncThunk(
   "transaction/getTransactions",
   async () => {
-    const url = `${devserver}/transactions`;
+    const url = `${server}/transactions`;
     let accessToken;
     const storedAccessToken = sessionStorage.getItem("accessToken");
     accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;

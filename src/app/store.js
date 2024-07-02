@@ -3,7 +3,6 @@ import signinReducer from "../features/signinSlice";
 import signupReducer from "../features/signupSlice";
 import logoutReducer from "../features/logoutSlice";
 import productReducer from "../features/dashSlice";
-import serverReducer from "../features/serverSlice";
 import walletReducer from "../features/walletSlice";
 import transactionReducer from "../features/transactionSlice";
 import orderReducer from "../features/orderSlice";
@@ -15,7 +14,6 @@ const store = configureStore({
     signup: signupReducer,
     logout: logoutReducer,
     products: productReducer,
-    server: serverReducer,
     wallet: walletReducer,
     transaction: transactionReducer,
     order: orderReducer,

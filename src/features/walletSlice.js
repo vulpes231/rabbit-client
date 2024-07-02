@@ -16,7 +16,7 @@ const initialState = {
 export const getUserBalance = createAsyncThunk(
   "wallet/getUserBalance",
   async () => {
-    const url = `${devserver}/wallet/balance`;
+    const url = `${server}/wallet/balance`;
     const accessToken = getAccessToken();
 
     if (!accessToken) {
@@ -44,7 +44,7 @@ export const getUserBalance = createAsyncThunk(
 );
 
 export const deposit = createAsyncThunk("wallet/deposit", async (formData) => {
-  const url = `${devserver}/wallet/deposit`;
+  const url = `${server}/wallet/deposit`;
   const accessToken = getAccessToken();
 
   if (!accessToken) {
