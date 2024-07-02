@@ -15,7 +15,7 @@ const paymentMethods = [
 
 const initialState = {
   amount: "",
-  paymentMethod: "",
+  method: "",
 };
 
 const Depositmodal = ({ closeDepositModal }) => {
@@ -37,7 +37,6 @@ const Depositmodal = ({ closeDepositModal }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Clicked");
     dispatch(deposit(formData));
     console.log(formData);
   };
@@ -49,8 +48,8 @@ const Depositmodal = ({ closeDepositModal }) => {
       setsuccessModal(true);
       setTimeout(() => {
         setsuccessModal(false);
-        timeout = 3000;
-        // window.location.reload();
+        timeout = 5000;
+        window.location.reload();
       }, timeout);
     }
     return () => {
@@ -64,12 +63,11 @@ const Depositmodal = ({ closeDepositModal }) => {
         <div className="flex justify-between items-center">
           <h4 className="flex items-center gap-1">
             Deposit
-            {formData.paymentMethod && (
+            {formData.method && (
               <span className="ml-2">
                 {paymentMethods.find(
                   (pmt) =>
-                    pmt.name.toLowerCase() ===
-                    formData.paymentMethod.toLowerCase()
+                    pmt.name.toLowerCase() === formData.method.toLowerCase()
                 )?.icon || <span>No icon found</span>}
               </span>
             )}
@@ -95,15 +93,15 @@ const Depositmodal = ({ closeDepositModal }) => {
               className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
             />
           </div>
-          {formData.paymentMethod && (
+          {formData.method && (
             <small className="p-2 bg-gray-200 text-gray-600 rounded-sm">
-              {formData.paymentMethod === "Bitcoin"
+              {formData.method === "Bitcoin"
                 ? "Minimum: $50"
-                : formData.paymentMethod === "Ethereum"
+                : formData.method === "Ethereum"
                 ? "Minimum: $20"
-                : formData.paymentMethod === "Litecoin"
+                : formData.method === "Litecoin"
                 ? "Minimum: $30"
-                : formData.paymentMethod === "Admin"
+                : formData.method === "Admin"
                 ? "Minimum: $0"
                 : "Select a payment method"}
             </small>
@@ -113,33 +111,38 @@ const Depositmodal = ({ closeDepositModal }) => {
               Payment Method
             </label>
             <select
-              id="paymentMethod"
-              name="paymentMethod"
-              value={formData.paymentMethod}
+              name="method"
+              value={formData.method}
               onChange={handleChange}
               className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
             >
               <option value="">Choose Payment Method</option>
-              {paymentMethods.map((pmt) => (
-                <option key={pmt.id} value={pmt.name}>
+              {paymentMethods.map((pmt, index) => (
+                <option key={index} value={pmt.name}>
                   {pmt.name}
                 </option>
               ))}
             </select>
           </div>
-          {formData.paymentMethod !== "Admin" ||
-            (formData.paymentMethod !== undefined && (
+          {formData.method !== "Admin" ||
+            (formData.method !== undefined && (
               <small className="p-2 bg-red-200 text-red-600 rounded-sm">
                 Payment method not available.
               </small>
             ))}
+
+          {depositSuccess && (
+            <small className="bg-yellow-200 text-yellow-500 p-2 rounded-xl">
+              Deposit pending.
+            </small>
+          )}
           <div>
             <button
               type="submit"
               // disabled={formData.paymentMethod !== "Admin"}
               className="font-medium text-sm bg-red-600 text-white hover:bg-red-800 transition-all px-5 py-2 rounded-full w-full"
             >
-              Deposit
+              {depositLoading ? "Processing..." : "Deposit"}
             </button>
           </div>
         </form>

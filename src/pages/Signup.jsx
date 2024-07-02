@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
-import { logo } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser, reset } from "../features/signupSlice";
 import { FaEye, FaUser, FaEyeSlash } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
 import Section from "../components/Section";
+import {
+  isValidUsername,
+  isValidEmail,
+  isValidPassword,
+} from "../utils/validation";
 
 const Signup = () => {
   const initialState = {
@@ -20,6 +24,7 @@ const Signup = () => {
 
   const [form, setForm] = useState(initialState);
   const [showPass, setShowPass] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const { loading, error, success } = useSelector((state) => state.signup);
 
@@ -37,7 +42,30 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
+
+    // Validate username
+    if (!isValidUsername(form.member)) {
+      setShowError(
+        "Username must be at least 4 characters long and can only contain alphabets and numbers."
+      );
+      return; // Prevent further execution
+    }
+
+    // Validate email
+    if (!isValidEmail(form.mail)) {
+      setShowError("Please enter a valid email address.");
+      return; // Prevent further execution
+    }
+
+    // Validate password
+    if (!isValidPassword(form.pass)) {
+      setShowError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter and one digit."
+      );
+      return; // Prevent further execution
+    }
+
+    // Dispatch signupUser action
     dispatch(signupUser(form));
   };
 
@@ -56,23 +84,25 @@ const Signup = () => {
         navigate("/signin");
       }, 3000);
     }
-    () => clearTimeout(timeout);
-  }, [success, dispatch]);
+    return () => clearTimeout(timeout);
+  }, [success, dispatch, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      setShowError(error);
+    }
+  }, [error]);
 
   return (
     <Section>
       <div className="container px-3">
         <div className="flex justify-center -mx-3">
-          <form
-            action=""
-            className="w-full xs:w-4/5 sm:w-3/5 md:w-1/2 lg:w-2/5 xl:w-1/3 px-3"
-          >
+          <form className="w-full xs:w-4/5 sm:w-3/5 md:w-1/2 lg:w-2/5 xl:w-1/3 px-3">
             <div className="bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 w-full p-6 pt-5">
               <div className="flex gap-2 items-center">
                 <h3 className="capitalize text-xl font-black">
                   create account
                 </h3>
-                {/* <img src={logo} alt="" className="w-[30px]" /> */}
               </div>
               <div className="relative py-2">
                 <Input
@@ -112,10 +142,12 @@ const Signup = () => {
               </div>
               <span
                 className={
-                  error ? "flex text-red-500 font-bold py-2" : "hidden"
+                  showError
+                    ? "flex text-red-500 font-normal text-xs bg-red-200 py-2 px-4 rounded-xl"
+                    : "hidden"
                 }
               >
-                {error}
+                {showError}
               </span>
               <span
                 className={

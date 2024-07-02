@@ -28,10 +28,11 @@ const Ticket = ({ toggle, userBal }) => {
 
   // console.log("mytrnx", transactions);
 
-  const mytrnx = transactions?.transactions?.map((trnx) => {
+  const mytrnx = transactions?.transactions?.map((trnx, index) => {
+    // console.log(trnx);
     return (
       <tr
-        key={transactions.transactions._id}
+        key={index}
         className="border-b dark:border-slate-700 text-xs font-thin capitalize"
       >
         <td className="py-3 px-4">

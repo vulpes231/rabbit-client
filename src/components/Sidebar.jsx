@@ -28,13 +28,11 @@ const Sidebar = ({
     ...new Set(products?.products?.map((prd) => prd.category)),
   ];
 
-  // console.log(activeLink);
-
   return (
     <aside
       className={
         toggle
-          ? "fixed h-full w-[60%] md:w-[40%] top-[130px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5"
+          ? "fixed h-full w-[60%] md:w-[40%] top-[130px] sm:top-[100px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 md:hidden"
           : "hidden lg:flex fixed h-full w-[250px] top-[58px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5"
       }
     >

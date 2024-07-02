@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { buyProduct } from "../features/orderSlice";
 
 const headers = [
   {
@@ -24,11 +26,87 @@ const headers = [
 ];
 
 const ProductTable = ({ data, title }) => {
+  const dispatch = useDispatch();
+
+  const [form, setForm] = useState({
+    item: "",
+    price: "",
+  });
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
+  const [confirmModal, setConfirmModal] = useState(false);
+  const { placeOrderError, placeOrderSuccess, placeOrderPending } = useSelector(
+    (state) => state.order
+  );
+
   const handleClick = (prd) => {
-    console.log(prd);
+    const orderFormData = {
+      item: prd.name,
+      price: prd.price,
+    };
+    setForm(orderFormData);
+    setConfirmModal(true);
   };
+
+  const buy = (e) => {
+    e.preventDefault();
+    dispatch(buyProduct(form));
+  };
+
+  const closeConfirm = (e) => {
+    setConfirmModal(false);
+  };
+
+  useEffect(() => {
+    if (placeOrderSuccess) {
+      setSuccess(true);
+    }
+  }, [placeOrderSuccess]);
+
+  useEffect(() => {
+    if (placeOrderError) {
+      setError(placeOrderError);
+    }
+  }, [placeOrderError]);
+
+  useEffect(() => {
+    // console.log("clearing all state");
+    let timeout;
+    if (success) {
+      timeout = 4000;
+      setTimeout(() => {
+        setForm({
+          item: "",
+          price: "",
+        });
+        setSuccess(false);
+
+        setConfirmModal(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [success]);
+
+  useEffect(() => {
+    console.log("clearing all state");
+    let timeout;
+    if (error) {
+      timeout = 4000;
+      setTimeout(() => {
+        setForm({
+          item: "",
+          price: "",
+        });
+        setError(false);
+
+        setConfirmModal(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [error]);
+
   return (
-    <div className=" overflow-auto w-full ">
+    <div className=" overflow-scroll w-full ">
       <table className=" min-w-full bg-white dark:bg-slate-950 divide-y divide-gray-200 dark:divide-gray-700 overflow-x-scroll">
         <thead className="bg-red-500 dark:bg-slate-950 ">
           <tr className="text-white dark:text-slate-200 ">
@@ -80,6 +158,35 @@ const ProductTable = ({ data, title }) => {
           ))}
         </tbody>
       </table>
+      {confirmModal && (
+        <div className="top-[130px] lg:top-[60px] z-50 right-0 fixed bg-white rounded-xl shadow p-6 flex flex-col items-center justify-center gap-4 w-[280px] text-xs font-medium">
+          <h4 className={success || error ? " hidden" : "flex"}>
+            Confirm {form?.item} order{" "}
+          </h4>
+          {success && (
+            <h4 className="text-green-500 capitalize">
+              order placed successfully.
+            </h4>
+          )}
+          {error && (
+            <h4 className="text-red-500 capitalize">{placeOrderError}</h4>
+          )}
+          <div className="flex justify-between items-center w-full">
+            <button
+              className="bg-green-500 text-white py-2 px-6 inline-flex rounded-xl"
+              onClick={buy}
+            >
+              Ok
+            </button>
+            <button
+              className="bg-red-500 text-white py-2 px-6 inline-flex rounded-xl"
+              onClick={closeConfirm}
+            >
+              cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

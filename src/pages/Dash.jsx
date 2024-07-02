@@ -100,7 +100,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
 
   return (
     <section
-      className="relative p-6 py-20 sm:py-7"
+      className="relative p-6 py-20 sm:py-7 font-[Montserrat]"
       style={{ scrollMarginTop: "var(--topbar-height, 69px)" }}
     >
       <div className="flex overflow-hidden min-h-screen">
