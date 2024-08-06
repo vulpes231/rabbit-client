@@ -8,17 +8,25 @@ import { FaEyeLowVision, FaUserGear } from "react-icons/fa6";
 import { RiArchiveStackFill } from "react-icons/ri";
 import { FaGift } from "react-icons/fa6";
 
-const Invoices = ({ toggle }) => {
+const Channel = ({ toggle }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
+
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
     }
   }, [accessToken]);
+
+  useEffect(() => {
+    document.title = "RH4OGS - Channels";
+    return () => {
+      document.title = "RH4OGS";
+    };
+  }, []);
   return (
-    <TabContainer toggle={toggle}>
-      <div className="w-full  min-h-screen ">
+    <section>
+      <div className="w-full min-h-screen lg:max-w-[1000px] mx-auto">
         <h3 className="uppercase font-semibold text-xl text-center pt-10">
           channels
         </h3>
@@ -57,8 +65,8 @@ const Invoices = ({ toggle }) => {
           />
         </div>
       </div>
-    </TabContainer>
+    </section>
   );
 };
 
-export default Invoices;
+export default Channel;

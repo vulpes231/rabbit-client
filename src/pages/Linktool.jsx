@@ -5,7 +5,7 @@ import { getAccessToken } from "../utils/getDate";
 import { useSelector } from "react-redux";
 import TabContainer from "./TabContainer";
 
-const Linktool = ({ toggle }) => {
+const Linktool = ({ toggle, handleLinks }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 
@@ -24,7 +24,7 @@ const Linktool = ({ toggle }) => {
 
   return (
     <TabContainer toggle={toggle}>
-      <ProductTable title={"buy"} data={myLinktool} />
+      <ProductTable title={"order"} data={myLinktool} />
     </TabContainer>
   );
 };

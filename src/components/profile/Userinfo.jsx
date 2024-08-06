@@ -8,27 +8,23 @@ const Userinfo = () => {
   const storedUser = sessionStorage.getItem("userInfo");
   const user = storedUser ? JSON.parse(storedUser) : null;
 
-  // Log the user object for debugging
-  console.log(user);
-
-  // Render user information if available
   return (
     <Container icon={<MdVerifiedUser />} title={"User Info:"}>
       {user ? (
-        <>
-          <p className="flex items-center gap-1 p-2 font-thin text-slate-400">
+        <div className="text-xs font-thin text-slate-400">
+          <p className="flex items-center gap-1">
             <span>
               <CgUser />
             </span>
             {user.username}
           </p>
-          <p className="flex items-center gap-1 p-2 font-thin text-slate-400">
+          <p className="flex items-center gap-1">
             <span>
               <CgMail />
             </span>
             {user.email}
           </p>
-        </>
+        </div>
       ) : (
         <p className="p-2 font-thin text-slate-400">
           No user information found.

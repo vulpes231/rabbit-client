@@ -5,7 +5,7 @@ import { getAccessToken } from "../utils/getDate";
 import { useSelector } from "react-redux";
 import TabContainer from "./TabContainer";
 
-const Resume = ({ toggle }) => {
+const Resume = ({ toggle, handleLinks }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 

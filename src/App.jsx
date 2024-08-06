@@ -7,11 +7,21 @@ import Dash from "./pages/Dash";
 import Navbar from "./components/Navbar";
 import { useSelector } from "react-redux";
 import Orders from "./pages/Orders";
+import Chat from "./pages/Chat";
+import Channel from "./pages/Channel";
+import Wallet from "./pages/Wallet";
+import Faq from "./pages/Faq";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
   const [token, setToken] = useState(false);
   const [activeLink, setActiveLink] = useState("dash");
+  const [darkMode, setDarkMode] = useState(false);
+
+  const handleModeToggle = () => {
+    setDarkMode(!darkMode);
+  };
 
   const { accessToken } = useSelector((state) => state.signin);
 
@@ -36,6 +46,15 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // Apply dark mode class to the body
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16 lg:pt-[calc(theme(space.16)+theme(space.1))]">
       {token || accessToken ? (
@@ -44,6 +63,8 @@ const App = () => {
           handleToggle={handleToggle}
           activeLink={activeLink}
           handleLinks={handleLinks}
+          darkMode={darkMode}
+          handleModeToggle={handleModeToggle}
         />
       ) : (
         <Navbar />
@@ -64,7 +85,12 @@ const App = () => {
             />
           }
         />
-        {/* <Route path="/orders" element={<Orders />} /> */}
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/wallet" element={<Wallet />} />
+        <Route path="/channel" element={<Channel />} />
+        <Route path="/order" element={<Orders />} />
       </Routes>
     </div>
   );

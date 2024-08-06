@@ -11,10 +11,10 @@ accessToken = JSON.parse(storedAccessToken);
 
 export const loggedLinks = [
   { id: "dash", title: "Dashboard", path: "/dashboard" },
-  { id: "invoice", title: "Channels", path: "" },
-  { id: "wallet", title: "Wallet", path: "" },
-  { id: "faq", title: "FAQ", path: "" },
-  { id: "status", title: "Profile", path: "" },
+  { id: "channel", title: "Channel", path: "/channel" },
+  { id: "wallet", title: "Wallet", path: "/wallet" },
+  { id: "faq", title: "FAQ", path: "/faq" },
+  { id: "profile", title: "Profile", path: "/profile" },
 ];
 
 export const sidebarLinks = [

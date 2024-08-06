@@ -1,18 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getAccessToken } from "../utils/getDate";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TabContainer from "./TabContainer";
 import { getUserOrders } from "../features/orderSlice";
 
-const Orders = ({ toggle }) => {
+const Orders = ({ toggle, handleLinks }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 
-  const { orders } = useSelector((state) => state.order);
+  const [selectedOptions, setSelectedOptions] = useState({
+    option: "",
+  });
+  const [orderData, setOrderData] = useState({});
 
-  // console.log(orders);
+  const handleOptions = (e, ord) => {
+    e.stopPropagation();
+    const { name, value } = e.target;
+    // set the selected option and associated order ID
+    setSelectedOptions({
+      option: value,
+      orderId: ord._id, // Capture the order ID for context
+    });
+  };
+
+  const { orders } = useSelector((state) => state.order);
 
   const myOrders = orders?.map((ord) => {
     return (
@@ -20,7 +33,7 @@ const Orders = ({ toggle }) => {
         className="border-b dark:border-slate-700 text-xs font-thin capitalize"
         key={ord._id}
       >
-        <td className="py-2 px-4">01/07/2024</td>
+        <td className="py-2 px-4">{ord._id}</td>
         <td className="py-2 px-4">{ord.item}</td>
         <td className="py-2 px-4">${ord.price}</td>
         <td className="py-2 px-4 ">
@@ -37,13 +50,29 @@ const Orders = ({ toggle }) => {
           </small>
         </td>
         <td className="py-2 px-4">
-          <button className="py-2 px-8 bg-green-500 text-white  rounded-md">
-            Show Info
-          </button>
+          <select
+            onChange={(e) => handleOptions(e, ord)}
+            value={
+              selectedOptions.orderId === ord._id ? selectedOptions.option : ""
+            }
+            name="option"
+            className="py-2 px-8 bg-green-500 text-white rounded-md"
+          >
+            <option value="">Select an option</option>
+            <option value="ticket">Open Ticket</option>
+            <option value="report">Report</option>
+          </select>
         </td>
       </tr>
     );
   });
+
+  useEffect(() => {
+    if (selectedOptions.option.includes("ticket")) {
+      setSelectedOptions("");
+      navigate("/chat");
+    }
+  }, [selectedOptions, orderData]);
 
   useEffect(() => {
     if (!accessToken) {
@@ -54,13 +83,13 @@ const Orders = ({ toggle }) => {
   }, [accessToken, navigate]);
 
   return (
-    <TabContainer toggle={toggle}>
-      <h3 className="text-xl font-bold mb-4 uppercase">My orders</h3>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white dark:bg-slate-900 dark:text-slate-200 text-xs font-medium">
+    <section className="w-full lg:max-w-[1000px] mx-auto ">
+      <h3 className="text-xl font-bold mb-4 uppercase">My Orders</h3>
+      <div className="overflow-x-auto w-full">
+        <table className="w-full bg-white dark:bg-slate-900 dark:text-slate-200 text-xs font-medium">
           <thead>
             <tr className="bg-red-500 dark:bg-slate-80 text-white uppercase">
-              <th className="text-left py-2 px-4">Date</th>
+              <th className="text-left py-2 px-4">Order ID</th>
               <th className="text-left py-2 px-4">Name</th>
               <th className="text-left py-2 px-4">Price</th>
               <th className="text-left py-2 px-4">Status</th>
@@ -70,7 +99,7 @@ const Orders = ({ toggle }) => {
           <tbody>{myOrders}</tbody>
         </table>
       </div>
-    </TabContainer>
+    </section>
   );
 };
 

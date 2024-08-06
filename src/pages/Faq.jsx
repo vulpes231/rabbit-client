@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import FaqComp from "../components/faq/FaqComp";
-
 import { MdChecklist } from "react-icons/md";
-import Cove from "../components/Cove";
 
-const Faq = ({ toggle }) => {
+const Faq = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const questionsAndAnswers = [
     {
@@ -78,15 +76,16 @@ const Faq = ({ toggle }) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    document.title = "RH4OGS - FAQ";
+    return () => {
+      document.title = "RH4OGS";
+    };
+  }, []);
+
   return (
-    <div
-      className={
-        toggle
-          ? "ml-[60%] md:ml-[40%]"
-          : "ml-0 lg:ml-[250px] flex-grow overflow-hidden"
-      }
-    >
-      <div className="w-full space-y-5 min-h-screen">
+    <section>
+      <div className="w-full space-y-5 min-h-screen lg:max-w-[1000px] mx-auto">
         <span>
           <h3 className="uppercase font-semibold text-lg text-center pt-10">
             Frequently asked questions
@@ -134,7 +133,7 @@ const Faq = ({ toggle }) => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

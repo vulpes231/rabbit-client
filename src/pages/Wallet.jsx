@@ -9,12 +9,16 @@ import { getTransactions } from "../features/transactionSlice";
 
 import { format } from "date-fns";
 import TabContainer from "./TabContainer";
+import { getUserBalance } from "../features/walletSlice";
 
-const Ticket = ({ toggle, userBal }) => {
+const Wallet = ({ toggle, userBal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const accessToken = getAccessToken();
+
   const { transactions } = useSelector((state) => state.transaction);
+  const { balance } = useSelector((state) => state.wallet);
 
   const [depositModal, setDepositModal] = useState(false);
 
@@ -25,8 +29,6 @@ const Ticket = ({ toggle, userBal }) => {
   const closeDepositModal = () => {
     setDepositModal(false);
   };
-
-  // console.log("mytrnx", transactions);
 
   const mytrnx = transactions?.transactions?.map((trnx, index) => {
     // console.log(trnx);
@@ -65,15 +67,23 @@ const Ticket = ({ toggle, userBal }) => {
 
   useEffect(() => {
     dispatch(getTransactions());
+    dispatch(getUserBalance());
   }, [dispatch]);
 
+  useEffect(() => {
+    document.title = "RH4OGS - Wallet";
+    return () => {
+      document.title = "RH4OGS";
+    };
+  }, []);
+
   return (
-    <TabContainer toggle={toggle}>
-      <div className="w-full py-6 min-h-screen lg:px-10 flex flex-col gap-6">
+    <section>
+      <div className="w-full py-6 min-h-screen lg:px-10 flex flex-col gap-6 lg:max-w-[1000px] mx-auto">
         <div className="flex justify-between">
           <div>
             <h4 className="font-bold text-md">
-              Wallet balance: ${userBal.toFixed(2)}
+              Wallet balance: ${balance.toFixed(2)}
             </h4>
           </div>
           <button
@@ -111,8 +121,8 @@ const Ticket = ({ toggle, userBal }) => {
           )}
         </div>
       </div>
-    </TabContainer>
+    </section>
   );
 };
 
-export default Ticket;
+export default Wallet;

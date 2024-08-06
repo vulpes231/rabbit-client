@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buyProduct } from "../features/orderSlice";
+import { Link } from "react-router-dom";
 
 const headers = [
   {
@@ -25,7 +26,7 @@ const headers = [
   },
 ];
 
-const ProductTable = ({ data, title }) => {
+const ProductTable = ({ data, title, setActiveLink }) => {
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -70,10 +71,9 @@ const ProductTable = ({ data, title }) => {
   }, [placeOrderError]);
 
   useEffect(() => {
-    // console.log("clearing all state");
     let timeout;
     if (success) {
-      timeout = 4000;
+      timeout = 6000;
       setTimeout(() => {
         setForm({
           item: "",
@@ -82,13 +82,14 @@ const ProductTable = ({ data, title }) => {
         setSuccess(false);
 
         setConfirmModal(false);
+        // window.location.href = "/order"
       }, timeout);
     }
     return () => clearTimeout(timeout);
   }, [success]);
 
   useEffect(() => {
-    console.log("clearing all state");
+    // console.log("clearing all state");
     let timeout;
     if (error) {
       timeout = 4000;
@@ -164,8 +165,9 @@ const ProductTable = ({ data, title }) => {
             Confirm {form?.item} order{" "}
           </h4>
           {success && (
-            <h4 className="text-green-500 capitalize">
-              order placed successfully.
+            <h4 className="text-green-500 capitalize flex flex-col gap-2 items-center">
+              order placed successfully.{" "}
+              <Link className="underline font-thin ">view orders</Link>
             </h4>
           )}
           {error && (

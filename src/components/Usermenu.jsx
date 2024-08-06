@@ -5,7 +5,7 @@ import { BiPurchaseTagAlt } from "react-icons/bi";
 import { BsGear, BsTicket } from "react-icons/bs";
 import { MdLogout } from "react-icons/md";
 
-const Usermenu = ({ handleLinks }) => {
+const Usermenu = () => {
   const [menu, setShowMenu] = useState(false);
 
   const showMenu = () => {
@@ -31,23 +31,17 @@ const Usermenu = ({ handleLinks }) => {
             : "hidden"
         }
       >
-        <li
-          onClick={() => {
-            handleLinks("order");
-            resetMenu();
-          }}
-          className="flex items-center gap-3 text-xs"
-        >
+        <li className="flex items-center gap-3 text-xs">
           <BiPurchaseTagAlt />
-          <Link>orders</Link>
+          <Link to={"/order"}>orders</Link>
         </li>
         <li className="flex items-center gap-3 text-xs">
           <BsTicket />
-          <Link>tickets</Link>
+          <Link to={""}>tickets</Link>
         </li>
         <li className="flex items-center gap-3 text-xs">
           <BsGear />
-          <Link>settings</Link>
+          <Link to={""}>settings</Link>
         </li>
         <li className="flex items-center gap-3 text-xs">
           <MdLogout />

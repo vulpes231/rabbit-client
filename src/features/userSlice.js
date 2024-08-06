@@ -14,7 +14,7 @@ const initialState = {
 };
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
-  const url = `${server}/user`;
+  const url = `${devserver}/user`;
   let accessToken;
   const storedAccessToken = sessionStorage.getItem("accessToken");
   accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;

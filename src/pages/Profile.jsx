@@ -7,31 +7,38 @@ import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../utils/getDate";
 import Cove from "../components/Cove";
 
-const Status = () => {
+const Profile = () => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
+
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
     }
   }, [accessToken]);
+
+  useEffect(() => {
+    document.title = "RH4OGS - Profile";
+    return () => {
+      document.title = "RH4OGS";
+    };
+  }, []);
   return (
-    <Cove>
-      <div className="container px-3">
-        <span>
-          <h3 className="uppercase font-semibold text-lg text-center pt-10">
-            Profile
-          </h3>
-        </span>
-        <div className="flex flex-wrap -m-3 p-3 gap-10">
+    <section>
+      <div className="container px-3 lg:max-w-[1000px] mx-auto">
+        <h3 className="uppercase font-semibold text-lg text-center pt-10">
+          Profile
+        </h3>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 p-3 gap-10">
           <Userinfo />
           <Changemail />
           <Topup />
           <Contactus />
         </div>
       </div>
-    </Cove>
+    </section>
   );
 };
 
-export default Status;
+export default Profile;
