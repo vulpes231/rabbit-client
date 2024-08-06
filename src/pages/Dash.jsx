@@ -57,10 +57,13 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
 
   return (
     <section
-      className="relative p-6 py-20 sm:py-7 font-[Montserrat]"
-      style={{ scrollMarginTop: "var(--topbar-height, 69px)" }}
+      className={
+        toggle
+          ? "ml-[60%] md:ml-[40%] flex-grow flex-col gap-8 font-[Montserrat] px-10"
+          : "ml-0 lg:ml-[250px] flex-grow flex-col gap-8 font-[Montserrat] px-10"
+      }
     >
-      <div className="flex overflow-hidden min-h-screen">
+      <div className="flex min-h-screen">
         <Sidebar
           toggle={toggle}
           handleLinks={handleLinks}
@@ -70,11 +73,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
         />
 
         <>
-          <Dashcontent
-            toggle={toggle}
-            activeLink={activeLink}
-            handleLinks={handleLinks}
-          />
+          <Dashcontent activeLink={activeLink} />
         </>
         {loading && <LogoutModal />}
       </div>

@@ -20,7 +20,7 @@ import Bypass from "../pages/Bypass";
 import Sender from "../pages/Sender";
 import Web3 from "../pages/Web3";
 
-const Content = ({ toggle }) => {
+const Content = () => {
   const dispatch = useDispatch();
   const { balance } = useSelector((state) => state.wallet);
   const { user } = useSelector((state) => state.user);
@@ -44,13 +44,7 @@ const Content = ({ toggle }) => {
     }
   }, [accessToken, dispatch]);
   return (
-    <div
-      className={
-        toggle
-          ? "ml-[60%] md:ml-[40%] flex-grow flex-col gap-8 w-full"
-          : "ml-0 lg:ml-[250px] flex-grow flex-col gap-8 w-full"
-      }
-    >
+    <div>
       <div className="flex flex-col gap-10 w-full p-6  lg:flex-row">
         <Article>
           <LabelIcon
@@ -135,7 +129,7 @@ const Content = ({ toggle }) => {
         </Dashdiv>
       </div>
 
-      <div className="flex flex-col gap-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mx-8 p-4 md:w-[45%] rounded-md ">
+      <div className="flex flex-col gap-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mx-8 p-4 md:w-[45%] rounded-md mt-5">
         <h3 className="capitalize ">invite a friend</h3>
         <hr className="text-white bg-white" />
         <span className="text-sm opacity-80">
@@ -155,7 +149,7 @@ const Content = ({ toggle }) => {
   );
 };
 
-const Dashcontent = ({ toggle, activeLink, handleLinks }) => {
+const Dashcontent = ({ activeLink }) => {
   const dispatch = useDispatch();
   const accessToken = getAccessToken();
 
@@ -166,41 +160,19 @@ const Dashcontent = ({ toggle, activeLink, handleLinks }) => {
   }, [accessToken, dispatch]);
 
   return (
-    <div>
-      {activeLink === "link" && (
-        <Linktool toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "link" && (
-        <Linktool toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "rdp" && (
-        <Server toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "spammed logs" && (
-        <Log toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "resume" && (
-        <Resume toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "social account" && (
-        <Account toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "service" && (
-        <Services toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "custom" && (
-        <Script toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "drainer" && (
-        <Web3 toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "2fa" && (
-        <Bypass toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "sender" && (
-        <Sender toggle={toggle} handleLinks={handleLinks} />
-      )}
-      {activeLink === "dash" && <Content toggle={toggle} />}
+    <div className="overflow-auto w-full">
+      {activeLink === "link" && <Linktool />}
+      {activeLink === "link" && <Linktool />}
+      {activeLink === "rdp" && <Server />}
+      {activeLink === "spammed logs" && <Log />}
+      {activeLink === "resume" && <Resume />}
+      {activeLink === "social account" && <Account />}
+      {activeLink === "service" && <Services />}
+      {activeLink === "custom" && <Script />}
+      {activeLink === "drainer" && <Web3 />}
+      {activeLink === "2fa" && <Bypass />}
+      {activeLink === "sender" && <Sender />}
+      {activeLink === "dash" && <Content />}
     </div>
   );
 };

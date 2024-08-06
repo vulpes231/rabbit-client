@@ -79,26 +79,27 @@ const Wallet = ({ toggle, userBal }) => {
 
   return (
     <section>
-      <div className="w-full py-6 min-h-screen lg:px-10 flex flex-col gap-6 lg:max-w-[1000px] mx-auto">
-        <div className="flex justify-between">
-          <div>
+      <div className="w-full py-6 min-h-screen lg:px-10 flex flex-col gap-6 lg:max-w-[1000px] mx-auto ">
+        <div className=" bg-white dark:bg-slate-950 p-6 rounded-xl shadow">
+          <div className="flex justify-between">
             <h4 className="font-bold text-md">
               Wallet balance: ${balance.toFixed(2)}
             </h4>
+            <button
+              onClick={handleDepositModal}
+              className="inline-flex font-medium text-sm bg-red-600 text-white hover:bg-red-800 transition-all px-5 py-2 rounded-full"
+            >
+              deposit
+            </button>
           </div>
-          <button
-            onClick={handleDepositModal}
-            className="inline-flex font-medium text-sm bg-red-600 text-white hover:bg-red-800 transition-all px-5 py-2 rounded-full"
-          >
-            deposit
-          </button>
-        </div>
-        <div className="flex flex-col gap-2">
-          <small>We currently accept the following payment methods.</small>
-          <div className="flex gap-4 items-center">
-            <Walletspan src={btc} title={"Bitcoin"} custom={"w-[25px]"} />
-            <Walletspan src={tet} title={"Tether"} custom={"w-[25px]"} />
-            <Walletspan src={eth} title={"Ethereum"} custom={"w-[15px]"} />
+
+          <div className="flex flex-col gap-2 ">
+            <small>We currently accept the following payment methods.</small>
+            <div className="flex gap-4 items-center">
+              <Walletspan src={btc} title={"Bitcoin"} custom={"w-[25px]"} />
+              <Walletspan src={tet} title={"Tether"} custom={"w-[25px]"} />
+              <Walletspan src={eth} title={"Ethereum"} custom={"w-[15px]"} />
+            </div>
           </div>
         </div>
 

@@ -5,7 +5,7 @@ import { getAccessToken } from "../utils/getDate";
 import { useSelector } from "react-redux";
 import TabContainer from "./TabContainer";
 
-const Server = ({ toggle, handleLinks }) => {
+const Server = ({ handleLinks }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 
@@ -24,7 +24,7 @@ const Server = ({ toggle, handleLinks }) => {
 
   return (
     <TabContainer>
-      <ProductTable title={"buy"} data={myServer} />
+      <ProductTable data={myServer} />
     </TabContainer>
   );
 };

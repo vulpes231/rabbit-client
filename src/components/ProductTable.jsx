@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buyProduct } from "../features/orderSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const headers = [
   {
@@ -20,22 +20,26 @@ const headers = [
     id: "description",
     name: "Description",
   },
+
   {
-    id: "features",
-    name: "features",
+    id: "actions",
+    name: "Actions",
   },
 ];
 
-const ProductTable = ({ data, title, setActiveLink }) => {
+const ProductTable = ({ data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     item: "",
     price: "",
   });
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [confirmModal, setConfirmModal] = useState(false);
+
   const { placeOrderError, placeOrderSuccess, placeOrderPending } = useSelector(
     (state) => state.order
   );
@@ -54,7 +58,7 @@ const ProductTable = ({ data, title, setActiveLink }) => {
     dispatch(buyProduct(form));
   };
 
-  const closeConfirm = (e) => {
+  const closeConfirm = () => {
     setConfirmModal(false);
   };
 
@@ -82,7 +86,7 @@ const ProductTable = ({ data, title, setActiveLink }) => {
         setSuccess(false);
 
         setConfirmModal(false);
-        // window.location.href = "/order"
+        navigate("/order");
       }, timeout);
     }
     return () => clearTimeout(timeout);
@@ -107,8 +111,8 @@ const ProductTable = ({ data, title, setActiveLink }) => {
   }, [error]);
 
   return (
-    <div className=" overflow-scroll w-full ">
-      <table className=" min-w-full bg-white dark:bg-slate-950 divide-y divide-gray-200 dark:divide-gray-700 overflow-x-scroll">
+    <>
+      <table className="bg-white dark:bg-slate-950 divide-y divide-gray-200 dark:divide-gray-700 w-full overflow-auto mt-8">
         <thead className="bg-red-500 dark:bg-slate-950 ">
           <tr className="text-white dark:text-slate-200 ">
             {headers.map((hdr) => (
@@ -119,12 +123,9 @@ const ProductTable = ({ data, title, setActiveLink }) => {
                 {hdr.name}
               </th>
             ))}
-            <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
-              Actions
-            </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700 text-xs font-thin capitalize overflow-auto text-center font-[Montserrat]">
+        <tbody className="divide-y divide-gray-200 dark:divide-gray-700 text-xs font-thin capitalize text-center font-[Montserrat]">
           {data?.map((product, index) => (
             <tr
               key={product._id}
@@ -144,21 +145,29 @@ const ProductTable = ({ data, title, setActiveLink }) => {
               <td className="px-6 py-4 whitespace-nowrap">
                 {product.description?.slice(0, 50) || "None"}
               </td>
+
               <td className="px-6 py-4 whitespace-nowrap">
-                {product.features || "None"}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <button
-                  className="px-8 py-2.5 inline-flex rounded-lg bg-blue-500 text-white text-sm font-medium capitalize hover:bg-blue-600"
-                  onClick={() => handleClick(product)}
-                >
-                  {title}
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    className="px-6 py-2.5 inline-flex rounded-3xl bg-yellow-500 text-white text-sm font-medium capitalize hover:bg-yellow-600"
+                    onClick={() => handleClick(product)}
+                  >
+                    order
+                  </button>
+                  <button
+                    className="px-8 py-2.5 inline-flex rounded-3xl bg-green-500 text-white text-sm font-medium capitalize hover:bg-green-600"
+                    onClick={() => handleClick(product)}
+                  >
+                    Info
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* confirm modal */}
       {confirmModal && (
         <div className="top-[130px] lg:top-[60px] z-50 right-0 fixed bg-white rounded-xl shadow p-6 flex flex-col items-center justify-center gap-4 w-[280px] text-xs font-medium">
           <h4 className={success || error ? " hidden" : "flex"}>
@@ -178,7 +187,7 @@ const ProductTable = ({ data, title, setActiveLink }) => {
               className="bg-green-500 text-white py-2 px-6 inline-flex rounded-xl"
               onClick={buy}
             >
-              Ok
+              {!placeOrderPending ? " Ok" : "Wait..."}
             </button>
             <button
               className="bg-red-500 text-white py-2 px-6 inline-flex rounded-xl"
@@ -189,7 +198,7 @@ const ProductTable = ({ data, title, setActiveLink }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
