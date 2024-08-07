@@ -25,6 +25,8 @@ const Content = () => {
   const { balance } = useSelector((state) => state.wallet);
   const { user } = useSelector((state) => state.user);
 
+  // console.log(user);
+
   const lastLogin = new Date();
   const formatteddate = lastLogin.toLocaleString("en-US", {
     weekday: "long",

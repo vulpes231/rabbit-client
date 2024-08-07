@@ -11,6 +11,9 @@ const initialState = {
   getOrderError: false,
   getOrderSuccess: false,
   orders: [],
+  orderByIdLoading: false,
+  orderByIdError: false,
+  singleOrder: null,
 };
 
 export const buyProduct = createAsyncThunk(
@@ -73,6 +76,36 @@ export const getUserOrders = createAsyncThunk(
   }
 );
 
+export const getOrderById = createAsyncThunk(
+  "order/getOrderById",
+  async (orderId) => {
+    const url = `${server}/order/${orderId}`;
+    const accessToken = getAccessToken();
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      // console.log("orders", response);
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        const errorMsg = error.response.data.message;
+        throw new Error(errorMsg);
+      } else {
+        throw new Error("Error getting user orders.");
+      }
+    }
+  }
+);
+
 const orderSlice = createSlice({
   name: "order",
   initialState,
@@ -85,6 +118,11 @@ const orderSlice = createSlice({
       state.getOrderPending = false;
       state.getOrderSuccess = false;
       state.orders = [];
+    },
+    resetGetorderById(state) {
+      state.orderByIdLoading = false;
+      state.orderByIdError = false;
+      state.singleOrder = null;
     },
   },
   extraReducers: (builder) => {
@@ -104,7 +142,7 @@ const orderSlice = createSlice({
       });
     builder
       .addCase(getUserOrders.pending, (state) => {
-        state.placeOrderPending = true;
+        state.getOrderPending = true;
       })
       .addCase(getUserOrders.fulfilled, (state, action) => {
         state.getOrderError = false;
@@ -117,6 +155,20 @@ const orderSlice = createSlice({
         state.getOrderPending = false;
         state.getOrderSuccess = false;
         state.orders = [];
+      });
+    builder
+      .addCase(getOrderById.pending, (state) => {
+        state.orderByIdLoading = true;
+      })
+      .addCase(getOrderById.fulfilled, (state, action) => {
+        state.orderByIdError = false;
+        state.orderByIdLoading = false;
+        state.singleOrder = action.payload;
+      })
+      .addCase(getOrderById.rejected, (state, action) => {
+        state.orderByIdError = action.error.message;
+        state.orderByIdLoading = false;
+        state.singleOrder = null;
       });
   },
 });

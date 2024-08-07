@@ -15,6 +15,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const dispatch = useDispatch();
 
   const accessToken = getAccessToken();
+  // console.log("accesToken", accessToken);
 
   const { loading, error, success } = useSelector((state) => state.logout);
 

@@ -7,6 +7,8 @@ import walletReducer from "../features/walletSlice";
 import transactionReducer from "../features/transactionSlice";
 import orderReducer from "../features/orderSlice";
 import userReducer from "../features/userSlice";
+import chatReducer from "../features/chatSlice";
+import ticketReducer from "../features/ticketSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ const store = configureStore({
     transaction: transactionReducer,
     order: orderReducer,
     user: userReducer,
+    chat: chatReducer,
+    ticket: ticketReducer,
   },
 });
 

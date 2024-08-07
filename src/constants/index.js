@@ -5,10 +5,6 @@ export const navLinks = [
   { id: "contact", title: "Contact", path: "" },
 ];
 
-let accessToken;
-const storedAccessToken = localStorage.getItem("accessToken");
-accessToken = JSON.parse(storedAccessToken);
-
 export const loggedLinks = [
   { id: "dash", title: "Dashboard", path: "/dashboard" },
   { id: "channel", title: "Channel", path: "/channel" },
@@ -277,4 +273,18 @@ export const products = [
   },
 ];
 
-export default accessToken;
+export const getAccessToken = () => {
+  const storedAccessToken = sessionStorage.getItem("accessToken");
+
+  // If storedAccessToken is null, return null or handle accordingly
+  if (storedAccessToken === null) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedAccessToken);
+  } catch (e) {
+    console.error("Error parsing access token:", e);
+    return null;
+  }
+};
