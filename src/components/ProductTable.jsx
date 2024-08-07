@@ -176,7 +176,9 @@ const ProductTable = ({ data }) => {
           {success && (
             <h4 className="text-green-500 capitalize flex flex-col gap-2 items-center">
               order placed successfully.{" "}
-              <Link className="underline font-thin ">view orders</Link>
+              <Link to={"/order"} className="underline font-thin ">
+                view orders
+              </Link>
             </h4>
           )}
           {error && (
