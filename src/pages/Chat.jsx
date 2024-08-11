@@ -50,6 +50,10 @@ const Chat = () => {
   }, [socket, chatId]);
 
   useEffect(() => {
+    document.title = "RH4OGS - LIVE CHAT";
+  }, []);
+
+  useEffect(() => {
     if (accessToken) {
       dispatch(getOrderById(orderId));
       dispatch(getTicketData(orderId));
@@ -60,8 +64,9 @@ const Chat = () => {
   useEffect(() => {
     if (ticketData) {
       setChatId(ticketData.ticket._id);
+      dispatch(getChatByTicketId(chatId));
     }
-  }, [ticketData]);
+  }, [ticketData, chatId]);
 
   const sendChatMessage = (e) => {
     e.preventDefault();
