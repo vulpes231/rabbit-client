@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { devserver, server } from "../constants";
+import { devserver, getAccessToken, server } from "../constants";
 
 const initialState = {
   loading: false,
@@ -9,13 +9,7 @@ const initialState = {
 };
 
 export const logoutUser = createAsyncThunk("logout/logoutUser", async () => {
-  let accessToken;
-  const storedAccessToken = sessionStorage.getItem("accessToken");
-  accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
-
-  if (!accessToken) {
-    throw new Error("No access token found");
-  }
+  const accessToken = getAccessToken();
 
   try {
     const url = `${server}/logout`;
@@ -30,8 +24,8 @@ export const logoutUser = createAsyncThunk("logout/logoutUser", async () => {
       }
     );
 
-    // Clear the token from sessionStorage after successful logout
     sessionStorage.removeItem("accessToken");
+    sessionStorage.clear();
 
     return response.data;
   } catch (error) {

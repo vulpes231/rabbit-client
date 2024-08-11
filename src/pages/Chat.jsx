@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
-import { devserver, getAccessToken } from "../constants";
+import { devserver, getAccessToken, server } from "../constants";
 import { getOrderById } from "../features/orderSlice";
 import { getTicketData } from "../features/ticketSlice";
 import { getChatByTicketId } from "../features/chatSlice";
@@ -29,30 +29,26 @@ const Chat = () => {
   const { user } = useSelector((state) => state.user);
   const { chatMessages } = useSelector((state) => state.chat);
 
-  // Initialize socket and event handlers
   useEffect(() => {
-    const socketConnection = io(devserver);
+    const socketConnection = io(server);
     setSocket(socketConnection);
 
     socketConnection.on("newMessage", (message) => {
-      // Update your chat UI with the new message
       console.log("New message:", message);
-      dispatch(getChatByTicketId(chatId)); // Refresh chat messages if needed
+      dispatch(getChatByTicketId(chatId));
     });
 
     return () => {
-      socketConnection.disconnect(); // Clean up on component unmount
+      socketConnection.disconnect();
     };
   }, [devserver, dispatch, chatId]);
 
-  // Join chat room when chatId is set
   useEffect(() => {
     if (socket && chatId) {
       socket.emit("joinChat", chatId);
     }
   }, [socket, chatId]);
 
-  // Fetch initial data
   useEffect(() => {
     if (accessToken) {
       dispatch(getOrderById(orderId));
@@ -69,7 +65,7 @@ const Chat = () => {
 
   const sendChatMessage = (e) => {
     e.preventDefault();
-    if (form.msg.trim() === "") return; // Avoid sending empty messages
+    if (form.msg.trim() === "") return;
 
     const data = {
       msg: form.msg,
@@ -92,42 +88,58 @@ const Chat = () => {
     }));
   };
 
+  // Handle Enter key press
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendChatMessage(e);
+    }
+  };
+
   return (
-    <div className="p-6 mt-10 flex flex-col gap-6 lg:max-w-[900px] mx-auto w-full">
-      <div>
-        <h3>
-          Ticket created for {singleOrder?.order?.item}{" "}
-          {`($${singleOrder?.order?.price})`}
-        </h3>
-        <small>status: {ticketData?.ticket?.status}</small>
+    <div className="fixed bottom-0 right-0 w-full max-w-sm bg-white shadow-lg rounded-t-lg lg:max-w-xs lg:right-4 lg:bottom-4 lg:w-80">
+      <div className="bg-red-500 text-white p-4 rounded-t-lg font-semibold">
+        Live Chat
       </div>
-      <ul className="bg-white p-6 flex flex-col gap-4 shadow-lg rounded-xl h-[300px] overflow-auto">
-        {chatMessages?.messages?.map((msg) => (
-          <li
-            className={`flex flex-col text-xs font-medium bg-green-100 p-3 w-full lg:w-[300px] rounded-sm`}
-            key={msg._id}
+      <div className="p-4 h-80 overflow-y-auto">
+        <ul className="space-y-3">
+          {chatMessages?.messages?.map((msg) => (
+            <li
+              className={`flex flex-col p-3 rounded-lg text-sm ${
+                msg.from === user?.username
+                  ? "bg-blue-200 text-right"
+                  : "bg-green-200 text-left"
+              }`}
+              key={msg._id}
+            >
+              <span className="text-xs text-gray-500">{msg.from}</span>
+              <p>{msg.msg}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <form onSubmit={sendChatMessage} className="p-4 border-t border-gray-200">
+        <div className="mb-2">
+          <label
+            htmlFor="msg"
+            className="block text-sm font-medium text-gray-700"
           >
-            <small className="font-thin text-slate-500">{msg.from}</small>
-            <p className="text-md">{msg.msg}</p>
-          </li>
-        ))}
-      </ul>
-      <form onSubmit={sendChatMessage} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="msg">Enter message</label>
+            Enter message
+          </label>
           <textarea
             id="msg"
             cols={30}
-            rows={5}
+            rows={3}
             onChange={handleInput}
             value={form.msg}
             name="msg"
-            className="focus:border-2 focus:border-red-500 outline-none"
+            className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-red-500"
+            onKeyDown={handleKeyDown}
           />
         </div>
         <button
           type="submit"
-          className="bg-red-400 w-[20%] text-white rounded-3xl py-2.5"
+          className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           Send
         </button>

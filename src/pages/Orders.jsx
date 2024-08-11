@@ -10,18 +10,23 @@ const ErrorModal = ({ error }) => {
 };
 
 const ConfirmTicket = ({ handleClick, loading, closeModal }) => {
-  console.log(loading);
+  // console.log(loading);
   return (
     <div className="absolute top-[80px] right-[20px] w-[250px] bg-white p-6 shadow-lg rounded-xl font-thin">
       <small>Are you sure you want to create a ticket?</small>
       <div className="flex items-center justify-between">
         <button
-          className="bg-blue-500 text-white px-2 rounded-2xl"
+          className="bg-green-500 text-white px-4 py-1.5 rounded-2xl"
           onClick={handleClick}
         >
           {loading ? "Please wait..." : "Confirm"}
         </button>
-        <button onClick={closeModal}>Cancel</button>
+        <button
+          className="bg-red-500 text-white px-4 py-1.5 rounded-2xl"
+          onClick={closeModal}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );
@@ -35,6 +40,11 @@ const Orders = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [orderId, setOrderId] = useState(null);
   const [ticketModal, setTicketModal] = useState(false);
+
+  const { orders } = useSelector((state) => state.order);
+  const { createTicketError, createTicketLoading, ticketCreated } = useSelector(
+    (state) => state.ticket
+  );
 
   const handleOptions = (e, ord) => {
     e.stopPropagation();
@@ -50,16 +60,12 @@ const Orders = () => {
     e.preventDefault();
     console.log("creating ticket");
     dispatch(createTicket(orderId));
+    console.log(ticketCreated);
   };
 
   const closeTicketModal = () => {
     setTicketModal(false);
   };
-
-  const { orders } = useSelector((state) => state.order);
-  const { createTicketError, createTicketLoading, ticketCreated } = useSelector(
-    (state) => state.ticket
-  );
 
   useEffect(() => {
     if (selectedOptions[orderId] === "ticket") {
@@ -75,7 +81,7 @@ const Orders = () => {
         ...prev,
         [orderId]: "",
       }));
-      setTicketModal(false); // Close modal after successful ticket creation
+      setTicketModal(false);
     }
   }, [ticketCreated, navigate, orderId]);
 
