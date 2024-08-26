@@ -15,6 +15,7 @@ import {
 } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import { HiOutlineDocumentText } from "react-icons/hi";
+import { FaLeanpub } from "react-icons/fa6";
 // Logo;
 const Sidebar = ({
   toggle,
@@ -87,8 +88,8 @@ const getIconForCategory = (category) => {
       return <GrServerCluster />;
     case "2fa":
       return <GrUserAdmin />;
-    // case "office365":
-    //   return <GrMail />;
+    case "tutorial":
+      return <FaLeanpub />;
     case "attachment":
       return <HiOutlineDocumentText />;
     default:

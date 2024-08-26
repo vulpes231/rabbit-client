@@ -12,7 +12,7 @@ const Hero = () => {
             everything an OG needs
           </h3>
           <p className="font-extralight text-xs py-2">💜💜💜💜💜 c:/Bishop.</p>
-          <p className="flex items-center gap-2 font-extralight p-4 rounded-2xl text-xl justify-between py-2 bg-slate-900 text-slate-200 dark:text-slate-900 dark:bg-slate-200">
+          <p className="flex items-center gap-2 font-extralight p-4 rounded-2xl text-xl justify-between py-2 dark:bg-slate-800 dark:text-slate-200 text-slate-900 bg-white">
             <RiSecurePaymentFill />
             <small className="text-xs font-medium ">we don't keep logs</small>
           </p>

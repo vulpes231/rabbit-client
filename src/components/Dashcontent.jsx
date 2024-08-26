@@ -20,6 +20,7 @@ import Bypass from "../pages/Bypass";
 import Sender from "../pages/Sender";
 import Web3 from "../pages/Web3";
 import Attachment from "../pages/Attachment";
+import Tutorial from "../pages/Tutorial";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -169,6 +170,7 @@ const Dashcontent = ({ activeLink }) => {
       {activeLink === "rdp" && <Server />}
       {activeLink === "office365" && <Log />}
       {activeLink === "attachment" && <Attachment />}
+      {activeLink === "tutorial" && <Tutorial />}
       {activeLink === "resume" && <Resume />}
       {activeLink === "social account" && <Account />}
       {activeLink === "service" && <Services />}
