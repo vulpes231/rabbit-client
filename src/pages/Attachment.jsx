@@ -5,15 +5,15 @@ import { getAccessToken } from "../utils/getDate";
 import { useSelector } from "react-redux";
 import TabContainer from "./TabContainer";
 
-const Log = ({ handleLinks }) => {
+const Attachment = ({ handleLinks }) => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 
   const { products } = useSelector((state) => state.products);
 
-  // Filter products that have the category "Log"
-  const myLog = products?.products?.filter(
-    (prd) => prd.category.toLowerCase() === "office365"
+  // Filter products that have the category "Linktool"
+  const attachments = products?.products?.filter(
+    (prd) => prd.category.toLowerCase() === "attachment"
   );
 
   useEffect(() => {
@@ -24,9 +24,9 @@ const Log = ({ handleLinks }) => {
 
   return (
     <TabContainer>
-      <ProductTable data={myLog} />
+      <ProductTable data={attachments} />
     </TabContainer>
   );
 };
 
-export default Log;
+export default Attachment;

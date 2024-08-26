@@ -14,6 +14,7 @@ import {
   GrUserAdmin,
 } from "react-icons/gr";
 import { useSelector } from "react-redux";
+import { HiOutlineDocumentText } from "react-icons/hi";
 // Logo;
 const Sidebar = ({
   toggle,
@@ -68,7 +69,7 @@ const getIconForCategory = (category) => {
   switch (category.toLowerCase()) {
     case "service":
       return <GrServices />;
-    case "spammed logs":
+    case "office365":
       return <GrCatalog />;
     case "sender":
       return <GrSend />;
@@ -86,8 +87,10 @@ const getIconForCategory = (category) => {
       return <GrServerCluster />;
     case "2fa":
       return <GrUserAdmin />;
-    case "office365":
-      return <GrMail />;
+    // case "office365":
+    //   return <GrMail />;
+    case "attachment":
+      return <HiOutlineDocumentText />;
     default:
       return null; // You can add more cases as needed
   }

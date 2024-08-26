@@ -125,7 +125,7 @@ const ProductTable = ({ data }) => {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700 text-xs font-thin capitalize text-center font-[Montserrat]">
+        <tbody className="divide-y divide-gray-200 dark:divide-gray-700 text-xs font-normal capitalize text-center font-[Montserrat]">
           {data?.map((product, index) => (
             <tr
               key={product._id}

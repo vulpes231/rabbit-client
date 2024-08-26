@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
 import { getAccessToken } from "../utils/getDate";
 import { useSelector } from "react-redux";
@@ -24,6 +24,15 @@ const Web3 = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="capitalize mt-3">
+        for more info:{" "}
+        <Link
+          to={"https://t.me/rabbitholecustom/22"}
+          className="underline text-red-500"
+        >
+          visit our channel.
+        </Link>
+      </h3>
       <ProductTable data={myDrainer} />
     </TabContainer>
   );

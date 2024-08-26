@@ -19,6 +19,7 @@ import Account from "../pages/Account";
 import Bypass from "../pages/Bypass";
 import Sender from "../pages/Sender";
 import Web3 from "../pages/Web3";
+import Attachment from "../pages/Attachment";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -166,7 +167,8 @@ const Dashcontent = ({ activeLink }) => {
       {activeLink === "link" && <Linktool />}
       {activeLink === "link" && <Linktool />}
       {activeLink === "rdp" && <Server />}
-      {activeLink === "spammed logs" && <Log />}
+      {activeLink === "office365" && <Log />}
+      {activeLink === "attachment" && <Attachment />}
       {activeLink === "resume" && <Resume />}
       {activeLink === "social account" && <Account />}
       {activeLink === "service" && <Services />}
