@@ -16,6 +16,8 @@ const Linktool = ({ handleLinks }) => {
     (prd) => prd.category.toLowerCase() === "link"
   );
 
+  // console.log(myLinktool);
+
   useEffect(() => {
     if (!accessToken) {
       navigate("/signin");
@@ -24,6 +26,7 @@ const Linktool = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5">Links</h3>
       <ProductTable data={myLinktool} />
     </TabContainer>
   );

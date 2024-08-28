@@ -24,6 +24,9 @@ const Account = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        social account
+      </h3>
       <ProductTable data={myAccount} />
     </TabContainer>
   );

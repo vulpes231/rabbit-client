@@ -20,6 +20,10 @@ const headers = [
     id: "description",
     name: "Description",
   },
+  {
+    id: "feature",
+    name: "Features",
+  },
 
   {
     id: "actions",
@@ -144,6 +148,9 @@ const ProductTable = ({ data }) => {
               </td>
               <td className="px-6 py-4 ">
                 <span className="w-[30%]">{product.description || "None"}</span>
+              </td>
+              <td className="px-6 py-4 ">
+                <span className="w-[30%]">{product.features || "None"}</span>
               </td>
 
               <td className="px-6 py-4 whitespace-nowrap">

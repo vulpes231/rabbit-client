@@ -24,6 +24,9 @@ const Script = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        custom
+      </h3>
       <ProductTable data={myScript} />
     </TabContainer>
   );

@@ -24,6 +24,9 @@ const Attachment = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        attachment spamming
+      </h3>
       <ProductTable data={attachments} />
     </TabContainer>
   );

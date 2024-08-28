@@ -19,6 +19,9 @@ const Bypass = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        2FA bypass
+      </h3>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <Twofactor
           title={"office365 2fa link"}

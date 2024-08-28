@@ -24,6 +24,9 @@ const Web3 = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        Drainers
+      </h3>
       <h3 className="capitalize mt-3">
         for more info:{" "}
         <Link

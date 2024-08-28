@@ -23,6 +23,9 @@ const Services = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        Services
+      </h3>
       <ProductTable data={myServices} />
     </TabContainer>
   );

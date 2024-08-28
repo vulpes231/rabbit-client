@@ -17,9 +17,10 @@ const Tutorial = ({ handleLinks }) => {
 
   return (
     <TabContainer>
-      <div>
-        <h3>coming soon...</h3>
-      </div>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        Tutorials
+      </h3>
+      <p className="text-center">coming soon...</p>
     </TabContainer>
   );
 };

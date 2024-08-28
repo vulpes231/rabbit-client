@@ -166,7 +166,7 @@ const Dashcontent = ({ activeLink }) => {
   return (
     <div className="overflow-auto w-full">
       {activeLink === "link" && <Linktool />}
-      {activeLink === "link" && <Linktool />}
+      {/* {activeLink === "link" && <Linktool />} */}
       {activeLink === "rdp" && <Server />}
       {activeLink === "office365" && <Log />}
       {activeLink === "attachment" && <Attachment />}

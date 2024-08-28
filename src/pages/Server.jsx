@@ -107,6 +107,9 @@ const Server = ({ handleLinks }) => {
 
   return (
     <TabContainer>
+      <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
+        RDPs
+      </h3>
       <div className="flex items-center justify-center">
         <h3 className="py-5 text-center w-[55%] ">
           Microsoft azure RDPs, with best IP reputation and uptime. Comes with
