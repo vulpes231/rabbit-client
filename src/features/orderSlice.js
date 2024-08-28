@@ -19,7 +19,7 @@ const initialState = {
 export const buyProduct = createAsyncThunk(
   "order/buyProduct",
   async (formData) => {
-    const url = `${devserver}/order`;
+    const url = `${server}/order`;
     const accessToken = getAccessToken();
 
     if (!accessToken) {
