@@ -84,7 +84,7 @@ const ProductTable = ({ data }) => {
           price: "",
         });
         setSuccess(false);
-
+        setError(false);
         setConfirmModal(false);
         navigate("/order");
       }, timeout);
@@ -142,8 +142,8 @@ const ProductTable = ({ data }) => {
               <td className="px-6 py-4 whitespace-nowrap">
                 {product.category}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {product.description?.slice(0, 50) || "None"}
+              <td className="px-6 py-4 ">
+                <span className="w-[30%]">{product.description || "None"}</span>
               </td>
 
               <td className="px-6 py-4 whitespace-nowrap">
@@ -152,13 +152,7 @@ const ProductTable = ({ data }) => {
                     className="px-6 py-2.5 inline-flex rounded-3xl bg-yellow-500 text-white text-sm font-medium capitalize hover:bg-yellow-600"
                     onClick={() => handleClick(product)}
                   >
-                    order
-                  </button>
-                  <button
-                    className="px-8 py-2.5 inline-flex rounded-3xl bg-green-500 text-white text-sm font-medium capitalize hover:bg-green-600"
-                    onClick={() => handleClick(product)}
-                  >
-                    Info
+                    {product.category.includes("service") ? "request" : "order"}
                   </button>
                 </div>
               </td>
@@ -169,10 +163,7 @@ const ProductTable = ({ data }) => {
 
       {/* confirm modal */}
       {confirmModal && (
-        <div className="top-[130px] lg:top-[60px] z-50 right-0 fixed bg-white rounded-xl shadow p-6 flex flex-col items-center justify-center gap-4 w-[280px] text-xs font-medium">
-          <h4 className={success || error ? " hidden" : "flex"}>
-            Confirm {form?.item} order{" "}
-          </h4>
+        <div className="top-[130px] lg:top-[80px] z-50 right-2 fixed bg-white rounded-xl shadow p-6 flex flex-col items-center justify-center gap-4 w-[280px] text-xs font-medium">
           {success && (
             <h4 className="text-green-500 capitalize flex flex-col gap-2 items-center">
               order placed successfully.{" "}
@@ -184,19 +175,22 @@ const ProductTable = ({ data }) => {
           {error && (
             <h4 className="text-red-500 capitalize">{placeOrderError}</h4>
           )}
-          <div className="flex justify-between items-center w-full">
-            <button
-              className="bg-green-500 text-white py-2 px-6 inline-flex rounded-xl"
-              onClick={buy}
-            >
-              {!placeOrderPending ? " Ok" : "Wait..."}
-            </button>
-            <button
-              className="bg-red-500 text-white py-2 px-6 inline-flex rounded-xl"
-              onClick={closeConfirm}
-            >
-              cancel
-            </button>
+          <div className="flex flex-col gap-6 w-full text-slate-950">
+            <h4>confirm {form.item} order </h4>
+            <div className="flex justify-between items-center w-full">
+              <button
+                className="bg-green-500 text-white py-2 px-6 inline-flex rounded-xl"
+                onClick={buy}
+              >
+                {!placeOrderPending ? " confirm" : "Wait..."}
+              </button>
+              <button
+                className="bg-red-500 text-white py-2 px-6 inline-flex rounded-xl"
+                onClick={closeConfirm}
+              >
+                cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

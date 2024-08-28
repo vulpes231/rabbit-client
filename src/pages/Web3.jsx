@@ -29,6 +29,7 @@ const Web3 = ({ handleLinks }) => {
         <Link
           to={"https://t.me/rabbitholecustom/22"}
           className="underline text-red-500"
+          target="_blank"
         >
           visit our channel.
         </Link>

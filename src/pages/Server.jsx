@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProductTable from "../components/ProductTable";
+
 import { getAccessToken } from "../utils/getDate";
 import TabContainer from "./TabContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { buyProduct } from "../features/orderSlice";
 
 const Server = ({ handleLinks }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const accessToken = getAccessToken();
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
+
+  const { placeOrderError, placeOrderSuccess, placeOrderPending } = useSelector(
+    (state) => state.order
+  );
 
   useEffect(() => {
     if (!accessToken) {
@@ -26,10 +36,6 @@ const Server = ({ handleLinks }) => {
     );
   };
 
-  const Input = () => {
-    return <input className="bg-transparent border p-2" type="text" />;
-  };
-
   const rdps = [
     { id: 1, price: 30, ram: 4, access: "user" },
     { id: 2, price: 40, ram: 6, access: "user" },
@@ -39,7 +45,11 @@ const Server = ({ handleLinks }) => {
   ];
 
   const [currentRdp, setCurrentRdp] = useState(null);
-  const [selection, setSelection] = useState({ ram: "", access: "" });
+  const [selection, setSelection] = useState({
+    ram: "",
+    access: "",
+    location: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,8 +61,13 @@ const Server = ({ handleLinks }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // console.log(selection);
+
+    const data = {
+      item: `${selection.access} ${selection.ram}gb ${selection.location} RDP`,
+      price: currentRdp?.price,
+    };
+    console.log(data);
+    dispatch(buyProduct(data));
   };
 
   useEffect(() => {
@@ -66,12 +81,37 @@ const Server = ({ handleLinks }) => {
     }
   }, [selection]);
 
+  useEffect(() => {
+    if (placeOrderSuccess) {
+      setSuccess(true);
+    }
+  }, [placeOrderSuccess]);
+
+  useEffect(() => {
+    if (placeOrderError) {
+      setError(placeOrderError);
+    }
+  }, [placeOrderError]);
+
+  useEffect(() => {
+    let timeout;
+    if (success) {
+      timeout = 6000;
+      setTimeout(() => {
+        setSuccess(false);
+        navigate("/order");
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [success]);
+
   return (
     <TabContainer>
       <div className="flex items-center justify-center">
-        <h3 className="py-5 text-center w-[55%] capitalize">
-          microsoft azure rdp, 4g ram, same power as a corei7 laptop, renewable
-          monthly subscription.
+        <h3 className="py-5 text-center w-[55%] ">
+          Microsoft azure RDPs, with best IP reputation and uptime. Comes with
+          management panel, PORT 25 open, Clean IP, works well with admin
+          connector.
         </h3>
       </div>
 
@@ -120,11 +160,31 @@ const Server = ({ handleLinks }) => {
               readOnly
             />
           </Holder>
+          <Holder>
+            <Label htmlFor="country">Location</Label>
+            <select
+              className="bg-transparent border p-2"
+              name="location"
+              value={selection.location}
+              onChange={handleChange}
+            >
+              <option value="">Select location</option>
+              <option value="usa">USA</option>
+              <option value="canada">CANADA</option>
+              <option value="europe">EUROPE</option>
+              <option value="germany">GERMANY</option>
+            </select>
+          </Holder>
+          {error && <p className="text-red-500">{error}</p>}
+          {success && (
+            <p className="text-green-500">{"order created successfully"}</p>
+          )}
           <button
-            className="bg-red-500 text-white rounded-3xl py-2.5"
+            onClick={handleSubmit}
+            className="bg-red-500 text-white rounded-3xl py-2.5 capitalize"
             type="submit"
           >
-            Purchase
+            {!placeOrderPending ? "order" : "wait..."}
           </button>
         </form>
       </div>
