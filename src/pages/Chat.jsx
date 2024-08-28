@@ -138,7 +138,7 @@ const Chat = () => {
             onChange={handleInput}
             value={form.msg}
             name="msg"
-            className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-red-500 text-slate-950"
             onKeyDown={handleKeyDown}
           />
         </div>

@@ -51,7 +51,7 @@ const ProductTable = ({ data }) => {
   const handleClick = (prd) => {
     const orderFormData = {
       item: prd.name,
-      price: prd.price,
+      price: prd.price || 0,
     };
     setForm(orderFormData);
     setConfirmModal(true);
@@ -60,6 +60,7 @@ const ProductTable = ({ data }) => {
   const buy = (e) => {
     e.preventDefault();
     dispatch(buyProduct(form));
+    console.log(form);
   };
 
   const closeConfirm = () => {
@@ -141,7 +142,7 @@ const ProductTable = ({ data }) => {
             >
               <td className="px-6 py-4 whitespace-nowrap">{product.name}</td>
               <td className="px-6 py-4 whitespace-nowrap">
-                ${product.price || "None"}
+                ${product.price || 0}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {product.category}
@@ -150,7 +151,9 @@ const ProductTable = ({ data }) => {
                 <span className="w-[30%]">{product.description || "None"}</span>
               </td>
               <td className="px-6 py-4 ">
-                <span className="w-[30%]">{product.features || "None"}</span>
+                <span className="w-[30%]">
+                  {product.features ? product.features : "None"}
+                </span>
               </td>
 
               <td className="px-6 py-4 whitespace-nowrap">
