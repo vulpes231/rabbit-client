@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../components";
 import { logoutUser } from "../features/logoutSlice";
 import Footer from "../components/Footer";
-import { getAccessToken } from "../utils/getDate";
+import { getAccessToken } from "../constants";
 import Dashcontent from "../components/Dashcontent";
 
 import { getProducts } from "../features/dashSlice";
@@ -15,8 +15,6 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
   const dispatch = useDispatch();
 
   const accessToken = getAccessToken();
-  // console.log("accesToken", accessToken);
-
   const { loading, error, success } = useSelector((state) => state.logout);
 
   useEffect(() => {

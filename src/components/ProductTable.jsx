@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { buyProduct } from "../features/orderSlice";
+import { buyProduct, resetPlaceOrder } from "../features/orderSlice";
 import { Link, useNavigate } from "react-router-dom";
 
 const headers = [
@@ -91,6 +91,7 @@ const ProductTable = ({ data }) => {
         setSuccess(false);
         setError(false);
         setConfirmModal(false);
+        dispatch(resetPlaceOrder());
         navigate("/order");
       }, timeout);
     }
@@ -148,7 +149,15 @@ const ProductTable = ({ data }) => {
                 {product.category}
               </td>
               <td className="px-6 py-4 ">
-                <span className="w-[30%]">{product.description || "None"}</span>
+                <span className="w-[30%]">
+                  {product.description.includes("https") ? (
+                    <Link to={product.description} target="_blank">
+                      {product.description}
+                    </Link>
+                  ) : (
+                    product.description
+                  )}
+                </span>
               </td>
               <td className="px-6 py-4 ">
                 <span className="w-[30%]">

@@ -14,15 +14,9 @@ const initialState = {
 export const createTicket = createAsyncThunk(
   "ticket/createTicket",
   async (orderId, { rejectWithValue }) => {
+    const url = `${server}/ticket`;
     try {
-      const url = `${server}/ticket`;
-
       const accessToken = getAccessToken();
-
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-
       const response = await axios.post(
         url,
         { orderId },
@@ -37,7 +31,6 @@ export const createTicket = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (error.response) {
-        // Return specific error message
         return rejectWithValue(error.response.data.message);
       } else {
         return rejectWithValue("Error creating ticket");

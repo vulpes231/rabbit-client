@@ -15,7 +15,7 @@ const features = [
   "100% uptime",
 ];
 
-const Twofactor = ({ title, monthlyPrice, dailyPrice }) => {
+const Twofactor = ({ title, monthlyPrice, dailyPrice, img }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -63,8 +63,8 @@ const Twofactor = ({ title, monthlyPrice, dailyPrice }) => {
 
   return (
     <div className="border border-none dark:border-slate-200 flex flex-col gap-4 p-6 bg-white dark:bg-slate-950 mt-5 shadow-xl rounded-lg">
-      <div className="flex gap-1 items-center">
-        <GrShieldSecurity className="text-xl" />
+      <div className="flex gap-3 items-center">
+        <img src={img} alt="" className="w-[30px]" />
         <h3 className="uppercase font-bold lg:text-md">{title}</h3>
       </div>
       <small className="text-sm text-slate-800 dark:text-slate-200">

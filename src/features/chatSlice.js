@@ -19,10 +19,6 @@ export const getChatByTicketId = createAsyncThunk(
     const url = `${server}/chat/${ticketId}`;
     const accessToken = getAccessToken();
 
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
     try {
       const response = await axios.get(url, {
         headers: {
@@ -49,10 +45,6 @@ export const userSendMessage = createAsyncThunk(
   async (formData) => {
     const url = `${server}/chat`;
     const accessToken = getAccessToken();
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
 
     try {
       const response = await axios.post(url, formData, {

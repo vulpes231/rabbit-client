@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { devserver, server } from "../constants";
+import { devserver, getAccessToken, server } from "../constants";
 
 const initialState = {
   loading: false,
@@ -14,15 +14,7 @@ export const getProducts = createAsyncThunk(
   "products/getProducts",
   async () => {
     const url = `${server}/products`;
-    let accessToken;
-    const storedAccessToken = sessionStorage.getItem("accessToken"); // Use sessionStorage as mentioned
-    accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
-
-    // console.log("Token from sessionStorage:", accessToken);
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
+    const accessToken = getAccessToken();
 
     try {
       const response = await axios.get(url, {

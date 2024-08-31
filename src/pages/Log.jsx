@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
-import { getAccessToken } from "../utils/getDate";
+import { getAccessToken } from "../constants";
 import { useSelector } from "react-redux";
 import TabContainer from "./TabContainer";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAccessToken } from "../utils/getDate";
+import { getAccessToken } from "../constants";
 import { Walletspan } from "../components";
 import { eth, btc, tet } from "../assets";
 import Depositmodal from "../components/wallet/Depositmodal";

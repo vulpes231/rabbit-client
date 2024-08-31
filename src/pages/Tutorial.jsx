@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ProductTable from "../components/ProductTable";
-import { getAccessToken } from "../utils/getDate";
-import { useSelector } from "react-redux";
+import { getAccessToken } from "../constants";
 import TabContainer from "./TabContainer";
 
-const Tutorial = ({ handleLinks }) => {
+const Tutorial = () => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 

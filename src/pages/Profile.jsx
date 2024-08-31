@@ -4,8 +4,7 @@ import Changemail from "../components/profile/Changemail";
 import Topup from "../components/profile/Topup";
 import Contactus from "../components/profile/Contactus";
 import { useNavigate } from "react-router-dom";
-import { getAccessToken } from "../utils/getDate";
-import Cove from "../components/Cove";
+import { getAccessToken } from "../constants";
 
 const Profile = () => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidelink from "./Sidelink";
 import { MdArchive, MdSend } from "react-icons/md";
 import {
@@ -13,9 +13,11 @@ import {
   GrServices,
   GrUserAdmin,
 } from "react-icons/gr";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { FaLeanpub } from "react-icons/fa6";
+import { getAccessToken } from "../constants";
+import { getProducts } from "../features/dashSlice";
 // Logo;
 const Sidebar = ({
   toggle,
@@ -24,11 +26,19 @@ const Sidebar = ({
   resetClick,
   handleLogout,
 }) => {
+  const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
+  const accessToken = getAccessToken();
 
   const categories = [
     ...new Set(products?.products?.map((prd) => prd.category)),
   ];
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getProducts());
+    }
+  }, [accessToken]);
 
   return (
     <aside
@@ -52,7 +62,9 @@ const Sidebar = ({
             active={activeLink === category}
             key={index}
             icon={getIconForCategory(category)}
-            title={category}
+            title={
+              category.includes("attachment") ? "letter & attachment" : category
+            }
             onClick={() => {
               handleLinks(category);
               resetClick();

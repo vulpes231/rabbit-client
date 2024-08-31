@@ -6,7 +6,7 @@ import Article from "./dash/Article";
 import Span from "./dash/Span";
 import Dashdiv from "./dash/Dashdiv";
 import { useDispatch, useSelector } from "react-redux";
-import { getAccessToken } from "../utils/getDate";
+import { getAccessToken } from "../constants";
 import { getUser } from "../features/userSlice";
 import { getUserBalance } from "../features/walletSlice";
 import Linktool from "../pages/Linktool";

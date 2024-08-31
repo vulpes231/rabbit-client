@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
-import { getAccessToken } from "../utils/getDate";
+import { getAccessToken } from "../constants";
 import { useSelector } from "react-redux";
 import TabContainer from "./TabContainer";
 
-const Web3 = ({ handleLinks }) => {
+const Web3 = () => {
   const navigate = useNavigate();
   const accessToken = getAccessToken();
 

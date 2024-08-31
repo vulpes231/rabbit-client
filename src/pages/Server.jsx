@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getAccessToken } from "../utils/getDate";
+import { getAccessToken } from "../constants";
 import TabContainer from "./TabContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { buyProduct } from "../features/orderSlice";
 
-const Server = ({ handleLinks }) => {
+const Server = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = getAccessToken();

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { devserver, server } from "../constants";
-import { getAccessToken } from "../utils/getDate";
+import { devserver, getAccessToken, server } from "../constants";
 
 const initialState = {
   loading: false,
@@ -46,10 +45,6 @@ export const getUserBalance = createAsyncThunk(
 export const deposit = createAsyncThunk("wallet/deposit", async (formData) => {
   const url = `${server}/wallet/deposit`;
   const accessToken = getAccessToken();
-
-  if (!accessToken) {
-    throw new Error("No access token found");
-  }
 
   try {
     const response = await axios.post(url, formData, {

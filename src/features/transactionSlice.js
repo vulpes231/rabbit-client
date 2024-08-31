@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { devserver, server } from "../constants";
+import { devserver, getAccessToken, server } from "../constants";
 
 const initialState = {
   loading: false,
@@ -13,13 +13,7 @@ export const getTransactions = createAsyncThunk(
   "transaction/getTransactions",
   async () => {
     const url = `${server}/transactions`;
-    let accessToken;
-    const storedAccessToken = sessionStorage.getItem("accessToken");
-    accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
+    const accessToken = getAccessToken();
 
     try {
       const response = await axios.get(url, {

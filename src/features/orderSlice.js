@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { server, devserver } from "../constants";
+import { server, devserver, getAccessToken } from "../constants";
 import axios from "axios";
-import { getAccessToken } from "../utils/getDate";
 
 const initialState = {
   placeOrderPending: false,
@@ -21,10 +20,6 @@ export const buyProduct = createAsyncThunk(
   async (formData) => {
     const url = `${server}/order`;
     const accessToken = getAccessToken();
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
 
     try {
       const response = await axios.post(url, formData, {
@@ -111,9 +106,6 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     reset(state) {
-      state.placeOrderError = false;
-      state.placeOrderPending = false;
-      state.placeOrderSuccess = false;
       state.getOrderError = false;
       state.getOrderPending = false;
       state.getOrderSuccess = false;
@@ -123,6 +115,11 @@ const orderSlice = createSlice({
       state.orderByIdLoading = false;
       state.orderByIdError = false;
       state.singleOrder = null;
+    },
+    resetPlaceOrder(state) {
+      state.placeOrderError = false;
+      state.placeOrderPending = false;
+      state.placeOrderSuccess = false;
     },
   },
   extraReducers: (builder) => {
@@ -173,5 +170,5 @@ const orderSlice = createSlice({
   },
 });
 
-export const { reset } = orderSlice.actions;
+export const { reset, resetPlaceOrder } = orderSlice.actions;
 export default orderSlice.reducer;

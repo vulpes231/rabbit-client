@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAccessToken } from "../utils/getDate";
+import { getAccessToken } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUserOrders } from "../features/orderSlice";

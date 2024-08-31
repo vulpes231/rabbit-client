@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { server, devserver } from "../constants";
+import { server, devserver, getAccessToken } from "../constants";
 import axios from "axios";
-import { getAccessToken } from "../utils/getDate";
 
 const initialState = {
   getUserLoading: false,
@@ -15,16 +14,9 @@ const initialState = {
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
   const url = `${server}/user`;
-  let accessToken;
-  const storedAccessToken = sessionStorage.getItem("accessToken");
-  accessToken = storedAccessToken ? JSON.parse(storedAccessToken) : null;
-
-  if (!accessToken) {
-    throw new Error("No access token found");
-  }
+  const accessToken = getAccessToken();
 
   try {
-    // console.log(accessToken);
     const response = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
@@ -48,10 +40,6 @@ export const changePass = createAsyncThunk(
   async (formData) => {
     const url = `${server}/users`;
     const accessToken = getAccessToken();
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
 
     try {
       const response = await axios.post(url, formData, {
