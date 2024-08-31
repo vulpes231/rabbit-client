@@ -12,6 +12,7 @@ import Channel from "./pages/Channel";
 import Wallet from "./pages/Wallet";
 import Faq from "./pages/Faq";
 import Profile from "./pages/Profile";
+import { getAccessToken } from "./constants";
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
@@ -23,7 +24,7 @@ const App = () => {
     setDarkMode(!darkMode);
   };
 
-  const { accessToken } = useSelector((state) => state.signin);
+  const accessToken = getAccessToken();
 
   const handleLinks = (linkId) => {
     setActiveLink(linkId);
@@ -38,7 +39,6 @@ const App = () => {
   };
   // console.log(token, accessToken);
   useEffect(() => {
-    const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
     if (accessToken) {
       setToken(accessToken);
     } else {

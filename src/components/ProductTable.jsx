@@ -148,19 +148,38 @@ const ProductTable = ({ data }) => {
               <td className="px-6 py-4 whitespace-nowrap">
                 {product.category}
               </td>
-              <td className="px-6 py-4 ">
+              <td className="px-6 py-4">
                 <span className="w-[30%]">
-                  {product.description.includes("https") ? (
-                    <Link to={product.description} target="_blank">
-                      {product.description}
-                    </Link>
-                  ) : (
-                    product.description
-                  )}
+                  {product.description
+                    ? product.description.split(",").map((desc, index) => {
+                        const trimmedDesc = desc.trim();
+                        console.log(trimmedDesc);
+                        return (
+                          <span
+                            className="flex gap-1 items-center justify-center"
+                            key={index}
+                          >
+                            {trimmedDesc.includes("https") ? (
+                              <Link to={trimmedDesc} target="_blank">
+                                {trimmedDesc}
+                              </Link>
+                            ) : (
+                              trimmedDesc
+                            )}
+                          </span>
+                        );
+                      })
+                    : // Handle the case where product.description is not a string
+                      "No description available"}
                 </span>
               </td>
-              <td className="px-6 py-4 ">
-                <span className="w-[30%]">
+
+              <td className={"px-6 py-4 "}>
+                <span
+                  className={
+                    product.category === "link" ? "hidden" : "w-[30%] "
+                  }
+                >
                   {product.features ? product.features : "None"}
                 </span>
               </td>

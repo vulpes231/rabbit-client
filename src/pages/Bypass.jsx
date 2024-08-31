@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAccessToken } from "../constants";
 import TabContainer from "./TabContainer";
 import Twofactor from "../components/Twofactor";
@@ -127,6 +127,13 @@ const Bypass = () => {
       <h3 className="text-xl lg:text-2xl font-semibold mt-5 capitalize">
         2FA Bypass
       </h3>
+      <Link
+        to={"https://telegra.ph/chatid-and-bot-token-08-28"}
+        target="_blank"
+        className="capitalize font-thin underline text-red-500"
+      >
+        more information
+      </Link>
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
         {twoFaTools}
       </div>
