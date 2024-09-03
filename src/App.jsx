@@ -5,7 +5,7 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dash from "./pages/Dash";
 import Navbar from "./components/Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Orders from "./pages/Orders";
 import Chat from "./pages/Chat";
 import Channel from "./pages/Channel";
@@ -13,8 +13,10 @@ import Wallet from "./pages/Wallet";
 import Faq from "./pages/Faq";
 import Profile from "./pages/Profile";
 import { getAccessToken } from "./constants";
+import { logoutUser } from "./features/logoutSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
   const [token, setToken] = useState(false);
   const [activeLink, setActiveLink] = useState("dash");
@@ -25,6 +27,19 @@ const App = () => {
   };
 
   const accessToken = getAccessToken();
+
+  const { loading, error, success } = useSelector((state) => state.logout);
+
+  const handleLogout = (e) => {
+    console.log("Logging out..");
+    dispatch(logoutUser());
+  };
+
+  useEffect(() => {
+    if (success) {
+      window.location.href = "/signin";
+    }
+  }, [success, dispatch]);
 
   const handleLinks = (linkId) => {
     setActiveLink(linkId);
@@ -57,7 +72,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16 lg:pt-[calc(theme(space.16)+theme(space.1))]">
-      {token || accessToken ? (
+      {token ? (
         <Authnav
           toggle={toggle}
           handleToggle={handleToggle}
@@ -65,6 +80,8 @@ const App = () => {
           handleLinks={handleLinks}
           darkMode={darkMode}
           handleModeToggle={handleModeToggle}
+          handleLogout={handleLogout}
+          logoutLoad={loading}
         />
       ) : (
         <Navbar />

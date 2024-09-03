@@ -14,6 +14,8 @@ const Authnav = ({
   handleToggle,
   darkMode,
   handleModeToggle,
+  handleLogout,
+  logoutLoad,
 }) => {
   const navigate = useNavigate();
   const authLinks = loggedLinks.map((link) => {
@@ -80,7 +82,7 @@ const Authnav = ({
               {darkMode ? <MdNightlightRound /> : <MdSunny />}
             </button>
           </span>
-          <Usermenu />
+          <Usermenu handleLogout={handleLogout} load={logoutLoad} />
         </div>
       </div>
 

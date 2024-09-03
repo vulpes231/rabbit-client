@@ -7,12 +7,10 @@ import { MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../features/logoutSlice";
 
-const Usermenu = () => {
+const Usermenu = ({ handleLogout, load }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menu, setShowMenu] = useState(false);
-
-  const { loading, error, success } = useSelector((state) => state.logout);
 
   const showMenu = () => {
     setShowMenu((prev) => !prev);
@@ -21,17 +19,6 @@ const Usermenu = () => {
   const resetMenu = () => {
     setShowMenu(false);
   };
-
-  const handleLogout = (e) => {
-    console.log("Logging out..");
-    dispatch(logoutUser());
-  };
-
-  useEffect(() => {
-    if (success) {
-      window.location.href = "/signin";
-    }
-  }, [success, dispatch]);
 
   return (
     <div>
@@ -63,7 +50,7 @@ const Usermenu = () => {
         <li className="flex items-center gap-3 text-xs cursor-pointer">
           <MdLogout />
           <span onClick={handleLogout}>
-            {!loading ? "logout" : "logging out..."}
+            {!load ? "logout" : "logging out..."}
           </span>
         </li>
       </ul>

@@ -153,14 +153,18 @@ const ProductTable = ({ data }) => {
                   {product.description
                     ? product.description.split(",").map((desc, index) => {
                         const trimmedDesc = desc.trim();
-                        console.log(trimmedDesc);
+                        // console.log(trimmedDesc);
                         return (
                           <span
                             className="flex gap-1 items-center justify-center"
                             key={index}
                           >
                             {trimmedDesc.includes("https") ? (
-                              <Link to={trimmedDesc} target="_blank">
+                              <Link
+                                className="lowercase text-red-500 underline active:text-blue-500"
+                                to={trimmedDesc}
+                                target="_blank"
+                              >
                                 {trimmedDesc}
                               </Link>
                             ) : (
