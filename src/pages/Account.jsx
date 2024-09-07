@@ -13,7 +13,7 @@ const Account = ({ handleLinks }) => {
   const { products } = useSelector((state) => state.products);
 
   const myAccount = products?.products?.filter(
-    (prd) => prd.category.toLowerCase() === "social account"
+    (prd) => prd.category.toLowerCase() === "social"
   );
 
   useEffect(() => {

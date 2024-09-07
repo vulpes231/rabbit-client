@@ -52,7 +52,7 @@ const App = () => {
   const resetToggle = () => {
     setToggle(false);
   };
-  // console.log(token, accessToken);
+
   useEffect(() => {
     if (accessToken) {
       setToken(accessToken);
@@ -62,7 +62,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // Apply dark mode class to the body
     if (darkMode) {
       document.documentElement.classList.remove("dark");
     } else {

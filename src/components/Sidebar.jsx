@@ -14,11 +14,41 @@ import {
   GrUserAdmin,
 } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
-import { HiOutlineDocumentText } from "react-icons/hi";
-import { FaLeanpub } from "react-icons/fa6";
+import { HiMail, HiOutlineDocumentText } from "react-icons/hi";
+import {
+  FaCamera,
+  FaDev,
+  FaLeanpub,
+  FaMoneyBillTransfer,
+  FaRaspberryPi,
+  FaShareNodes,
+  FaSignature,
+} from "react-icons/fa6";
 import { getAccessToken } from "../constants";
 import { getProducts } from "../features/dashSlice";
-// Logo;
+
+// const categories = [z
+//   "resume",
+//   "sender",
+//   "leads",
+//   "rdp",
+//   "attachment",
+//   "social",
+//   "office",
+//   "smtp",
+//   "financial",
+//   "drainer",
+//   "video",
+//   "redirect",
+//   "malware",
+//   "cookie",
+//   "extractor",
+//   "bank",
+//   "developer",
+//   "paid",
+//   "updated",
+// ];
+
 const Sidebar = ({
   toggle,
   handleLinks,
@@ -44,11 +74,11 @@ const Sidebar = ({
     <aside
       className={
         toggle
-          ? "fixed h-full w-[60%] md:w-[40%] top-[130px] sm:top-[100px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 md:hidden"
-          : "hidden lg:flex fixed h-full w-[250px] top-[58px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5"
+          ? "fixed h-full w-[60%] md:w-[40%] top-[130px] sm:top-[100px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 md:hidden overflow-y-auto max-h-[calc(100vh-130px)]"
+          : "hidden lg:flex fixed h-full w-[250px] top-[58px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 overflow-y-auto max-h-[calc(100vh-58px)]"
       }
     >
-      <div className="p-4 flex flex-col gap-4 h-full">
+      <div className="px-4 gap-2 flex flex-col h-full ">
         <span
           onClick={() => {
             handleLinks("dash");
@@ -57,32 +87,63 @@ const Sidebar = ({
         >
           <Sidelink title={"dash"} icon={<GrHome />} />
         </span>
-        {categories?.map((category, index) => (
-          <Sidelink
-            active={activeLink === category}
-            key={index}
-            icon={getIconForCategory(category)}
-            title={
-              category.includes("attachment") ? "letter & attachment" : category
-            }
-            onClick={() => {
-              handleLinks(category);
-              resetClick();
-            }}
-          />
-        ))}
-        {/* <Logout resetClick={resetClick} handleLogout={handleLogout} /> */}
+
+        <span className="flex flex-col gap-2">
+          {categories?.map((category, index) => (
+            <Sidelink
+              active={activeLink === category}
+              key={index}
+              icon={getIconForCategory(category)}
+              title={
+                category.includes("social")
+                  ? "social media"
+                  : category.includes("extractor")
+                  ? "extractor + sorter"
+                  : category.includes("sender")
+                  ? "email senders"
+                  : category.includes("redirect")
+                  ? "redirect tools"
+                  : category.includes("financial")
+                  ? "financial services"
+                  : category.includes("attachment")
+                  ? "offline attachment "
+                  : category.includes("office")
+                  ? "office logs"
+                  : category.includes("developer")
+                  ? "developer services"
+                  : category.includes("drainer")
+                  ? "drainer (crypt)"
+                  : category.includes("video")
+                  ? "deep fake video tool"
+                  : category
+              }
+              onClick={() => {
+                handleLinks(category);
+                resetClick();
+              }}
+            />
+          ))}
+        </span>
       </div>
     </aside>
   );
 };
 
-// Function to select appropriate icon based on category
 const getIconForCategory = (category) => {
   switch (category.toLowerCase()) {
-    case "service":
+    case "financial":
       return <GrServices />;
-    case "office365":
+    case "developer":
+      return <FaDev />;
+    case "cookie":
+      return <FaSignature />;
+    case "bank":
+      return <FaMoneyBillTransfer />;
+    case "video":
+      return <FaCamera />;
+    case "malware":
+      return <FaRaspberryPi />;
+    case "office":
       return <GrCatalog />;
     case "sender":
       return <GrSend />;
@@ -90,11 +151,11 @@ const getIconForCategory = (category) => {
       return <GrResume />;
     case "drainer":
       return <MdArchive />;
-    case "social account":
+    case "social":
       return <GrAddCircle />;
-    case "link":
+    case "redirect":
       return <GrCloudSoftware />;
-    case "custom":
+    case "extractor":
       return <MdSend />;
     case "rdp":
       return <GrServerCluster />;
@@ -104,8 +165,12 @@ const getIconForCategory = (category) => {
       return <FaLeanpub />;
     case "attachment":
       return <HiOutlineDocumentText />;
+    case "leads":
+      return <HiMail />;
+    case "smtp":
+      return <FaShareNodes />;
     default:
-      return null; // You can add more cases as needed
+      return null;
   }
 };
 

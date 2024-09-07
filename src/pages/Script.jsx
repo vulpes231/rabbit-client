@@ -13,7 +13,7 @@ const Script = () => {
 
   // Filter products that have the category "Script"
   const myScript = products?.products?.filter(
-    (prd) => prd.category.toLowerCase() === "custom"
+    (prd) => prd.category.toLowerCase() === "malware"
   );
 
   useEffect(() => {

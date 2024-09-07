@@ -13,7 +13,7 @@ const Log = ({ handleLinks }) => {
 
   // Filter products that have the category "Log"
   const myLog = products?.products?.filter(
-    (prd) => prd.category.toLowerCase() === "office365"
+    (prd) => prd.category.toLowerCase() === "office"
   );
 
   useEffect(() => {

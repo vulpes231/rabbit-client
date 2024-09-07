@@ -62,7 +62,7 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
           : "ml-0 lg:ml-[250px] flex-grow flex-col gap-8 font-[Montserrat] px-10"
       }
     >
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen overflow-auto">
         <Sidebar
           toggle={toggle}
           handleLinks={handleLinks}

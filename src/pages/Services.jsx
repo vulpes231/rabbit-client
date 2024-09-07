@@ -12,7 +12,7 @@ const Services = ({ handleLinks }) => {
   const { products } = useSelector((state) => state.products);
 
   const myServices = products?.products?.filter(
-    (prd) => prd.category.toLowerCase() === "service"
+    (prd) => prd.category.toLowerCase() === "financial"
   );
 
   useEffect(() => {

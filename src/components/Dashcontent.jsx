@@ -21,6 +21,11 @@ import Sender from "../pages/Sender";
 import Web3 from "../pages/Web3";
 import Attachment from "../pages/Attachment";
 import Tutorial from "../pages/Tutorial";
+import Developer from "../pages/Developer";
+import Smtp from "../pages/Smtp";
+import Leads from "../pages/Leads";
+import Extractor from "../pages/Extractor";
+import Deepfake from "../pages/Deepfake";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -165,20 +170,25 @@ const Dashcontent = ({ activeLink }) => {
 
   return (
     <div className="overflow-auto w-full">
-      {activeLink === "link" && <Linktool />}
+      {activeLink === "redirect" && <Linktool />}
       {/* {activeLink === "link" && <Linktool />} */}
       {activeLink === "rdp" && <Server />}
-      {activeLink === "office365" && <Log />}
+      {activeLink === "office" && <Log />}
       {activeLink === "attachment" && <Attachment />}
       {activeLink === "tutorial" && <Tutorial />}
       {activeLink === "resume" && <Resume />}
-      {activeLink === "social account" && <Account />}
-      {activeLink === "service" && <Services />}
-      {activeLink === "custom" && <Script />}
+      {activeLink === "social" && <Account />}
+      {activeLink === "financial" && <Services />}
+      {activeLink === "malware" && <Script />}
       {activeLink === "drainer" && <Web3 />}
       {activeLink === "2fa" && <Bypass />}
       {activeLink === "sender" && <Sender />}
       {activeLink === "dash" && <Content />}
+      {activeLink === "developer" && <Developer />}
+      {activeLink === "smtp" && <Smtp />}
+      {activeLink === "leads" && <Leads />}
+      {activeLink === "extractor" && <Extractor />}
+      {activeLink === "video" && <Deepfake />}
     </div>
   );
 };
