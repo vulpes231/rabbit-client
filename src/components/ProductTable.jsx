@@ -122,9 +122,9 @@ const ProductTable = ({ data }) => {
             <tr
               key={product._id}
               className={`${
-                index % 2 === 0
-                  ? "bg-gray-100 dark:bg-slate-800"
-                  : "bg-gray-200 dark:bg-slate-700"
+                index % 2 !== 0
+                  ? "bg-gray-200 dark:bg-slate-800"
+                  : "bg-white dark:bg-slate-700"
               } text-gray-700 dark:text-gray-300 transition-colors duration-300 hover:bg-gray-300 dark:hover:bg-slate-600`}
             >
               <td className="px-6 py-4 whitespace-nowrap">

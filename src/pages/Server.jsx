@@ -127,7 +127,7 @@ const Server = () => {
           <Holder>
             <Label htmlFor="ram">RAM</Label>
             <select
-              className="bg-transparent border p-2"
+              className="dark:bg-slate-950 bg-white border p-2"
               name="ram"
               value={selection.ram}
               onChange={handleChange}
@@ -142,7 +142,7 @@ const Server = () => {
           <Holder>
             <Label htmlFor="access">Access Level</Label>
             <select
-              className="bg-transparent border p-2"
+              className="dark:bg-slate-950 bg-white border p-2"
               name="access"
               value={selection.access}
               onChange={handleChange}
@@ -166,7 +166,7 @@ const Server = () => {
           <Holder>
             <Label htmlFor="country">Location</Label>
             <select
-              className="bg-transparent border p-2"
+              className="dark:bg-slate-950 bg-white border p-2"
               name="location"
               value={selection.location}
               onChange={handleChange}

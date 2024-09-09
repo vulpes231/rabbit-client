@@ -7,21 +7,33 @@ import { deposit } from "../../features/walletSlice";
 import Walletmodal from "./Walletmodal";
 
 const paymentMethods = [
-  { name: "Bitcoin", icon: <FaBitcoin />, id: "btc" },
-  { name: "Ethereum", icon: <FaEthereum />, id: "eth" },
-  { name: "Litecoin", icon: <FaLitecoinSign />, id: "ltc" },
-  { name: "Admin", icon: <MdAdminPanelSettings />, id: "adm" },
+  { currency: "bitcoin", icon: <FaBitcoin />, id: "btc", network: ["btc"] },
+  {
+    currency: "ethereum",
+    icon: <FaEthereum />,
+    id: "eth",
+    network: ["erc20", "base mainnet", "arbitrum one", "bsc(bep20)"],
+  },
+  {
+    currency: "tether",
+    icon: <FaLitecoinSign />,
+    id: "usdt",
+    network: ["erc20", "trc20", "bsc(bep20)"],
+  },
+  { currency: "admin", icon: <MdAdminPanelSettings />, id: "adm", network: [] },
 ];
 
 const initialState = {
+  currency: "",
+  network: "",
   amount: "",
-  method: "",
 };
 
 const Depositmodal = ({ closeDepositModal }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialState);
   const [successModal, setsuccessModal] = useState(false);
+  const [error, setError] = useState(false);
 
   const { depositError, depositSuccess, depositLoading } = useSelector(
     (state) => state.wallet
@@ -37,8 +49,20 @@ const Depositmodal = ({ closeDepositModal }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(deposit(formData));
-    console.log(formData);
+
+    if (formData.currency === "admin" && parseFloat(formData.amount) < 100) {
+      setError("Minimum deposit is $100");
+      return;
+    }
+
+    const dataToSend = {
+      currency: formData.currency.toLowerCase(),
+      amount: parseFloat(formData.amount),
+      network: formData.network || "",
+    };
+
+    // dispatch(deposit(dataToSend));
+    console.log(dataToSend);
   };
 
   useEffect(() => {
@@ -57,18 +81,36 @@ const Depositmodal = ({ closeDepositModal }) => {
     };
   }, [depositSuccess, dispatch]);
 
+  useEffect(() => {
+    if (depositError) {
+      setError(depositError);
+    }
+  }, [depositError]);
+
+  useEffect(() => {
+    let timeout;
+    if (error) {
+      timeout = 3000;
+      setTimeout(() => {
+        setError(false);
+      }, timeout);
+    }
+    return () => clearTimeout(timeout);
+  }, [error]);
+
+  const selectedPaymentMethod = paymentMethods.find(
+    (pmt) => pmt.id === formData.currency
+  );
+
   return (
     <div className="w-full h-screen fixed flex items-center justify-center top-0 left-0 bg-white bg-opacity-50">
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 w-full sm:w-[370px] sm:mx-auto shadow rounded-xl p-6 m-4 flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <h4 className="flex items-center gap-1">
             Deposit
-            {formData.method && (
+            {formData.currency && (
               <span className="ml-2">
-                {paymentMethods.find(
-                  (pmt) =>
-                    pmt.name.toLowerCase() === formData.method.toLowerCase()
-                )?.icon || <span>No icon found</span>}
+                {selectedPaymentMethod?.icon || <span>No icon found</span>}
               </span>
             )}
           </h4>
@@ -93,43 +135,62 @@ const Depositmodal = ({ closeDepositModal }) => {
               className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
             />
           </div>
-          {formData.method && (
+          {formData.currency && (
             <small className="p-2 bg-gray-200 text-gray-600 rounded-sm">
-              {formData.method === "Bitcoin"
+              {formData.currency === "bitcoin"
                 ? "Minimum: $50"
-                : formData.method === "Ethereum"
+                : formData.currency === "ethereum"
                 ? "Minimum: $20"
-                : formData.method === "Litecoin"
+                : formData.currency === "tether"
                 ? "Minimum: $30"
-                : formData.method === "Admin"
-                ? "Minimum: $0"
+                : formData.currency === "admin"
+                ? "Minimum: $100"
                 : "Select a payment method"}
             </small>
           )}
           <div className="flex flex-col gap-1">
-            <label htmlFor="paymentMethod" className="font-semibold">
-              Payment Method
+            <label htmlFor="currency" className="font-semibold">
+              Currency
             </label>
             <select
-              name="method"
-              value={formData.method}
+              name="currency"
+              value={formData.currency}
               onChange={handleChange}
               className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
             >
               <option value="">Choose Payment Method</option>
               {paymentMethods.map((pmt, index) => (
-                <option key={index} value={pmt.name}>
-                  {pmt.name}
+                <option key={index} value={pmt.id}>
+                  {pmt.currency}
                 </option>
               ))}
             </select>
           </div>
-          {formData.method !== "Admin" ||
-            (formData.method !== undefined && (
-              <small className="p-2 bg-red-200 text-red-600 rounded-sm">
-                Payment method not available.
-              </small>
-            ))}
+          {selectedPaymentMethod && (
+            <div className="flex flex-col gap-1">
+              <label htmlFor="network" className="font-semibold">
+                Network
+              </label>
+              <select
+                name="network"
+                value={formData.network}
+                onChange={handleChange}
+                className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+              >
+                <option value="">Select Network</option>
+                {selectedPaymentMethod.network.map((network, index) => (
+                  <option key={index} value={network}>
+                    {network}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {formData.currency === "admin" && (
+            <small className="p-2 bg-red-200 text-red-600 rounded-sm">
+              Payment method not available.
+            </small>
+          )}
 
           {depositSuccess && (
             <small className="bg-yellow-200 text-yellow-500 p-2 rounded-xl">
@@ -137,6 +198,11 @@ const Depositmodal = ({ closeDepositModal }) => {
             </small>
           )}
           <div>
+            {error && (
+              <div className="text-red-500 py-2">
+                <p>{error}</p>
+              </div>
+            )}
             <button
               type="submit"
               // disabled={formData.paymentMethod !== "Admin"}

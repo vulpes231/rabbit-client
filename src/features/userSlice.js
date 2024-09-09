@@ -5,11 +5,10 @@ import axios from "axios";
 const initialState = {
   getUserLoading: false,
   getUserError: false,
-  getUserSuccess: false,
-  changePassLoading: false,
-  changePassError: false,
-  changePassSuccess: false,
-  user: null,
+  editUserLoading: false,
+  editUserError: false,
+  userEdited: false,
+  user: false,
 };
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
@@ -35,44 +34,37 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   }
 });
 
-export const changePass = createAsyncThunk(
-  "user/changePass",
-  async (formData) => {
-    const url = `${server}/users`;
-    const accessToken = getAccessToken();
+export const editUser = createAsyncThunk("user/editUser", async (formData) => {
+  const url = `${server}/user`;
+  const accessToken = getAccessToken();
 
-    try {
-      const response = await axios.post(url, formData, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      if (error.response) {
-        const errorMsg = error.response.data.message;
-        throw new Error(errorMsg);
-      } else {
-        throw new Error("Error changing password");
-      }
+  try {
+    const response = await axios.put(url, formData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      const errorMsg = error.response.data.message;
+      throw new Error(errorMsg);
+    } else {
+      throw new Error("Error updating user");
     }
   }
-);
+});
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    reset(state) {
-      state.getUserLoading = false;
-      state.getUserError = false;
-      state.getUserSuccess = false;
-      state.changePassLoading = false;
-      state.changePassError = false;
-      state.changePassSuccess = false;
-      state.user = null;
+    resetEditUser(state) {
+      state.editUserLoading = false;
+      state.editUserError = false;
+      state.userEdited = false;
     },
   },
   extraReducers: (builder) => {
@@ -83,30 +75,29 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.getUserLoading = false;
         state.getUserError = false;
-        state.getUserSuccess = true;
         state.user = action.payload.user;
       })
       .addCase(getUser.rejected, (state, action) => {
         state.getUserLoading = false;
         state.getUserError = action.error.message;
-        state.getUserSuccess = false;
+        state.user = false;
       });
     builder
-      .addCase(changePass.pending, (state) => {
-        state.changePassLoading = true;
+      .addCase(editUser.pending, (state) => {
+        state.editUserLoading = true;
       })
-      .addCase(changePass.fulfilled, (state, action) => {
-        state.changePassLoading = false;
-        state.changePassError = false;
-        state.changePassSuccess = true;
+      .addCase(editUser.fulfilled, (state) => {
+        state.editUserLoading = false;
+        state.editUserError = false;
+        state.userEdited = true;
       })
-      .addCase(changePass.rejected, (state, action) => {
-        state.changePassLoading = false;
-        state.changePassError = action.error.message;
-        state.changePassSuccess = false;
+      .addCase(editUser.rejected, (state, action) => {
+        state.editUserLoading = false;
+        state.editUserError = action.error.message;
+        state.userEdited = false;
       });
   },
 });
 
-export const { reset } = userSlice.actions;
+export const { resetEditUser } = userSlice.actions;
 export default userSlice.reducer;

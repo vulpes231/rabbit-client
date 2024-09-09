@@ -32,7 +32,7 @@ const Content = () => {
   const { balance } = useSelector((state) => state.wallet);
   const { user } = useSelector((state) => state.user);
 
-  // console.log(user);
+  // console.log(balance);
 
   const lastLogin = new Date();
   const formatteddate = lastLogin.toLocaleString("en-US", {
@@ -53,7 +53,7 @@ const Content = () => {
     }
   }, [accessToken, dispatch]);
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-10 w-full p-6  lg:flex-row">
         <Article>
           <LabelIcon
@@ -97,7 +97,7 @@ const Content = () => {
           Welcome {user?.username}
         </h3>
         <span className="flex flex-col text-xl">
-          {balance?.toFixed(2)}
+          {(balance && balance.toFixed(2)) || 0} USD
           <small className="text-xs capitalize opacity-50">balance</small>
         </span>
       </div>

@@ -24,9 +24,6 @@ export const logoutUser = createAsyncThunk("logout/logoutUser", async () => {
       }
     );
 
-    sessionStorage.removeItem("accessToken");
-    sessionStorage.clear();
-
     return response.data;
   } catch (error) {
     if (error.response) {

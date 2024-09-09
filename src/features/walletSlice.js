@@ -3,10 +3,9 @@ import axios from "axios";
 import { devserver, getAccessToken, server } from "../constants";
 
 const initialState = {
-  loading: false,
-  error: false,
-  success: false,
-  balance: 0,
+  getBalLoading: false,
+  getBalError: false,
+  balance: false,
   depositLoading: false,
   depositError: false,
   depositSuccess: false,
@@ -17,10 +16,6 @@ export const getUserBalance = createAsyncThunk(
   async () => {
     const url = `${server}/wallet/balance`;
     const accessToken = getAccessToken();
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
 
     try {
       const response = await axios.get(url, {
@@ -36,7 +31,7 @@ export const getUserBalance = createAsyncThunk(
         const errorMsg = error.response.data.message;
         throw new Error(errorMsg);
       } else {
-        throw new Error("Error fetching products");
+        throw new Error("Error fetching balance");
       }
     }
   }
@@ -68,11 +63,7 @@ const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    reset(state) {
-      state.balance = 0;
-      state.error = false;
-      state.success = false;
-      state.loading = false;
+    resetDeposit(state) {
       state.depositError = false;
       state.depositLoading = false;
       state.depositSuccess = false;
@@ -80,19 +71,17 @@ const walletSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUserBalance.pending, (state) => {
-      state.loading = true;
+      state.getBalLoading = true;
     });
     builder.addCase(getUserBalance.fulfilled, (state, action) => {
-      state.loading = false;
-      state.error = false;
-      state.success = true;
+      state.getBalLoading = false;
+      state.getBalError = false;
       state.balance = action.payload.walletBalance;
     });
     builder.addCase(getUserBalance.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-      state.success = false;
-      state.balance = 0;
+      state.getBalLoading = false;
+      state.getBalError = action.error.message;
+      state.balance = false;
     });
     builder
       .addCase(deposit.pending, (state) => {

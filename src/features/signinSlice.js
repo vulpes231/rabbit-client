@@ -5,9 +5,9 @@ import { devserver, server } from "../constants";
 const initialState = {
   loading: false,
   error: false,
-  accessToken: null,
+  accessToken: false,
   success: false,
-  user: null,
+  user: false,
 };
 
 export const signinUser = createAsyncThunk(
@@ -37,12 +37,12 @@ const signinSlice = createSlice({
   name: "signin",
   initialState,
   reducers: {
-    reset(state) {
-      state.accessToken = null;
+    resetLogin(state) {
+      state.accessToken = false;
       state.loading = false;
       state.error = false;
       state.success = false;
-      state.user = null;
+      state.user = false;
     },
   },
   extraReducers: (builder) => {
@@ -58,14 +58,14 @@ const signinSlice = createSlice({
         state.user = action.payload.userObj;
       })
       .addCase(signinUser.rejected, (state, action) => {
-        state.accessToken = null;
+        state.accessToken = false;
         state.loading = false;
         state.error = action.error.message;
         state.success = false;
-        state.user = null;
+        state.user = false;
       });
   },
 });
 
-export const { reset } = signinSlice.actions;
+export const { resetLogin } = signinSlice.actions;
 export default signinSlice.reducer;

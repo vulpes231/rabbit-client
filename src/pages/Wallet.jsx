@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../features/transactionSlice";
 
 import { format } from "date-fns";
-import TabContainer from "./TabContainer";
+
 import { getUserBalance } from "../features/walletSlice";
 
-const Wallet = ({ toggle, userBal }) => {
+const Wallet = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ const Wallet = ({ toggle, userBal }) => {
     return (
       <tr
         key={index}
-        className="border-b dark:border-slate-700 text-xs font-thin capitalize"
+        className="border-b dark:border-slate-700 text-xs font-thin capitalize p-4"
       >
         <td className="py-3 px-4">
           {format(new Date(trnx.date), "dd/mm/yyyy")}
@@ -46,10 +46,10 @@ const Wallet = ({ toggle, userBal }) => {
           <span
             className={`py-2 px-4 rounded-lg capitalize ${
               trnx.status === "completed"
-                ? "text-green-500 bg-green-100"
+                ? "text-green-500 bg-green-50"
                 : trnx.status === "failed"
-                ? "text-red-500 bg-red-100"
-                : "text-yellow-500 bg-yellow-100"
+                ? "text-red-500 bg-red-50"
+                : "text-yellow-500 bg-yellow-50"
             }`}
           >
             {trnx.status}
@@ -82,9 +82,7 @@ const Wallet = ({ toggle, userBal }) => {
       <div className="w-full py-6 min-h-screen lg:px-10 flex flex-col gap-6 lg:max-w-[1000px] mx-auto ">
         <div className=" bg-white dark:bg-slate-950 p-6 rounded-xl shadow">
           <div className="flex justify-between">
-            <h4 className="font-bold text-md">
-              Wallet balance: ${balance.toFixed(2)}
-            </h4>
+            <h4 className="font-bold text-md">Wallet balance: {balance} USD</h4>
             <button
               onClick={handleDepositModal}
               className="inline-flex font-medium text-sm bg-red-600 text-white hover:bg-red-800 transition-all px-5 py-2 rounded-full"

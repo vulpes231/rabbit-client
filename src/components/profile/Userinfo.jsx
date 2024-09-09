@@ -1,33 +1,42 @@
 import React from "react";
-import { MdVerifiedUser } from "react-icons/md";
+import { MdMoney, MdVerifiedUser } from "react-icons/md";
 import { CgMail, CgUser } from "react-icons/cg";
 import Container from "./Container";
 
-const Userinfo = () => {
-  // Retrieve and parse the user information from sessionStorage
-  const storedUser = sessionStorage.getItem("userInfo");
-  const user = storedUser ? JSON.parse(storedUser) : null;
+const styles = {
+  span: "flex items-center font-bold",
+};
 
+const Userinfo = ({ user, bal }) => {
   return (
     <Container icon={<MdVerifiedUser />} title={"User Info:"}>
       {user ? (
-        <div className="text-xs font-thin text-slate-400">
+        <div className="text-xs font-normal capitalize flex flex-col gap-5">
           <p className="flex items-center gap-1">
-            <span>
+            <span className={styles.span}>
               <CgUser />
+              username:
             </span>
-            {user.username}
+            {user?.username}
           </p>
           <p className="flex items-center gap-1">
-            <span>
+            <span className={styles.span}>
               <CgMail />
+              email:
             </span>
-            {user.email}
+            <span className="lowercase">{user?.email}</span>
+          </p>
+          <p className="flex items-center gap-1">
+            <span className={styles.span}>
+              <MdMoney />
+              wallet balance:
+            </span>
+            <span>{bal || 0} USD</span>
           </p>
         </div>
       ) : (
         <p className="p-2 font-thin text-slate-400">
-          No user information found.
+          Unable to load user information.
         </p>
       )}
     </Container>

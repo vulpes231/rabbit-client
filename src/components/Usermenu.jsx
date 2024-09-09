@@ -4,12 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiPurchaseTagAlt } from "react-icons/bi";
 import { BsGear, BsTicket } from "react-icons/bs";
 import { MdLogout } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../features/logoutSlice";
+import { useDispatch } from "react-redux";
 
-const Usermenu = ({ handleLogout, load }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const Usermenu = ({ handleLogout }) => {
   const [menu, setShowMenu] = useState(false);
 
   const showMenu = () => {
@@ -41,17 +38,15 @@ const Usermenu = ({ handleLogout, load }) => {
         </li>
         <li className="flex items-center gap-3 text-xs">
           <BsTicket />
-          <Link to={""}>tickets</Link>
+          <Link to={"/tickets"}>tickets</Link>
         </li>
         <li className="flex items-center gap-3 text-xs">
           <BsGear />
-          <Link to={""}>settings</Link>
+          <Link to={"/settings"}>settings</Link>
         </li>
         <li className="flex items-center gap-3 text-xs cursor-pointer">
           <MdLogout />
-          <span onClick={handleLogout}>
-            {!load ? "logout" : "logging out..."}
-          </span>
+          <span onClick={handleLogout}>{"logout"}</span>
         </li>
       </ul>
     </div>

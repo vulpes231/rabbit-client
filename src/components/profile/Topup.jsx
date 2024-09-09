@@ -1,17 +1,22 @@
 import React from "react";
-import { MdMoney, MdVerifiedUser } from "react-icons/md";
-import { CgMail, CgUser } from "react-icons/cg";
-import Button from "./Button";
+import { MdMoney } from "react-icons/md";
 import Container from "./Container";
-const Topup = () => {
+import { Link } from "react-router-dom";
+
+const Topup = ({ bal }) => {
   return (
     <Container icon={<MdMoney />} title={"top up:"}>
-      <span className="flex items-center justify-between">
-        <p className="flex items-center gap-1 text-xs text-slate-400 font-extralight">
-          Current balance: $0
+      <div className="flex items-center justify-between">
+        <p className="flex items-center gap-1 text-xs font-normal">
+          Wallet Balance: {bal || 0} USD
         </p>
-        <Button title={"Top up wallet"} />
-      </span>
+        <Link
+          to={"/wallet"}
+          className="px-4 py-2.5 bg-red-500 text-white rounded-3xl cursor-pointer capitalize text-xs font-medium whitespace-nowrap"
+        >
+          Deposit
+        </Link>
+      </div>
     </Container>
   );
 };
