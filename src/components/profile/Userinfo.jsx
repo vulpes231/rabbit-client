@@ -9,7 +9,7 @@ const styles = {
 
 const Userinfo = ({ user, bal }) => {
   return (
-    <Container icon={<MdVerifiedUser />} title={"User Info:"}>
+    <Container icon={<MdVerifiedUser />} title={"User Information"}>
       {user ? (
         <div className="text-xs font-normal capitalize flex flex-col gap-5">
           <p className="flex items-center gap-1">

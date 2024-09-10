@@ -31,8 +31,8 @@ const Profile = () => {
 
   return (
     <section className="font-[Montserrat]">
-      <div className="container px-3 lg:max-w-[1000px] mx-auto">
-        <h3 className="uppercase font-semibold text-lg text-center pt-10">
+      <div className="container px-3 lg:max-w-[1000px] mx-auto mt-28 sm:mt-16 lg:mt-0">
+        <h3 className="uppercase font-semibold text-lg text-center py-5">
           Profile
         </h3>
 

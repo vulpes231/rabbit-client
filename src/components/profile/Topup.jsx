@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Topup = ({ bal }) => {
   return (
-    <Container icon={<MdMoney />} title={"top up:"}>
+    <Container icon={<MdMoney />} title={"top up"}>
       <div className="flex items-center justify-between">
         <p className="flex items-center gap-1 text-xs font-normal">
           Wallet Balance: {bal || 0} USD

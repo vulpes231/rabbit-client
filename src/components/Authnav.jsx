@@ -23,7 +23,7 @@ const Authnav = ({
         key={link.id}
         onClick={() => {
           if (link.id !== "dash") {
-            console.log("yes");
+            // console.log("yes");
             navigate(link.path);
           } else {
             handleLinks(link.id);
@@ -31,7 +31,7 @@ const Authnav = ({
           }
         }}
         className={
-          "flex gap-3 cursor-pointer items-center font-thin pb-2 hover:text-red-500"
+          "flex gap-2 cursor-pointer items-center font-thin pb-2 hover:text-red-500"
         }
       >
         {link.title.includes("Dash") ? (
@@ -51,7 +51,7 @@ const Authnav = ({
   });
 
   return (
-    <header className="isolate fixed top-0 start-0 w-full py-4 xl:py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-[1020] px-3">
+    <header className="isolate fixed top-0 start-0 w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-[1020] p-4 flex flex-col gap-6">
       <div className="flex items-center w-100 justify-between">
         <h3 className="text-2xl caveat-regular capitalize text-red-500 font-bold hidden lg:flex">
           rh4ogs
@@ -85,7 +85,7 @@ const Authnav = ({
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 justify-center md:gap-10 lg:hidden pt-2 text-xs font-medium">
+      <div className="flex flex-wrap gap-6 justify-center md:gap-10 lg:hidden pt-2 text-xs font-medium">
         {authLinks}
       </div>
     </header>

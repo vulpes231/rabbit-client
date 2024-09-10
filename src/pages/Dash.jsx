@@ -58,8 +58,8 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
     <section
       className={
         toggle
-          ? "ml-[60%] md:ml-[40%] flex-grow flex-col gap-8 font-[Montserrat] px-10"
-          : "ml-0 lg:ml-[250px] flex-grow flex-col gap-8 font-[Montserrat] px-10"
+          ? "md:ml-[40%] flex-grow flex-col gap-8 font-[Montserrat] px-2"
+          : "ml-0 lg:ml-[250px] flex-grow flex-col gap-8 font-[Montserrat] px-2"
       }
     >
       <div className="flex min-h-screen overflow-auto">

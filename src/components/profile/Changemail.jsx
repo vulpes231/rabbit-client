@@ -70,7 +70,7 @@ const Changemail = ({ user }) => {
   }, [editUserError, userEdited]);
 
   return (
-    <Container icon={<MdAttachEmail />} title={"change mail:"}>
+    <Container icon={<MdAttachEmail />} title={"Security"}>
       <span className="flex items-center gap-1 relative">
         <span className="absolute top-2 right-2">
           <CgUser />

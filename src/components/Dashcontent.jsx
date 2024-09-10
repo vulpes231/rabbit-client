@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDiscount, MdOutlinePriceChange } from "react-icons/md";
 import { FaCalendar, FaClock, FaGift, FaUserFriends } from "react-icons/fa";
 import { LabelIcon } from "../components";
@@ -26,16 +26,17 @@ import Smtp from "../pages/Smtp";
 import Leads from "../pages/Leads";
 import Extractor from "../pages/Extractor";
 import Deepfake from "../pages/Deepfake";
+import { Link } from "react-router-dom";
 
 const Content = () => {
   const dispatch = useDispatch();
   const { balance } = useSelector((state) => state.wallet);
   const { user } = useSelector((state) => state.user);
 
-  // console.log(balance);
+  const [lastLogin, setLastLogin] = useState(false);
 
-  const lastLogin = new Date();
-  const formatteddate = lastLogin.toLocaleString("en-US", {
+  const currentdate = new Date();
+  const formatteddate = currentdate.toLocaleString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -51,10 +52,11 @@ const Content = () => {
       dispatch(getUser());
       dispatch(getUserBalance());
     }
+    setLastLogin(formatteddate);
   }, [accessToken, dispatch]);
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-10 w-full p-6  lg:flex-row">
+    <div className="flex flex-col gap-5 mt-28 sm:mt-16 lg:mt-0">
+      <div className="flex flex-col gap-10 w-full p-2 lg:flex-row">
         <Article>
           <LabelIcon
             icon={<MdDiscount />}
@@ -77,11 +79,13 @@ const Content = () => {
         </Article>
       </div>
 
-      <div className="flex flex-col gap-10 rounded-lg w-full px-8 lg:flex-row ">
+      <div className="flex flex-col gap-4 rounded-lg w-full px-8 lg:flex-row ">
         <Span>
           <div className="flex items-center gap-2 capitalize">
             <FaClock />
-            <small>last login:{formatteddate}</small>
+            <small className="flex flex-col md:flex-row md:items-center">
+              last login: <span>{lastLogin}</span>
+            </small>
           </div>
         </Span>
         <Span>
@@ -102,7 +106,7 @@ const Content = () => {
         </span>
       </div>
 
-      <div className="grid gap-5 px-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 p-2 md:grid-cols-2 lg:grid-cols-3">
         <Dashdiv>
           <span className=" flex justify-between items-center">
             <p>RDP(s)</p>
@@ -138,21 +142,25 @@ const Content = () => {
         </Dashdiv>
       </div>
 
-      <div className="flex flex-col gap-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mx-8 p-4 md:w-[45%] rounded-md mt-5">
-        <h3 className="capitalize ">invite a friend</h3>
-        <hr className="text-white bg-white" />
-        <span className="text-sm opacity-80">
-          <LabelIcon icon={<FaGift />} title={"Earnings:"} />
-          <small className="text-green-500 text-xl font-semibold">$0</small>
-        </span>
-        <span className="text-sm opacity-80">
-          <LabelIcon icon={<FaUserFriends />} title={"Friends Invited:"} />
-          <small className="text-red-500 text-xl font-semibold">0</small>
-        </span>
-        <p className="text-center text-red-500 underline text-sm cursor-pointer">
-          localhost:400?r=1234567a
-        </p>
-        <button className="text-center border-2 py-2">Go to referrals</button>
+      <div className=" grid sm:grid-cols-2 lg:grid-cols-3 p-2 ">
+        <div className="flex flex-col gap-4 bg-white dark:bg-slate-950">
+          <h3 className="capitalize pt-2 px-4">invite a friend</h3>
+          <hr className="border dark:border-slate-800 border-slate-200" />
+          <span className="text-sm opacity-80 flex flex-col items-center justify-center">
+            <LabelIcon icon={<FaGift />} title={"Earnings:"} />
+            <small className="text-green-500 text-xl font-semibold">$0</small>
+          </span>
+          <span className="text-sm opacity-80 flex flex-col items-center justify-center">
+            <LabelIcon icon={<FaUserFriends />} title={"Friends Invited:"} />
+            <small className="text-red-500 text-xl font-semibold">0</small>
+          </span>
+          <small className="text-center text-red-500 underline text-xs cursor-pointer">
+            {`https://rabbithole4og.com/?r=${user?.username}rhs4og`}
+          </small>
+          <Link className="text-center border py-2 m-3 dark:border-slate-600 border-slate-200">
+            Go to referrals
+          </Link>
+        </div>
       </div>
     </div>
   );

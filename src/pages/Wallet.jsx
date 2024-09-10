@@ -35,21 +35,25 @@ const Wallet = () => {
     return (
       <tr
         key={index}
-        className="border-b dark:border-slate-700 text-xs font-thin capitalize p-4"
+        className={`${
+          index % 2 !== 0
+            ? "bg-slate-100 dark:bg-slate-400"
+            : "bg-white dark:bg-slate-950"
+        } border-b dark:border-slate-700 text-xs font-normal capitalize p-4`}
       >
-        <td className="py-3 px-4">
+        <td className="py-4 px-6">
           {format(new Date(trnx.date), "dd/mm/yyyy")}
         </td>
-        <td className="py-3 px-4">{trnx.method}</td>
-        <td className="py-3 px-4">${trnx.amount}</td>
-        <td className="py-3 px-4">
+        <td className="py-4 px-6">{trnx.method}</td>
+        <td className="py-4 px-6">${trnx.amount}</td>
+        <td className="py-4 px-6">
           <span
             className={`py-2 px-4 rounded-lg capitalize ${
               trnx.status === "completed"
-                ? "text-green-500 bg-green-50"
+                ? "text-green-500 border border-green-500"
                 : trnx.status === "failed"
-                ? "text-red-500 bg-red-50"
-                : "text-yellow-500 bg-yellow-50"
+                ? "text-red-500 border border-red-500"
+                : "text-yellow-500 border border-yellow-500"
             }`}
           >
             {trnx.status}
@@ -78,21 +82,30 @@ const Wallet = () => {
   }, []);
 
   return (
-    <section>
-      <div className="w-full py-6 min-h-screen lg:px-10 flex flex-col gap-6 lg:max-w-[1000px] mx-auto ">
-        <div className=" bg-white dark:bg-slate-950 p-6 rounded-xl shadow">
-          <div className="flex justify-between">
-            <h4 className="font-bold text-md">Wallet balance: {balance} USD</h4>
+    <section className="font-[Montserrat]">
+      <div className="w-full p-4 min-h-screen flex flex-col gap-6 lg:max-w-[1000px] mx-auto mt-28 sm:mt-16 lg:mt-0">
+        <div className="flex flex-col gap-2 md:flex-row md:justify-between md:items-center">
+          <h3 className="uppercase font-semibold text-xl">
+            manage your wallet
+          </h3>
+          <span>
             <button
               onClick={handleDepositModal}
               className="inline-flex font-medium text-sm bg-red-600 text-white hover:bg-red-800 transition-all px-5 py-2 rounded-full"
             >
               deposit
             </button>
-          </div>
+          </span>
+        </div>
 
-          <div className="flex flex-col gap-2 ">
-            <small>We currently accept the following payment methods.</small>
+        <div className=" bg-white dark:bg-slate-950 p-6 rounded-xl shadow">
+          <div className="flex flex-col gap-4 ">
+            <h4 className="font-semibold">
+              Wallet balance: {balance || 0} USD
+            </h4>
+            <small className="text-xs text-slate-500">
+              We currently accept the following payment methods.
+            </small>
             <div className="flex gap-4 items-center">
               <Walletspan src={btc} title={"Bitcoin"} custom={"w-[25px]"} />
               <Walletspan src={tet} title={"Tether"} custom={"w-[25px]"} />
@@ -101,18 +114,22 @@ const Wallet = () => {
           </div>
         </div>
 
-        <div className="overflow-hidden mt-5 text-xs font-medium">
-          <div className="overflow-x-auto">
+        <div className="overflow-auto mt-5 text-xs font-medium">
+          <div className="">
             <table className="min-w-full bg-white dark:bg-slate-900 dark:text-slate-200 text-xs font-medium">
               <thead>
                 <tr className="bg-red-500 dark:bg-slate-80 text-white uppercase">
                   <th className="text-left py-2 px-4">Date</th>
-                  <th className="text-left py-2 px-4">Payment Method</th>
+                  <th className="text-left py-2 px-4">Currency</th>
                   <th className="text-left py-2 px-4">Amount</th>
                   <th className="text-left py-2 px-4">Status</th>
                 </tr>
               </thead>
-              <tbody>{mytrnx}</tbody>
+              {transactions ? (
+                <tbody className="min-w-full">{mytrnx}</tbody>
+              ) : (
+                <div>No recent transactions</div>
+              )}
             </table>
           </div>
           {depositModal && (

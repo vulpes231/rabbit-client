@@ -84,20 +84,19 @@ const Faq = () => {
   }, []);
 
   return (
-    <section>
-      <div className="w-full space-y-5 min-h-screen lg:max-w-[1000px] mx-auto">
-        <span>
-          <h3 className="uppercase font-semibold text-lg text-center pt-10">
-            Frequently asked questions
-          </h3>
-        </span>
-        <div className=" min-h-screen flex flex-col items-center py-8">
-          <div className="w-full max-w-2xl">
+    <section className="font-[Montserrat]">
+      <div className="w-full  min-h-screen lg:max-w-[1000px] mx-auto mt-28 sm:mt-16 lg:mt-0 flex flex-col gap-6">
+        <h3 className="uppercase font-semibold text-lg text-center py-5">
+          Frequently asked questions
+        </h3>
+
+        <div className=" min-h-screen flex flex-col items-center">
+          <div className="w-full max-w-2xl dark:bg-slate-950 bg-white">
             {questionsAndAnswers.map((item, index) => (
               <div key={index} className=" border-b py-4">
                 <button
                   onClick={() => toggleAnswer(index)}
-                  className="w-full text-left py-2 px-4 rounded focus:outline-none flex items-center justify-between gap-2"
+                  className="w-full text-left py-2 px-4 rounded focus:outline-none flex items-center justify-between gap-2 text-xs"
                 >
                   {item.question} <FaPlus />
                 </button>
@@ -110,7 +109,7 @@ const Faq = () => {
             ))}
           </div>
         </div>
-        <div className="text-xs font-thin md:flex flex-wrap md:items-center md:justify-center gap-4 my-5">
+        <div className="text-xs font-thin md:flex flex-col md:flex-row md:items-center md:justify-center gap-4 p-6">
           <FaqComp
             title={"Admin support on Telegram"}
             icon={<MdChecklist className="text-red-500" />}

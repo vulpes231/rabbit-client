@@ -103,8 +103,8 @@ const ProductTable = ({ data }) => {
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   return (
-    <>
-      <table className="bg-white dark:bg-slate-950 divide-y divide-gray-200 dark:divide-gray-700 w-full overflow-auto mt-8">
+    <div>
+      <table className="bg-white dark:bg-slate-950 divide-y divide-gray-200 dark:divide-gray-700 w-full overflow-auto mt-28 sm:mt-16 lg:mt-0">
         <thead className="bg-red-500 dark:bg-slate-950 ">
           <tr className="text-white dark:text-slate-200 ">
             {headers.map((hdr) => (
@@ -258,7 +258,7 @@ const ProductTable = ({ data }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

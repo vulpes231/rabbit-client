@@ -9,7 +9,7 @@ const styles = {
 
 const Contactus = () => {
   return (
-    <Container icon={<MdContactPage />} title={"contact us:"}>
+    <Container icon={<MdContactPage />} title={"contact us"}>
       <span className="flex justify-between items-center">
         <Link className={styles.link} to={"/tickets"}>
           Open a ticket

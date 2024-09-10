@@ -25,8 +25,8 @@ const Channel = ({ toggle }) => {
   }, []);
   return (
     <section>
-      <div className="w-full min-h-screen lg:max-w-[1000px] mx-auto">
-        <h3 className="uppercase font-semibold text-xl text-center pt-10">
+      <div className="w-full min-h-screen lg:max-w-[1000px] mx-auto mt-28 sm:mt-16 lg:mt-0">
+        <h3 className="uppercase font-semibold text-xl text-center py-5">
           channels
         </h3>
 

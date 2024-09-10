@@ -74,11 +74,11 @@ const Sidebar = ({
     <aside
       className={
         toggle
-          ? "fixed h-full w-[60%] md:w-[40%] top-[130px] sm:top-[100px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 md:hidden overflow-y-auto max-h-[calc(100vh-130px)]"
+          ? "fixed h-full w-[60%] md:w-[40%] top-[100px] sm:top-[100px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 md:hidden overflow-y-auto"
           : "hidden lg:flex fixed h-full w-[250px] top-[58px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 overflow-y-auto max-h-[calc(100vh-58px)]"
       }
     >
-      <div className="px-4 gap-2 flex flex-col h-full ">
+      <div className="px-4 gap-2 flex flex-col h-full mt-20 sm:mt-16 lg:mt-0 ">
         <span
           onClick={() => {
             handleLinks("dash");
