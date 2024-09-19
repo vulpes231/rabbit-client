@@ -76,7 +76,7 @@ const ProductTable = ({ data }) => {
       }, timeout);
     }
     return () => clearTimeout(timeout);
-  }, [success]);
+  }, [success, dispatch, navigate]);
 
   useEffect(() => {
     let timeout;
