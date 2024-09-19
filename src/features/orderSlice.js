@@ -10,6 +10,9 @@ const initialState = {
   getOrderError: false,
   getOrderSuccess: false,
   orders: [],
+  orderDetailError: false,
+  orderDetailLoading: false,
+  orderDetails: [],
   orderByIdLoading: false,
   orderByIdError: false,
   singleOrder: null,
@@ -45,6 +48,36 @@ export const getUserOrders = createAsyncThunk(
   "order/getUserOrders",
   async () => {
     const url = `${server}/order`;
+    const accessToken = getAccessToken();
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      // console.log("orders", response);
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        const errorMsg = error.response.data.message;
+        throw new Error(errorMsg);
+      } else {
+        throw new Error("Error getting user orders.");
+      }
+    }
+  }
+);
+
+export const getCompletedOrderDetails = createAsyncThunk(
+  "order/getCompletedOrderDetails",
+  async () => {
+    const url = `${server}/completed`;
     const accessToken = getAccessToken();
 
     if (!accessToken) {
@@ -166,6 +199,20 @@ const orderSlice = createSlice({
         state.orderByIdError = action.error.message;
         state.orderByIdLoading = false;
         state.singleOrder = null;
+      });
+    builder
+      .addCase(getCompletedOrderDetails.pending, (state) => {
+        state.orderDetailLoading = true;
+      })
+      .addCase(getCompletedOrderDetails.fulfilled, (state, action) => {
+        state.orderDetailError = false;
+        state.orderDetailLoading = false;
+        state.orderDetails = action.payload;
+      })
+      .addCase(getCompletedOrderDetails.rejected, (state, action) => {
+        state.orderDetailError = action.error.message;
+        state.orderDetailLoading = false;
+        state.orderDetails = null;
       });
   },
 });

@@ -6,7 +6,6 @@ import {
   GrCatalog,
   GrCloudSoftware,
   GrHome,
-  GrMail,
   GrResume,
   GrSend,
   GrServerCluster,
@@ -49,12 +48,13 @@ import { getProducts } from "../features/dashSlice";
 //   "updated",
 // ];
 
+/* eslint-disable react/prop-types */
 const Sidebar = ({
   toggle,
   handleLinks,
   activeLink,
   resetClick,
-  handleLogout,
+  // handleLogout,
 }) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
@@ -68,7 +68,7 @@ const Sidebar = ({
     if (accessToken) {
       dispatch(getProducts());
     }
-  }, [accessToken]);
+  }, [accessToken, dispatch]);
 
   return (
     <aside

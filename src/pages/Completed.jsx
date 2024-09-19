@@ -3,12 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../constants";
 import { getUserOrders } from "../features/orderSlice";
+import Orderinfo from "../components/Orderinfo";
 
 const Completed = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { orders } = useSelector((state) => state.order);
   const [completedOrders, setCompletedOrders] = useState([]);
+
+  const [showOrdeModal, setShowOrderModal] = useState(false);
+  const [orderDetail, setOrderDetail] = useState(false);
+
+  const handleOrderModal = (ord) => {
+    // console.log(ord);
+    setOrderDetail(ord);
+    setShowOrderModal(true);
+  };
+
+  const closeOrderModal = () => {
+    setShowOrderModal(false);
+  };
 
   const accessToken = getAccessToken();
 
@@ -68,13 +82,21 @@ const Completed = () => {
                     </small>
                   </td>
                   <td className="p-4">
-                    <span className="underline">view details</span>
+                    <button
+                      onClick={() => handleOrderModal(ord)}
+                      className="underline cursor-pointer"
+                    >
+                      view details
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {showOrdeModal && (
+          <Orderinfo order={orderDetail} onClose={closeOrderModal} />
+        )}
       </div>
     </section>
   );
