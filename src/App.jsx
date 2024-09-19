@@ -17,6 +17,10 @@ import { logoutUser } from "./features/logoutSlice";
 import { resetLogin } from "./features/signinSlice";
 import Ticket from "./pages/Ticket";
 import Settings from "./pages/Settings";
+import Showaddress from "./pages/Showaddress";
+import Contact from "./pages/Contact";
+import LogoutModal from "./components/dash/LogoutModal";
+import Completed from "./pages/Completed";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,16 +38,10 @@ const App = () => {
 
   const { loading, error, success } = useSelector((state) => state.logout);
 
-  const handleLogout = (e) => {
+  const handleLogout = () => {
     console.log("Logging out..");
     dispatch(logoutUser());
   };
-
-  useEffect(() => {
-    if (success) {
-      window.location.href = "/signin";
-    }
-  }, [success, dispatch]);
 
   const handleLinks = (linkId) => {
     setActiveLink(linkId);
@@ -62,16 +60,15 @@ const App = () => {
       setToken(accessToken);
     } else {
       setToken(false);
-      navigate("/signin");
     }
-  }, [accessToken]);
+  }, [accessToken, navigate]);
 
   useEffect(() => {
     if (success) {
       sessionStorage.clear();
       dispatch(resetLogin());
     }
-  }, [success]);
+  }, [success, dispatch]);
 
   useEffect(() => {
     if (darkMode) {
@@ -80,6 +77,12 @@ const App = () => {
       document.documentElement.classList.add("dark");
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    if (success) {
+      window.location.href = "/signin";
+    }
+  }, [success, dispatch]);
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16">
@@ -94,13 +97,19 @@ const App = () => {
           handleLogout={handleLogout}
         />
       ) : (
-        <Navbar />
+        <Navbar
+          darkMode={darkMode}
+          handleDarkMode={handleModeToggle}
+          toggle={toggle}
+          handleToggle={handleToggle}
+        />
       )}
 
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/dashboard"
           element={
@@ -109,6 +118,7 @@ const App = () => {
               resetToggle={resetToggle}
               handleLinks={handleLinks}
               toggle={toggle}
+              handleLogout={handleLogout}
             />
           }
         />
@@ -120,7 +130,10 @@ const App = () => {
         <Route path="/order" element={<Orders />} />
         <Route path="/tickets" element={<Ticket />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/payment" element={<Showaddress />} />
+        <Route path="/completed" element={<Completed />} />
       </Routes>
+      {loading && <LogoutModal />}
     </div>
   );
 };

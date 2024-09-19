@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { getUserOrders } from "../features/orderSlice";
 import { createTicket } from "../features/ticketSlice";
 
+/* eslint-disable react/prop-types */
 const ErrorModal = ({ error }) => {
   return <div className="absolute top-0 right-0 w-[150px]">{error}</div>;
 };
 
 const ConfirmTicket = ({ handleClick, loading, closeModal }) => {
-  // console.log(loading);
   return (
     <div className="absolute top-[80px] right-[20px] w-[250px] bg-white p-6 shadow-lg rounded-xl font-thin">
       <small>Are you sure you want to create a ticket?</small>
@@ -60,7 +60,6 @@ const Orders = () => {
     e.preventDefault();
     console.log("creating ticket");
     dispatch(createTicket(orderId));
-    console.log(ticketCreated);
   };
 
   const closeTicketModal = () => {
@@ -75,7 +74,6 @@ const Orders = () => {
 
   useEffect(() => {
     if (ticketCreated) {
-      console.log("yes");
       navigate(`/chat?orderId=${orderId}`);
       setSelectedOptions((prev) => ({
         ...prev,
@@ -93,9 +91,12 @@ const Orders = () => {
     }
   }, [accessToken, navigate, dispatch]);
 
+  // Filter orders to only show pending ones
+  const pendingOrders = orders?.filter((ord) => ord.status === "pending");
+
   return (
-    <section className="w-full lg:max-w-[1000px] mx-auto ">
-      <h3 className="text-xl font-bold mb-4 uppercase">My Orders</h3>
+    <section className="w-full lg:max-w-[1000px] mx-auto mt-10 ">
+      <h3 className="text-xl font-bold mb-4 uppercase"> Pending Orders</h3>
       <div className="overflow-x-auto w-full">
         <table className="w-full bg-white dark:bg-slate-900 dark:text-slate-200 text-xs font-medium">
           <thead>
@@ -108,7 +109,7 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders?.map((ord) => (
+            {pendingOrders?.map((ord) => (
               <tr
                 className="border-b dark:border-slate-700 text-xs font-thin capitalize"
                 key={ord._id}

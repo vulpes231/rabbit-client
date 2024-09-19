@@ -1,8 +1,8 @@
 export const navLinks = [
   { id: "home", title: "Home", path: "/" },
-  { id: "faq", title: "FAQs", path: "" },
-  { id: "channels", title: "Channels", path: "" },
-  { id: "contact", title: "Contact", path: "" },
+  { id: "faq", title: "FAQs", path: "/faq" },
+  { id: "channels", title: "Channels", path: "/channel" },
+  { id: "contact", title: "Contact", path: "/contact" },
 ];
 
 export const loggedLinks = [

@@ -20,7 +20,6 @@ const paymentMethods = [
     id: "usdt",
     network: ["erc20", "trc20", "bsc(bep20)"],
   },
-  { currency: "admin", icon: <MdAdminPanelSettings />, id: "adm", network: [] },
 ];
 
 const initialState = {
@@ -50,8 +49,15 @@ const Depositmodal = ({ closeDepositModal }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.currency === "admin" && parseFloat(formData.amount) < 100) {
-      setError("Minimum deposit is $100");
+    if (formData.currency === "btc" && parseFloat(formData.amount) < 100) {
+      setError("Minimum deposit is $50");
+      return;
+    }
+    if (
+      formData.currency === "eth" ||
+      (formData.currency === "usdt" && parseFloat(formData.amount) < 100)
+    ) {
+      setError("Minimum deposit is $20");
       return;
     }
 
@@ -73,7 +79,7 @@ const Depositmodal = ({ closeDepositModal }) => {
       setTimeout(() => {
         setsuccessModal(false);
         timeout = 5000;
-        window.location.reload();
+        window.location.href = "/payment";
       }, timeout);
     }
     return () => {
@@ -106,13 +112,16 @@ const Depositmodal = ({ closeDepositModal }) => {
     <div className="w-full h-screen fixed flex items-center justify-center top-0 left-0 bg-white bg-opacity-50">
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 w-full sm:w-[370px] sm:mx-auto shadow rounded-xl p-6 m-4 flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <h4 className="flex items-center gap-1">
-            Deposit
-            {formData.currency && (
-              <span className="ml-2">
-                {selectedPaymentMethod?.icon || <span>No icon found</span>}
-              </span>
-            )}
+          <h4 className="flex items-center capitalize font-bold text-lg gap-1 ">
+            Deposit with
+            <span>
+              {formData.currency && (
+                <span className="flex items-center gap-2">
+                  <span className="">{selectedPaymentMethod.currency}</span>
+                  <span className="">{selectedPaymentMethod.icon}</span>
+                </span>
+              )}
+            </span>
           </h4>
           <MdClose onClick={closeDepositModal} className="cursor-pointer" />
         </div>
@@ -120,34 +129,6 @@ const Depositmodal = ({ closeDepositModal }) => {
           onSubmit={handleFormSubmit}
           className="flex flex-col gap-4 capitalize"
         >
-          <div className="flex flex-col gap-1">
-            <label htmlFor="amount" className="font-semibold">
-              Amount
-            </label>
-            <input
-              type="text"
-              id="amount"
-              name="amount"
-              value={formData.amount}
-              onChange={handleChange}
-              placeholder="$0.00"
-              autoComplete="off"
-              className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
-            />
-          </div>
-          {formData.currency && (
-            <small className="p-2 bg-gray-200 text-gray-600 rounded-sm">
-              {formData.currency === "bitcoin"
-                ? "Minimum: $50"
-                : formData.currency === "ethereum"
-                ? "Minimum: $20"
-                : formData.currency === "tether"
-                ? "Minimum: $30"
-                : formData.currency === "admin"
-                ? "Minimum: $100"
-                : "Select a payment method"}
-            </small>
-          )}
           <div className="flex flex-col gap-1">
             <label htmlFor="currency" className="font-semibold">
               Currency
@@ -185,6 +166,33 @@ const Depositmodal = ({ closeDepositModal }) => {
                 ))}
               </select>
             </div>
+          )}
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="amount" className="font-semibold">
+              Amount
+            </label>
+            <input
+              type="text"
+              id="amount"
+              name="amount"
+              value={formData.amount}
+              onChange={handleChange}
+              placeholder="$0.00"
+              autoComplete="off"
+              className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+            />
+          </div>
+          {formData.currency && (
+            <small className="p-2 rounded-sm font-medium text-xs">
+              {formData.currency === "btc"
+                ? "Minimum: $50"
+                : formData.currency === "eth"
+                ? "Minimum: $20"
+                : formData.currency === "usdt"
+                ? "Minimum: $20"
+                : "Select a payment method"}
+            </small>
           )}
           {formData.currency === "admin" && (
             <small className="p-2 bg-red-200 text-red-600 rounded-sm">

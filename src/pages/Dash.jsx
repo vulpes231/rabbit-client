@@ -1,51 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Sidebar } from "../components";
-import { logoutUser } from "../features/logoutSlice";
 import Footer from "../components/Footer";
 import { getAccessToken } from "../constants";
 import Dashcontent from "../components/Dashcontent";
-
 import { getProducts } from "../features/dashSlice";
-import LogoutModal from "../components/dash/LogoutModal";
 
-const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
-  const navigate = useNavigate();
+/* eslint-disable react/prop-types */
+const Dash = ({
+  handleLinks,
+  activeLink,
+  toggle,
+  resetToggle,
+  handleLogout,
+}) => {
   const dispatch = useDispatch();
 
   const accessToken = getAccessToken();
-  const { loading, error, success } = useSelector((state) => state.logout);
-
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/signin");
-    }
-  }, [accessToken]);
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
 
   useEffect(() => {
     if (accessToken) {
       dispatch(getProducts());
     }
   }, [accessToken, dispatch]);
-
-  useEffect(() => {
-    if (success) {
-      // Clear cookies
-      document.cookie.split(";").forEach((c) => {
-        document.cookie = c
-          .replace(/^ +/, "")
-          .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
-      });
-      localStorage.clear();
-      sessionStorage.clear();
-      window.location.reload();
-    }
-  }, [success]);
 
   useEffect(() => {
     document.title = "RH4OGS - Client area";
@@ -74,7 +51,6 @@ const Dash = ({ handleLinks, activeLink, toggle, resetToggle }) => {
         <>
           <Dashcontent activeLink={activeLink} />
         </>
-        {loading && <LogoutModal />}
       </div>
       <Footer />
     </section>

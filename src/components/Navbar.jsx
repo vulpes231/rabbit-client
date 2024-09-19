@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { logo } from "../assets";
 import { Link } from "react-router-dom";
 import {
@@ -14,53 +14,42 @@ import { GrChannel } from "react-icons/gr";
 import { FaInstagram, FaTelegram, FaTwitter } from "react-icons/fa";
 import { navLinks } from "../constants";
 
-const Navbar = () => {
-  const [activeLink, setActiveLink] = useState("");
-  const [toggle, setToggle] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+/* eslint-disable react/prop-types */
+const Navbar = ({
+  darkMode,
+  handleDarkMode,
 
-  const handleLinks = (linkId) => {
+  toggle,
+  handleToggle,
+}) => {
+  const [activeLink, setActiveLink] = useState("home");
+  const handleLink = (linkId) => {
     setActiveLink(linkId);
   };
-
-  const handleToggle = () => {
-    setToggle((prev) => !prev);
-  };
-  const handleModeToggle = () => {
-    setDarkMode(!darkMode);
-  };
-  const links = navLinks.map((link) => (
-    <Link
-      onClick={() => handleLinks(link.id)}
-      key={link.id}
-      className={
-        activeLink === link.id
-          ? "flex items-center gap-2 text-xs font-medium border-b-2 border-red-500 uppercase"
-          : "flex items-center gap-2 text-xs font-medium uppercase"
-      }
-      to={link.path}
-    >
-      {link.title.includes("Home") ? (
-        <MdHome />
-      ) : link.title.includes("FAQs") ? (
-        <MdNote />
-      ) : link.title.includes("Channels") ? (
-        <GrChannel />
-      ) : link.title.includes("Contact") ? (
-        <MdPhone />
-      ) : null}
-      {link.title}
-    </Link>
-  ));
-
-  useEffect(() => {
-    // Apply dark mode class to the body
-    if (!darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
+  const links = navLinks.map((link) => {
+    console.log(activeLink);
+    return (
+      <Link
+        to={link.path}
+        key={link.id}
+        onClick={() => handleLink(link.id)}
+        className={`flex items-center gap-1 uppercase text-xs font-medium border-b-2 p-2 ${
+          activeLink === link.id ? "border-red-500" : "border-none"
+        }`}
+      >
+        {link.title.includes("Home") ? (
+          <MdHome />
+        ) : link.title.includes("FAQs") ? (
+          <MdNote />
+        ) : link.title.includes("Channels") ? (
+          <GrChannel />
+        ) : link.title.includes("Contact") ? (
+          <MdPhone />
+        ) : null}
+        {link.title}
+      </Link>
+    );
+  });
 
   return (
     <header className="isolate fixed top-0 start-0 w-full py-4 xl:py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-[1020] px-3">
@@ -88,7 +77,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-x-3 lg:gap-x-5">
-              <span onClick={handleModeToggle} className="inline-flex relative">
+              <span onClick={handleDarkMode} className="inline-flex relative">
                 <button className="inline-flex items-center justify-center h-8 w-8 rounded-full overflow-hidden transition-all text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800">
                   {darkMode ? <MdSunny /> : <MdNightlightRound />}
                 </button>

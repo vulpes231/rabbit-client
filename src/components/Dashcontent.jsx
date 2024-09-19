@@ -53,11 +53,11 @@ const Content = () => {
       dispatch(getUserBalance());
     }
     setLastLogin(formatteddate);
-  }, [accessToken, dispatch]);
+  }, [accessToken, dispatch, formatteddate]);
   return (
     <div className="flex flex-col gap-5 mt-28 sm:mt-16 lg:mt-0">
       <div className="flex flex-col gap-10 w-full p-2 lg:flex-row">
-        <Article>
+        <Article path={"/order"}>
           <LabelIcon
             icon={<MdDiscount />}
             title={"pending orders"}
@@ -67,7 +67,7 @@ const Content = () => {
             {user?.pendingOrders || 0}
           </small>
         </Article>
-        <Article>
+        <Article path={"/completed"}>
           <LabelIcon
             icon={<MdOutlinePriceChange />}
             title={"completed orders"}
@@ -166,6 +166,7 @@ const Content = () => {
   );
 };
 
+/* eslint-disable react/prop-types */
 const Dashcontent = ({ activeLink }) => {
   const dispatch = useDispatch();
   const accessToken = getAccessToken();
