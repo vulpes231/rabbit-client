@@ -6,9 +6,6 @@ const initialState = {
   getBalLoading: false,
   getBalError: false,
   balance: false,
-  depositLoading: false,
-  depositError: false,
-  depositSuccess: false,
 };
 
 export const getUserBalance = createAsyncThunk(
@@ -37,38 +34,10 @@ export const getUserBalance = createAsyncThunk(
   }
 );
 
-export const deposit = createAsyncThunk("wallet/deposit", async (formData) => {
-  const url = `${server}/wallet/deposit`;
-  const accessToken = getAccessToken();
-
-  try {
-    const response = await axios.post(url, formData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    if (error.response) {
-      const errorMsg = error.response.data.message;
-      throw new Error(errorMsg);
-    } else {
-      throw new Error("An error occured.");
-    }
-  }
-});
-
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
-  reducers: {
-    resetDeposit(state) {
-      state.depositError = false;
-      state.depositLoading = false;
-      state.depositSuccess = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUserBalance.pending, (state) => {
       state.getBalLoading = true;
@@ -83,20 +52,6 @@ const walletSlice = createSlice({
       state.getBalError = action.error.message;
       state.balance = false;
     });
-    builder
-      .addCase(deposit.pending, (state) => {
-        state.depositLoading = false;
-      })
-      .addCase(deposit.fulfilled, (state) => {
-        state.depositError = false;
-        state.depositLoading = false;
-        state.depositSuccess = true;
-      })
-      .addCase(deposit.rejected, (state, action) => {
-        state.depositError = action.error.message;
-        state.depositLoading = false;
-        state.depositSuccess = false;
-      });
   },
 });
 

@@ -1,42 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { MdAdminPanelSettings, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { FaBitcoin, FaLitecoinSign } from "react-icons/fa6";
 import { FaCheckCircle, FaEthereum } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { deposit } from "../../features/walletSlice";
 import Walletmodal from "./Walletmodal";
+import { manualDeposit, resetManualDeposit } from "../../features/depositSlice";
+import { useNavigate } from "react-router-dom";
 
 const paymentMethods = [
-  { currency: "bitcoin", icon: <FaBitcoin />, id: "btc", network: ["btc"] },
+  { currency: "bitcoin", icon: <FaBitcoin />, id: "bitcoin", network: ["btc"] },
   {
     currency: "ethereum",
     icon: <FaEthereum />,
-    id: "eth",
+    id: "ethereum",
     network: ["erc20", "base mainnet", "arbitrum one", "bsc(bep20)"],
   },
   {
     currency: "tether",
     icon: <FaLitecoinSign />,
-    id: "usdt",
+    id: "tether",
     network: ["erc20", "trc20", "bsc(bep20)"],
   },
 ];
 
 const initialState = {
-  currency: "",
+  coinName: "",
   network: "",
   amount: "",
 };
 
-const Depositmodal = ({ closeDepositModal }) => {
+/* eslint-disable react/prop-types */
+const Manualdeposit = ({ closeDepositModal }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
   const [successModal, setsuccessModal] = useState(false);
   const [error, setError] = useState(false);
 
-  const { depositError, depositSuccess, depositLoading } = useSelector(
-    (state) => state.wallet
-  );
+  const { manualDepositError, manualTrnxData, manualDepositLoading } =
+    useSelector((state) => state.deposit);
+
+  console.log(manualTrnxData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,54 +53,55 @@ const Depositmodal = ({ closeDepositModal }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.currency === "btc" && parseFloat(formData.amount) < 100) {
+    if (formData.coinName === "bitcoin" && parseFloat(formData.amount) < 50) {
       setError("Minimum deposit is $50");
       return;
     }
-    if (
-      formData.currency === "eth" ||
-      (formData.currency === "usdt" && parseFloat(formData.amount) < 100)
-    ) {
+    if (formData.coinName === "tether" && parseFloat(formData.amount) < 20) {
+      setError("Minimum deposit is $20");
+      return;
+    }
+    if (formData.coinName === "ethereum" && parseFloat(formData.amount) < 20) {
       setError("Minimum deposit is $20");
       return;
     }
 
     const dataToSend = {
-      currency: formData.currency.toLowerCase(),
+      coinName: formData.coinName.toLowerCase(),
       amount: parseFloat(formData.amount),
       network: formData.network || "",
     };
 
-    // dispatch(deposit(dataToSend));
-    console.log(dataToSend);
+    dispatch(manualDeposit(dataToSend));
+    // console.log(dataToSend);
   };
 
   useEffect(() => {
     let timeout;
-    if (depositSuccess) {
-      console.log("deposit successful!");
+    if (manualTrnxData) {
+      timeout = 3000;
       setsuccessModal(true);
+
       setTimeout(() => {
-        setsuccessModal(false);
-        timeout = 5000;
-        window.location.href = "/payment";
+        dispatch(resetManualDeposit());
+        closeDepositModal();
+        const transactionId = manualTrnxData.transactiondata._id;
+        navigate(`/payment/${transactionId}`);
       }, timeout);
     }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [depositSuccess, dispatch]);
+    return () => clearTimeout(timeout);
+  }, [manualTrnxData, dispatch, navigate, closeDepositModal]);
 
   useEffect(() => {
-    if (depositError) {
-      setError(depositError);
+    if (manualDepositError) {
+      setError(manualDepositError);
     }
-  }, [depositError]);
+  }, [manualDepositError]);
 
   useEffect(() => {
     let timeout;
     if (error) {
-      timeout = 3000;
+      timeout = 4000;
       setTimeout(() => {
         setError(false);
       }, timeout);
@@ -105,7 +110,7 @@ const Depositmodal = ({ closeDepositModal }) => {
   }, [error]);
 
   const selectedPaymentMethod = paymentMethods.find(
-    (pmt) => pmt.id === formData.currency
+    (pmt) => pmt.id === formData.coinName
   );
 
   return (
@@ -115,7 +120,7 @@ const Depositmodal = ({ closeDepositModal }) => {
           <h4 className="flex items-center capitalize font-bold text-lg gap-1 ">
             Deposit with
             <span>
-              {formData.currency && (
+              {formData.coinName && (
                 <span className="flex items-center gap-2">
                   <span className="">{selectedPaymentMethod.currency}</span>
                   <span className="">{selectedPaymentMethod.icon}</span>
@@ -134,8 +139,8 @@ const Depositmodal = ({ closeDepositModal }) => {
               Currency
             </label>
             <select
-              name="currency"
-              value={formData.currency}
+              name="coinName"
+              value={formData.coinName}
               onChange={handleChange}
               className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
             >
@@ -183,24 +188,19 @@ const Depositmodal = ({ closeDepositModal }) => {
               className="outline-none border placeholder:text-xs placeholder:font-thin p-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
             />
           </div>
-          {formData.currency && (
+          {formData.coinName && (
             <small className="p-2 rounded-sm font-medium text-xs">
-              {formData.currency === "btc"
+              {formData.coinName === "bitcoin"
                 ? "Minimum: $50"
-                : formData.currency === "eth"
+                : formData.coinName === "ethereum"
                 ? "Minimum: $20"
-                : formData.currency === "usdt"
+                : formData.coinName === "tether"
                 ? "Minimum: $20"
                 : "Select a payment method"}
             </small>
           )}
-          {formData.currency === "admin" && (
-            <small className="p-2 bg-red-200 text-red-600 rounded-sm">
-              Payment method not available.
-            </small>
-          )}
 
-          {depositSuccess && (
+          {manualTrnxData && (
             <small className="bg-yellow-200 text-yellow-500 p-2 rounded-xl">
               Deposit pending.
             </small>
@@ -216,7 +216,7 @@ const Depositmodal = ({ closeDepositModal }) => {
               // disabled={formData.paymentMethod !== "Admin"}
               className="font-medium text-sm bg-red-600 text-white hover:bg-red-800 transition-all px-5 py-2 rounded-full w-full"
             >
-              {depositLoading ? "Processing..." : "Deposit"}
+              {manualDepositLoading ? "Wait..." : "Generate Address"}
             </button>
           </div>
         </form>
@@ -228,4 +228,4 @@ const Depositmodal = ({ closeDepositModal }) => {
   );
 };
 
-export default Depositmodal;
+export default Manualdeposit;

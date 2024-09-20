@@ -3,27 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../constants";
 import { Walletspan } from "../components";
 import { eth, btc, tet } from "../assets";
-import Depositmodal from "../components/wallet/Depositmodal";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactions } from "../features/transactionSlice";
-
 import { format } from "date-fns";
-
 import { getUserBalance } from "../features/walletSlice";
+import Choosedeposit from "../components/wallet/Choosedeposit";
 
 const Wallet = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const accessToken = getAccessToken();
+
+  const [depositModal, setDepositModal] = useState(false);
 
   const { transactions } = useSelector((state) => state.transaction);
   const { balance } = useSelector((state) => state.wallet);
 
-  const [depositModal, setDepositModal] = useState(false);
-
   const handleDepositModal = () => {
-    setDepositModal((prev) => !prev);
+    setDepositModal(true);
   };
 
   const closeDepositModal = () => {
@@ -133,7 +130,7 @@ const Wallet = () => {
             </table>
           </div>
           {depositModal && (
-            <Depositmodal closeDepositModal={closeDepositModal} />
+            <Choosedeposit closeDepositModal={closeDepositModal} />
           )}
         </div>
       </div>

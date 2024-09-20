@@ -17,10 +17,10 @@ import { logoutUser } from "./features/logoutSlice";
 import { resetLogin } from "./features/signinSlice";
 import Ticket from "./pages/Ticket";
 import Settings from "./pages/Settings";
-import Showaddress from "./pages/Showaddress";
 import Contact from "./pages/Contact";
 import LogoutModal from "./components/dash/LogoutModal";
 import Completed from "./pages/Completed";
+import Payment from "./pages/Payment";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -130,7 +130,7 @@ const App = () => {
         <Route path="/order" element={<Orders />} />
         <Route path="/tickets" element={<Ticket />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/payment" element={<Showaddress />} />
+        <Route path="/payment/:transactionId" element={<Payment />} />
         <Route path="/completed" element={<Completed />} />
       </Routes>
       {loading && <LogoutModal />}
