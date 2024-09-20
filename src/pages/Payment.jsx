@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAccessToken } from "../constants";
-import { getTransactionById, markPaid } from "../features/transactionSlice";
+import {
+  getTransactionById,
+  confirmPayment,
+} from "../features/transactionSlice";
 
 const Payment = () => {
   const { transactionId } = useParams();
@@ -10,7 +13,9 @@ const Payment = () => {
 
   const accesstoken = getAccessToken();
 
-  const { trnxDetail } = useSelector((state) => state.transaction);
+  const { trnxDetail, markPaidLoading, markPaidError, markPaid } = useSelector(
+    (state) => state.transaction
+  );
 
   const [form, setForm] = useState({
     hash: "",
@@ -28,7 +33,7 @@ const Payment = () => {
     e.preventDefault();
     const transactionId = trnxDetail?.transaction?._id;
 
-    dispatch(markPaid(transactionId, form));
+    dispatch(confirmPayment(transactionId, form));
   };
 
   const copyAddress = () => {
@@ -48,6 +53,12 @@ const Payment = () => {
       console.warn("No address to copy.");
     }
   };
+
+  useEffect(() => {
+    if (markPaid) {
+      window.location.href = "/wallet";
+    }
+  }, [markPaid]);
 
   useEffect(() => {
     if (accesstoken) {
@@ -138,7 +149,7 @@ const Payment = () => {
             className="text-white py-2.5 px-6 bg-red-500 w-full uppercase text-sm font-medium"
             onClick={handleSubmit}
           >
-            mark paid
+            {!markPaidLoading ? " mark paid" : "Wait..."}
           </button>
           <button
             onClick={copyAddress}

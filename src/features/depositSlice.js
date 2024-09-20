@@ -14,7 +14,7 @@ const initialState = {
 export const manualDeposit = createAsyncThunk(
   "wallet/manualDeposit",
   async (formData) => {
-    const url = `${devserver}/wallet/depositmanual`;
+    const url = `${server}/wallet/depositmanual`;
     const accessToken = getAccessToken();
 
     try {

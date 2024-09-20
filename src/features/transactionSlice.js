@@ -44,7 +44,7 @@ export const getTransactions = createAsyncThunk(
 export const getTransactionById = createAsyncThunk(
   "transaction/getTransactionById",
   async (transactionId) => {
-    const url = `${devserver}/transactions/${transactionId}`;
+    const url = `${server}/transactions/${transactionId}`;
     const accessToken = getAccessToken();
 
     try {
@@ -67,10 +67,10 @@ export const getTransactionById = createAsyncThunk(
   }
 );
 
-export const markPaid = createAsyncThunk(
-  "transaction/markPaid",
+export const confirmPayment = createAsyncThunk(
+  "transaction/confirmPayment",
   async (transactionId, formData) => {
-    const url = `${devserver}/transactions/${transactionId}`;
+    const url = `${server}/transactions/${transactionId}`;
     const accessToken = getAccessToken();
 
     try {
@@ -140,15 +140,15 @@ const transactionSlice = createSlice({
         state.trnxDetail = false;
       });
     builder
-      .addCase(markPaid.pending, (state) => {
+      .addCase(confirmPayment.pending, (state) => {
         state.markPaidLoading = true;
       })
-      .addCase(markPaid.fulfilled, (state) => {
+      .addCase(confirmPayment.fulfilled, (state) => {
         state.markPaidLoading = false;
         state.markPaidError = false;
         state.markPaid = true;
       })
-      .addCase(markPaid.rejected, (state, action) => {
+      .addCase(confirmPayment.rejected, (state, action) => {
         state.markPaidLoading = false;
         state.markPaidError = action.error.message;
         state.markPaid = false;

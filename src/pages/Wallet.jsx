@@ -34,23 +34,24 @@ const Wallet = () => {
         key={index}
         className={`${
           index % 2 !== 0
-            ? "bg-slate-100 dark:bg-slate-400"
+            ? "bg-slate-200 dark:bg-slate-800"
             : "bg-white dark:bg-slate-950"
         } border-b dark:border-slate-700 text-xs font-normal capitalize p-4`}
       >
         <td className="py-4 px-6">
           {format(new Date(trnx.date), "dd/mm/yyyy")}
         </td>
-        <td className="py-4 px-6">{trnx.method}</td>
+        <td className="py-4 px-6">{trnx.currency}</td>
+        <td className="py-4 px-6">{trnx.network}</td>
         <td className="py-4 px-6">${trnx.amount}</td>
         <td className="py-4 px-6">
           <span
             className={`py-2 px-4 rounded-lg capitalize ${
               trnx.status === "completed"
-                ? "text-green-500 border border-green-500"
+                ? "text-green-500 bg-green-100"
                 : trnx.status === "failed"
-                ? "text-red-500 border border-red-500"
-                : "text-yellow-500 border border-yellow-500"
+                ? "text-red-500 bg-red-100"
+                : "text-yellow-500 bg-yellow-100"
             }`}
           >
             {trnx.status}
@@ -118,6 +119,7 @@ const Wallet = () => {
                 <tr className="bg-red-500 dark:bg-slate-80 text-white uppercase">
                   <th className="text-left py-2 px-4">Date</th>
                   <th className="text-left py-2 px-4">Currency</th>
+                  <th className="text-left py-2 px-4">Network</th>
                   <th className="text-left py-2 px-4">Amount</th>
                   <th className="text-left py-2 px-4">Status</th>
                 </tr>
