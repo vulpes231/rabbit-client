@@ -21,6 +21,7 @@ import Contact from "./pages/Contact";
 import LogoutModal from "./components/dash/LogoutModal";
 import Completed from "./pages/Completed";
 import Payment from "./pages/Payment";
+import Successpage from "./components/Successpage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -84,6 +85,24 @@ const App = () => {
     }
   }, [success, dispatch]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        navigator.serviceWorker.getRegistration().then((reg) => {
+          if (reg) {
+            reg.update();
+          }
+        });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16">
       {token ? (
@@ -132,6 +151,7 @@ const App = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/payment/:transactionId" element={<Payment />} />
         <Route path="/completed" element={<Completed />} />
+        <Route path="/success" element={<Successpage />} />
       </Routes>
       {loading && <LogoutModal />}
     </div>

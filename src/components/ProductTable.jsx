@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buyProduct, resetPlaceOrder } from "../features/orderSlice";
 import { Link, useNavigate } from "react-router-dom";
+import Successpage from "./Successpage";
 
 const headers = [
   { id: "name", name: "Name" },
@@ -12,6 +13,7 @@ const headers = [
   { id: "actions", name: "Actions" },
 ];
 
+/* eslint-disable react/prop-types */
 const ProductTable = ({ data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ const ProductTable = ({ data }) => {
   const [form, setForm] = useState({
     item: "",
     price: "",
+    quantity: "",
+    note: "",
   });
 
   const [success, setSuccess] = useState(false);
@@ -35,6 +39,8 @@ const ProductTable = ({ data }) => {
     const orderFormData = {
       item: prd.name,
       price: prd.price || 0,
+      quantity: "",
+      note: "",
     };
     setForm(orderFormData);
     setConfirmModal(true);
@@ -42,12 +48,13 @@ const ProductTable = ({ data }) => {
 
   const buy = (e) => {
     e.preventDefault();
-    dispatch(buyProduct(form));
     console.log(form);
+    dispatch(buyProduct(form));
   };
 
   const closeConfirm = () => {
     setConfirmModal(false);
+    setForm({ item: "", price: "", quantity: "", note: "" }); // Reset form state
   };
 
   useEffect(() => {
@@ -65,14 +72,14 @@ const ProductTable = ({ data }) => {
   useEffect(() => {
     let timeout;
     if (success) {
-      timeout = 6000;
+      timeout = 2000;
       setTimeout(() => {
-        setForm({ item: "", price: "" });
+        setForm({ item: "", price: "", quantity: "", note: "" });
         setSuccess(false);
-        setError(false);
+        setError(null);
         setConfirmModal(false);
         dispatch(resetPlaceOrder());
-        navigate("/order");
+        navigate("/success");
       }, timeout);
     }
     return () => clearTimeout(timeout);
@@ -83,8 +90,7 @@ const ProductTable = ({ data }) => {
     if (error) {
       timeout = 4000;
       setTimeout(() => {
-        setForm({ item: "", price: "" });
-        setError(false);
+        setError(null);
         setConfirmModal(false);
       }, timeout);
     }
@@ -228,31 +234,47 @@ const ProductTable = ({ data }) => {
       {/* Confirm modal */}
       {confirmModal && (
         <div className="top-[130px] lg:top-[80px] z-50 right-2 fixed bg-white rounded-xl shadow p-6 flex flex-col items-center justify-center gap-4 w-[280px] text-xs font-medium">
-          {success && (
-            <h4 className="text-green-500 capitalize flex flex-col gap-2 items-center">
-              order placed successfully.{" "}
-              <Link to={"/order"} className="underline font-thin ">
-                view orders
-              </Link>
-            </h4>
-          )}
+          {/* {success && <Successpage />} */}
           {error && (
             <h4 className="text-red-500 capitalize">{placeOrderError}</h4>
           )}
           <div className="flex flex-col gap-6 w-full text-slate-950">
-            <h4>confirm {form.item} order </h4>
+            <h4>Confirm {form.item} order</h4>
+            <span className="flex flex-col gap-1">
+              <label htmlFor="">Quantity</label>
+              <input
+                type="number"
+                placeholder="Enter quantity"
+                value={form.quantity}
+                onChange={(e) => setForm({ ...form, quantity: e.target.value })}
+                className="border outline-none focus:outline-red-500 focus:border-none rounded p-2"
+                min="1"
+              />
+            </span>
+            <span className="flex flex-col gap-1">
+              <label htmlFor="">Additional notes</label>
+              <textarea
+                rows={3}
+                placeholder="Additional information"
+                value={form.note}
+                onChange={(e) => setForm({ ...form, note: e.target.value })}
+                className="border outline-none focus:outline-red-500 focus:border-none rounded p-2"
+                name="note"
+              ></textarea>
+            </span>
+
             <div className="flex justify-between items-center w-full">
               <button
                 className="bg-green-500 text-white py-2 px-6 inline-flex rounded-xl"
                 onClick={buy}
               >
-                {!placeOrderPending ? " confirm" : "Wait..."}
+                {!placeOrderPending ? "Confirm" : "Wait..."}
               </button>
               <button
                 className="bg-red-500 text-white py-2 px-6 inline-flex rounded-xl"
                 onClick={closeConfirm}
               >
-                cancel
+                Cancel
               </button>
             </div>
           </div>
