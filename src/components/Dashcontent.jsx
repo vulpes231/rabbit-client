@@ -27,6 +27,7 @@ import Leads from "../pages/Leads";
 import Extractor from "../pages/Extractor";
 import Deepfake from "../pages/Deepfake";
 import { Link } from "react-router-dom";
+import Calendar from "./Calendar";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -79,31 +80,33 @@ const Content = () => {
         </Article>
       </div>
 
-      <div className="flex flex-col gap-4 rounded-lg w-full px-8 lg:flex-row ">
-        <Span>
-          <div className="flex items-center gap-2 capitalize">
+      <div className="flex flex-col gap-4 rounded-lg w-full p-6 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
+            <h3 className=" text-2xl uppercase font-thin">
+              Welcome {user?.username}
+            </h3>
+            <span className="flex flex-col text-xl">
+              {(balance && balance.toFixed(2)) || 0} USD
+              <small className="text-xs capitalize opacity-50">balance</small>
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          <span className="flex items-center gap-2 capitalize">
             <FaClock />
             <small className="flex flex-col md:flex-row md:items-center">
               last login: <span>{lastLogin}</span>
             </small>
-          </div>
-        </Span>
-        <Span>
-          <div className="flex items-center gap-2 capitalize">
+          </span>
+
+          <span className="flex items-center gap-2 capitalize">
             <FaCalendar />
             <small>member since: 1985</small>
-          </div>
-        </Span>
-      </div>
+          </span>
+        </div>
 
-      <div className="flex flex-col gap-5 px-8">
-        <h3 className=" text-2xl uppercase font-thin">
-          Welcome {user?.username}
-        </h3>
-        <span className="flex flex-col text-xl">
-          {(balance && balance.toFixed(2)) || 0} USD
-          <small className="text-xs capitalize opacity-50">balance</small>
-        </span>
+        <Calendar />
       </div>
 
       <div className="grid gap-5 p-2 md:grid-cols-2 lg:grid-cols-3">

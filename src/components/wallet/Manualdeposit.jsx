@@ -80,7 +80,7 @@ const Manualdeposit = ({ closeDepositModal }) => {
     let timeout;
     if (manualTrnxData) {
       timeout = 3000;
-      setsuccessModal(true);
+      // setsuccessModal(true);
 
       setTimeout(() => {
         dispatch(resetManualDeposit());
