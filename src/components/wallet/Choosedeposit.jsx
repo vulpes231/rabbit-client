@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Manualdeposit from "./Manualdeposit";
+// import Manualdeposit from "./Manualdeposit";
 import Autodeposit from "./Autodeposit";
 
 /* eslint-disable react/prop-types */
@@ -14,7 +14,7 @@ const Choosedeposit = ({ closeDepositModal }) => {
 
   useEffect(() => {
     if (
-      selectedOption.method === "cryptoManual" ||
+      // selectedOption.method === "cryptoManual" ||
       selectedOption.method === "cryptoAuto"
     ) {
       setDepositMethod(selectedOption.method);
@@ -32,17 +32,21 @@ const Choosedeposit = ({ closeDepositModal }) => {
             onChange={handleSelected}
             name="method"
             value={selectedOption.method}
-            className="bg-transparent w-full border p-2"
+            className="bg-white dark:bg-slate-950 w-full border p-2"
           >
-            <option value="">select method</option>
-            <option value="cryptoManual">cryptocurrency (Manual)</option>
-            <option value="cryptoAuto">cryptocurrency (Auto)</option>
+            <option className="bg-white dark:bg-slate-950" value="">
+              select method
+            </option>
+            {/* <option value="cryptoManual">cryptocurrency (Manual)</option> */}
+            <option className="bg-white dark:bg-slate-950" value="cryptoAuto">
+              cryptocurrency (Auto)
+            </option>
           </select>
         </div>
       </div>
-      {depositMethod === "cryptoManual" && (
+      {/* {depositMethod === "cryptoManual" && (
         <Manualdeposit closeDepositModal={closeDepositModal} />
-      )}
+      )} */}
       {depositMethod === "cryptoAuto" && (
         <Autodeposit closeDepositModal={closeDepositModal} />
       )}
