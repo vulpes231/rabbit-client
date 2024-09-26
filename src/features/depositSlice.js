@@ -98,7 +98,7 @@ const depositSlice = createSlice({
       .addCase(autoDeposit.fulfilled, (state, action) => {
         state.autoDepositLoading = false;
         state.autoDepositError = false;
-        state.autoTrnxData = action.payload.trasactionData;
+        state.autoTrnxData = action.payload;
       })
       .addCase(autoDeposit.rejected, (state, action) => {
         state.autoDepositLoading = false;

@@ -65,7 +65,7 @@ const Wallet = () => {
     if (!accessToken) {
       navigate("/signin");
     }
-  }, [accessToken]);
+  }, [accessToken, navigate]);
 
   useEffect(() => {
     dispatch(getTransactions());

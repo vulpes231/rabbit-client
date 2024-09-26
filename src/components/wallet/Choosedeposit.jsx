@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Manualdeposit from "./Manualdeposit";
+import Autodeposit from "./Autodeposit";
 
 /* eslint-disable react/prop-types */
 const Choosedeposit = ({ closeDepositModal }) => {
@@ -41,6 +42,9 @@ const Choosedeposit = ({ closeDepositModal }) => {
       </div>
       {depositMethod === "cryptoManual" && (
         <Manualdeposit closeDepositModal={closeDepositModal} />
+      )}
+      {depositMethod === "cryptoAuto" && (
+        <Autodeposit closeDepositModal={closeDepositModal} />
       )}
     </div>
   );
