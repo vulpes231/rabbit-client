@@ -16,6 +16,7 @@ const Payment = () => {
   const { trnxDetail, markPaidLoading, markPaidError, markPaid } = useSelector(
     (state) => state.transaction
   );
+  // console.log(trnxDetail);
 
   const [form, setForm] = useState({
     hash: "",

@@ -36,7 +36,7 @@ const Calendar = () => {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-2 border dark:border-slate-800 border-slate-300 dark:bg-slate-950 bg-white rounded-lg">
+      <div className="grid grid-cols-7 gap-2 border dark:border-slate-800 border-slate-300 dark:bg-slate-950 bg-white rounded-lg p-3">
         {days.map((day) => {
           const holiday = holidays.find(
             (hol) =>
