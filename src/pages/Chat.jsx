@@ -68,6 +68,8 @@ const Chat = () => {
     }
   }, [ticketData, chatId]);
 
+  // console.log(singleOrder);
+
   const sendChatMessage = (e) => {
     e.preventDefault();
     if (form.msg.trim() === "") return;
@@ -107,18 +109,28 @@ const Chat = () => {
         Live Chat
       </div>
       <div className="p-4 h-80 overflow-y-auto">
-        <ul className="space-y-3">
+        <ul className="space-y-3 text-slate-800">
+          <span className="flex flex-col text-slate-500">
+            <small>Contact: {singleOrder?.order?.customerEmail}</small>
+            <small>Item: {singleOrder?.order?.item}</small>
+            <small>Quantity: {singleOrder?.order?.qty}</small>
+            <small>
+              Price: $
+              {parseFloat(singleOrder?.order?.price) *
+                parseFloat(singleOrder?.order?.qty)}
+            </small>
+          </span>
           {chatMessages?.messages?.map((msg) => (
             <li
-              className={`flex flex-col p-3 rounded-lg text-sm ${
+              className={`flex flex-col p-3 gap-2 rounded-lg text-sm ${
                 msg.from === user?.username
-                  ? "bg-blue-200 text-right"
-                  : "bg-green-200 text-left"
+                  ? "bg-slate-200 text-right"
+                  : "bg-slate-400 text-left"
               }`}
               key={msg._id}
             >
-              <span className="text-xs text-gray-500">{msg.from}</span>
-              <p>{msg.msg}</p>
+              <h3 className="text-sm uppercase font-semibold">{msg.from}</h3>
+              <small className="text-xs font-medium">{msg.msg}</small>
             </li>
           ))}
         </ul>

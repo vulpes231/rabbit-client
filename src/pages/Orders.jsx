@@ -12,14 +12,14 @@ const ErrorModal = ({ error }) => {
 
 const ConfirmTicket = ({ handleClick, loading, closeModal }) => {
   return (
-    <div className="absolute top-[80px] right-[20px] w-[250px] bg-white p-6 shadow-lg rounded-xl font-thin">
-      <small>Are you sure you want to create a ticket?</small>
+    <div className="absolute top-[80px] right-[20px] w-[250px] bg-white p-6 shadow-lg rounded-xl font-thin dark:bg-slate-800 text-slate-950 dark:text-white flex flex-col gap-5">
+      <h3>Are you sure you want to create a ticket?</h3>
       <div className="flex items-center justify-between">
         <button
           className="bg-green-500 text-white px-4 py-1.5 rounded-2xl"
           onClick={handleClick}
         >
-          {loading ? "Please wait..." : "Confirm"}
+          {loading ? "Wait..." : "Confirm"}
         </button>
         <button
           className="bg-red-500 text-white px-4 py-1.5 rounded-2xl"
