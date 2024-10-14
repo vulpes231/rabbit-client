@@ -39,7 +39,7 @@ export const manualDeposit = createAsyncThunk(
 export const autoDeposit = createAsyncThunk(
   "wallet/autoDeposit",
   async (formData) => {
-    const url = `${devserver}/wallet/depositauto`;
+    const url = `${server}/wallet/depositauto`;
     const accessToken = getAccessToken();
 
     try {
