@@ -16,11 +16,11 @@ const Landing = () => {
     }
   }, [accessToken]);
   return (
-    <Section>
+    <section>
       <Navbar />
       <Hero />
       <Products />
-    </Section>
+    </section>
   );
 };
 

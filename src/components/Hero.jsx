@@ -1,11 +1,11 @@
 import React from "react";
 import { RiSecurePaymentFill } from "react-icons/ri";
-import Section from "./Section";
+// import Section from "./Section";
 
 const Hero = () => {
   return (
-    <Section>
-      <div className="container px-3">
+    <section className="py-32 bg-slate-950">
+      <div className="container px-3 ">
         <div className="flex justify-center -mx-3 flex-col items-center">
           <h3 className="text-3xl leading-tight font-bold tracking-wider text-center inline-flex font-[Montserrat] text-gradient">
             Your one stop shop for <br />
@@ -20,7 +20,7 @@ const Hero = () => {
           </p>
         </div>
       </div>
-    </Section>
+    </section>
   );
 };
 
