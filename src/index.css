@@ -26,11 +26,11 @@
 
 .text-gradient {
   background: linear-gradient(to right, #e2be4a, #fe1390);
-  -webkit-background-clip: text; /* For Safari and Chrome */
-  -moz-background-clip: text; /* For Firefox (older versions, though not commonly supported) */
-  background-clip: text; /* Standard property */
-  -webkit-text-fill-color: transparent; /* For Safari and Chrome */
-  -moz-text-fill-color: transparent; /* For Firefox (older versions, though not commonly supported) */
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
 }
 
 .container {
@@ -68,7 +68,7 @@
 
 .content {
   flex-grow: 1;
-  margin-left: 250px; /* Adjust this value based on the width of the sidebar */
+  margin-left: 250px;
   overflow-y: auto;
 }
 
@@ -79,7 +79,7 @@
 
 .loader {
   border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #3498db; /* Blue color for spinner */
+  border-top: 4px solid #3498db;
   border-radius: 50%;
   width: 50px;
   height: 50px;

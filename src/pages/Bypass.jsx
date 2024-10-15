@@ -53,7 +53,7 @@ const Bypass = () => {
 
   const handleSubmit = (e, tool) => {
     e.preventDefault();
-    setActiveProductId(tool.id); // Set the active product ID
+    setActiveProductId(tool.id);
     const data = {
       item: tool.title,
       price: tool.monthlyPrice,
@@ -102,7 +102,7 @@ const Bypass = () => {
       }, timeout);
     }
     return () => clearTimeout(timeout);
-  }, [success, navigate]);
+  }, [success, navigate, dispatch]);
 
   useEffect(() => {
     let timeout;

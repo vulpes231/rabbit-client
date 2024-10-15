@@ -10,32 +10,23 @@ const Products = () => {
       <Product
         key={prod.id}
         title={prod.title}
-        content={prod.availability.map((av, index) => {
-          return (
-            <span
-              className="  font-semibold text-sm uppercase ml-2"
-              key={index}
-            >
-              {av}
-            </span>
-          );
-        })}
+        content={prod.availability.map((av, index) => (
+          <span className="font-semibold text-sm uppercase ml-2" key={index}>
+            {av}
+          </span>
+        ))}
         price={prod.price}
-        features={prod.features.map((ft, index) => {
-          return (
-            <li key={index} className=" text-xs uppercase font-thin ml-2">
-              {ft || "None."}
-            </li>
-          );
-        })}
-        info={prod.info || "None."}
-        requirements={prod.requirements.map((rq, index) => {
-          return (
-            <p key={index} className=" text-xs uppercase font-thin ml-2">
-              {rq || "None."}
-            </p>
-          );
-        })}
+        features={prod.features.map((ft, index) => (
+          <li key={index} className="text-xs uppercase font-thin">
+            {ft || "None."}
+          </li>
+        ))}
+        // info={prod.info || "None."}
+        // requirements={prod.requirements.map((rq, index) => (
+        //   <p key={index} className="text-xs uppercase font-thin">
+        //     {rq || "None."}
+        //   </p>
+        // ))}
       />
     );
   });

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Product = ({
   icon,
@@ -11,46 +12,36 @@ const Product = ({
   requirements,
 }) => {
   return (
-    <div className="border-2 border-white p-4 rounded-lg flex flex-col gap-4 h-[400px] overflow-scroll cursor-pointer text-xs ">
-      <span className="text-4xl  bg-red-500 w-[30px] h-[30px]">
-        <span>{icon}</span>
-      </span>
-      <article className="flex flex-col gap-6">
-        <h3 className={`uppercase text-red-500  font-medium`}>{title}</h3>
-        <p className="flex flex-col gap-4 font-normal">{content}</p>
-        <p className="flex flex-col gap-2 capitalize font-bold">
-          <span className="bg-green-500 bg-opacity-20 p-2 w-[100px] text-center rounded-2xl font-bold uppercase">
-            price
-          </span>
-          {price}
-        </p>
-        <div className="flex flex-col gap-2 font-normal">
-          <span className="bg-red-500 bg-opacity-20 p-2 w-[100px] text-center rounded-2xl font-bold uppercase">
-            features
-          </span>
-          {features}
+    <div className="border border-slate-700 p-6 rounded-lg shadow-lg flex flex-col gap-4 cursor-pointer transition-transform transform hover:scale-105 justify-between">
+      {/* <span className="text-5xl text-red-500">{icon}</span> */}
+      <article className="flex flex-col gap-4">
+        <h3 className="text-md font-bold text-slate-200 uppercase font-[Roboto]">
+          {title}
+        </h3>
+        <small className="text-xs text-slate-400 lowercase">{content}</small>
+        <div className="flex text-slate-400 lowercase text-xs">{price}</div>
+        <div className="flex flex-col">
+          <span className="font-medium capitalize mb-1">Features</span>
+          <ul className="list-disc pl-5 text-xs text-slate-400">{features}</ul>
         </div>
-        <div className="flex flex-col gap-2 font-thin leading-5">
-          <span className="bg-blue-500 bg-opacity-20 p-2 w-[100px] text-center rounded-2xl font-bold uppercase">
-            info
-          </span>
-          {info}
+        <div className="flex flex-col">
+          {/* <span className="font-bold text-blue-600 uppercase mb-1">Info</span> */}
+          <p className="text-xs text-gray-600">{info}</p>
         </div>
-        <div className="flex flex-col gap-2">
-          {" "}
-          <span className="bg-yellow-500 bg-opacity-20 p-2 w-[120px] text-center rounded-2xl  font-bold uppercase">
-            requirements
+        {/* <div className="flex flex-col">
+          <span className="font-bold text-yellow-600 uppercase mb-1">
+            Requirements
           </span>
-          {requirements}
-        </div>
+          <div className="text-xs text-gray-600">{requirements}</div>
+        </div> */}
       </article>
 
-      <motion.button
-        initial={{ backgroundColor: "lightskyeblue" }}
-        className="inline-flex justify-center items-center font-medium transition-all text-sm px-5 py-2 gap-3 w-full rounded-md bg-red-600 text-white hover:bg-red-800"
+      <Link
+        to={"/signin"}
+        className="flex justify-center items-center font-medium text-sm px-5 py-2 gap-3 w-full rounded-md bg-slate-400 text-white hover:bg-slate-500"
       >
-        Buy now
-      </motion.button>
+        Purchase
+      </Link>
     </div>
   );
 };

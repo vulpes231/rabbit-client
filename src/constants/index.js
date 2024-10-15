@@ -259,7 +259,7 @@ export const products = [
   },
   {
     id: 12,
-    title: " EXTRACTOR and SORTER for office365 boxes",
+    title: " EXTRACTOR & SORTER for office365 boxes",
     availability: [""],
     price: "",
     features: ["- we provide full setup guide. 🔰"],

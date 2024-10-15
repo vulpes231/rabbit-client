@@ -28,6 +28,7 @@ import Extractor from "../pages/Extractor";
 import Deepfake from "../pages/Deepfake";
 import { Link } from "react-router-dom";
 import Calendar from "./Calendar";
+import { format } from "date-fns";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,8 @@ const Content = () => {
     second: "2-digit",
     hour12: false,
   });
+
+  const memberJoinDate = format(new Date(user?.createdAt), "MMMM, yyyy.");
 
   const accessToken = getAccessToken();
   useEffect(() => {
@@ -102,7 +105,7 @@ const Content = () => {
 
           <span className="flex items-center gap-2 capitalize">
             <FaCalendar />
-            <small>member since: 1985</small>
+            <small>member since: {memberJoinDate}</small>
           </span>
         </div>
 

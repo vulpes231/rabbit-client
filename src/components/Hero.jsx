@@ -14,7 +14,9 @@ const Hero = () => {
           <p className="font-extralight text-xs py-2">💜💜💜💜💜 c:/Bishop.</p>
           <p className="flex items-center gap-2 font-extralight p-4 rounded-2xl text-xl justify-between py-2 dark:bg-slate-800 dark:text-slate-200 text-slate-900 bg-white">
             <RiSecurePaymentFill />
-            <small className="text-xs font-medium ">we don't keep logs</small>
+            <small className="text-xs font-medium ">
+              we don&apos;t keep logs
+            </small>
           </p>
         </div>
       </div>
