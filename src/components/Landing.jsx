@@ -5,6 +5,7 @@ import Products from "./Products";
 import Section from "./Section";
 import { getAccessToken } from "../constants";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Landing = () => {
       <Navbar />
       <Hero />
       <Products />
+      <Footer />
     </section>
   );
 };

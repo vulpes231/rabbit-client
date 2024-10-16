@@ -32,7 +32,8 @@ const App = () => {
   const navigate = useNavigate();
 
   const handleModeToggle = () => {
-    setDarkMode(!darkMode);
+    console.log("clicked");
+    setDarkMode((prev) => !prev);
   };
 
   const accessToken = getAccessToken();

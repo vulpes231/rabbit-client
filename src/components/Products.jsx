@@ -46,7 +46,7 @@ const Products = () => {
         key={prod.id}
         title={prod.title}
         content={prod.tools.map((av, index) => (
-          <li className="font-semibold text-sm uppercase ml-8" key={index}>
+          <li className="font-medium text-sm capitalize ml-8" key={index}>
             {av || "custom"}
           </li>
         ))}
@@ -55,8 +55,8 @@ const Products = () => {
   });
   return (
     <section className=" py-20">
-      <div className="container px-3 font-[Montserrat]">
-        <h3 className="text-xl lg:text-4xl font-black text-center uppercase my-10">
+      <div className="container px-3 font-[Montserrat] flex flex-col gap-6">
+        <h3 className="text-xl lg:text-4xl font-black text-center uppercase pb-10">
           our services include
         </h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

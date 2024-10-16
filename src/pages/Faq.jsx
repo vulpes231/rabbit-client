@@ -91,9 +91,9 @@ const Faq = () => {
         </h3>
 
         <div className=" min-h-screen flex flex-col items-center">
-          <div className="w-full max-w-2xl dark:bg-slate-950 bg-white">
+          <div className="w-full max-w-2xl dark:bg-black bg-white">
             {questionsAndAnswers.map((item, index) => (
-              <div key={index} className=" border-b py-4">
+              <div key={index} className=" border-b border-slate-800 py-4">
                 <button
                   onClick={() => toggleAnswer(index)}
                   className="w-full text-left py-2 px-4 rounded focus:outline-none flex items-center justify-between gap-2 text-xs"
@@ -101,7 +101,7 @@ const Faq = () => {
                   {item.question} <FaPlus />
                 </button>
                 {activeIndex === index && (
-                  <div className="  p-4 rounded mt-2 text-sm leading-7 font-thin">
+                  <div className="bg-slate-800 p-4 rounded mt-2 text-sm leading-7 font-thin">
                     {item.answer}
                   </div>
                 )}

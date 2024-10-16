@@ -15,17 +15,15 @@ import { FaInstagram, FaTelegram, FaTwitter } from "react-icons/fa";
 import { navLinks } from "../constants";
 
 /* eslint-disable react/prop-types */
-const Navbar = ({
-  darkMode,
-  handleDarkMode,
-
-  toggle,
-  handleToggle,
-}) => {
+const Navbar = ({ darkMode, handleDarkMode, toggle, handleToggle }) => {
   const [activeLink, setActiveLink] = useState("home");
+
   const handleLink = (linkId) => {
     setActiveLink(linkId);
   };
+
+  console.log(darkMode);
+
   const links = navLinks.map((link) => {
     console.log(activeLink);
     return (
@@ -52,7 +50,7 @@ const Navbar = ({
   });
 
   return (
-    <header className="isolate fixed top-0 start-0 w-full py-4 xl:py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-[1020] px-3">
+    <header className="isolate fixed top-0 start-0 w-full py-4 xl:py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-black z-[1020] px-3">
       <div className="container px-3">
         <nav className="flex items-center w-100 justify-between">
           <span className="flex gap-16 items-center">
@@ -77,11 +75,13 @@ const Navbar = ({
             </div>
 
             <div className="flex items-center gap-x-3 lg:gap-x-5">
-              <span onClick={handleDarkMode} className="inline-flex relative">
-                <button className="inline-flex items-center justify-center h-8 w-8 rounded-full overflow-hidden transition-all text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800">
-                  {darkMode ? <MdSunny /> : <MdNightlightRound />}
-                </button>
-              </span>
+              <button
+                onClick={handleDarkMode}
+                className="inline-flex items-center justify-center h-8 w-8 rounded-full transition-all text-slate-400 hover:text-red-600 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800"
+              >
+                {!darkMode ? <MdSunny /> : <MdNightlightRound />}
+              </button>
+
               <div className="xl:hidden -ms-1.">
                 <button
                   onClick={handleToggle}
