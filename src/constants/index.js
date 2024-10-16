@@ -2,7 +2,7 @@ export const navLinks = [
   { id: "home", title: "Home", path: "/" },
   { id: "faq", title: "FAQs", path: "/faq" },
   { id: "channels", title: "Channels", path: "/channel" },
-  { id: "contact", title: "Contact", path: "/contact" },
+  { id: "contact", title: "Team ", path: "/team" },
 ];
 
 export const loggedLinks = [

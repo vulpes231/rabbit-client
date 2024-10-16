@@ -8,5 +8,22 @@ import soft from "./soft.png";
 import yh from "./yh.png";
 import email from "./email.png";
 import profile from "./profile.png";
+import kudo from "./shinichi.png";
+import goku from "./goku.jpg";
+import naegi from "./naegi.png";
 
-export { logo, construct, btc, tet, eth, profile, gg, soft, yh, email };
+export {
+  logo,
+  construct,
+  btc,
+  tet,
+  eth,
+  profile,
+  gg,
+  soft,
+  yh,
+  email,
+  kudo,
+  naegi,
+  goku,
+};
