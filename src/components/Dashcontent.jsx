@@ -3,7 +3,7 @@ import { MdDiscount, MdOutlinePriceChange } from "react-icons/md";
 import { FaCalendar, FaClock, FaGift, FaUserFriends } from "react-icons/fa";
 import { LabelIcon } from "../components";
 import Article from "./dash/Article";
-import Span from "./dash/Span";
+// import Span from "./dash/Span";
 import Dashdiv from "./dash/Dashdiv";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../constants";
@@ -36,6 +36,7 @@ const Content = () => {
   const { user } = useSelector((state) => state.user);
 
   const [lastLogin, setLastLogin] = useState(false);
+  const [joinDate, setJoinDate] = useState(false);
 
   const currentdate = new Date();
   const formatteddate = currentdate.toLocaleString("en-US", {
@@ -48,7 +49,12 @@ const Content = () => {
     hour12: false,
   });
 
-  const memberJoinDate = format(new Date(user?.createdAt), "MMMM, yyyy.");
+  useEffect(() => {
+    if (user) {
+      const memberJoinDate = format(new Date(user.createdAt), "MMMM, yyyy.");
+      setJoinDate(memberJoinDate);
+    }
+  }, [user]);
 
   const accessToken = getAccessToken();
   useEffect(() => {
@@ -57,6 +63,7 @@ const Content = () => {
       dispatch(getUserBalance());
     }
     setLastLogin(formatteddate);
+    // setJoinDate()
   }, [accessToken, dispatch, formatteddate]);
   return (
     <div className="flex flex-col gap-5 mt-28 sm:mt-16 lg:mt-0">
@@ -105,7 +112,7 @@ const Content = () => {
 
           <span className="flex items-center gap-2 capitalize">
             <FaCalendar />
-            <small>member since: {memberJoinDate}</small>
+            <small>member since: {joinDate}</small>
           </span>
         </div>
 

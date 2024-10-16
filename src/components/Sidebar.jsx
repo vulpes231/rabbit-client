@@ -78,7 +78,7 @@ const Sidebar = ({
           : "hidden lg:flex fixed h-full w-[250px] top-[58px] left-0 z-30 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 pt-5 overflow-y-auto max-h-[calc(100vh-58px)]"
       }
     >
-      <div className="px-4 gap-2 flex flex-col h-full mt-20 sm:mt-16 lg:mt-0 ">
+      <div className="px-4 gap-2 flex flex-col h-full">
         <span
           onClick={() => {
             handleLinks("dash");
@@ -88,7 +88,7 @@ const Sidebar = ({
           <Sidelink title={"dash"} icon={<GrHome />} />
         </span>
 
-        <span className="flex flex-col gap-2">
+        <span className="flex flex-col gap-2 pb-8">
           {categories?.map((category, index) => (
             <Sidelink
               active={activeLink === category}
