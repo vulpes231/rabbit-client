@@ -1,12 +1,11 @@
 import React from "react";
 
+/* eslint-disable react/prop-types */
 const Walletmodal = ({ icon, title }) => {
   return (
-    <div className="w-full h-screen fixed flex items-center justify-center top-0 left-0 bg-white bg-opacity-50">
-      <div className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 w-full lg:w-[370px] lg:mx-auto shadow rounded-xl p-6 m-4 lg:ml-10 flex flex-col gap-4 text-xl font-bold text-green-500">
-        <span>{icon}</span>
-        <small>{title}</small>
-      </div>
+    <div className="flex flex-col rounded-xl bg-white dark:bg-slate-950 p-6 gap-4 absolute top-[150px] md:top-[100px] right-10 md:right-5 w-[250px] items-center justify-center text-green-500">
+      <span>{icon}</span>
+      <h3 className="font-bold">{title}</h3>
     </div>
   );
 };

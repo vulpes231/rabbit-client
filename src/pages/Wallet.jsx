@@ -39,7 +39,7 @@ const Wallet = () => {
         } border-b dark:border-slate-700 text-xs font-normal capitalize p-4`}
       >
         <td className="py-4 px-6">
-          {format(new Date(trnx.date), "dd/mm/yyyy")}
+          {format(new Date(trnx.date), "dd/MM/yyyy")}
         </td>
         <td className="py-4 px-6">{trnx.currency}</td>
         <td className="py-4 px-6">{trnx.network}</td>

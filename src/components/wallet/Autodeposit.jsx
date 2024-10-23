@@ -76,12 +76,19 @@ const Autodeposit = ({ closeDepositModal }) => {
   };
 
   useEffect(() => {
+    let timeout;
     if (autoTrnxData) {
-      // setInvoiceData(autoTrnxData);
-      closeDepositModal();
+      setsuccessModal(true);
+
       dispatch(resetAutoDeposit());
-      window.open(autoTrnxData.invoiceUrl.data.invoice_url, "_blank");
+
+      timeout = 3000;
+      setTimeout(() => {
+        closeDepositModal();
+        window.location.href = autoTrnxData.invoiceUrl.data.invoice_url;
+      }, timeout);
     }
+    return () => clearTimeout(timeout);
   }, [autoTrnxData, dispatch, closeDepositModal]);
 
   useEffect(() => {
@@ -93,7 +100,7 @@ const Autodeposit = ({ closeDepositModal }) => {
   useEffect(() => {
     let timeout;
     if (error) {
-      timeout = 4000;
+      timeout = 6000;
       setTimeout(() => {
         setError(false);
       }, timeout);
@@ -214,7 +221,10 @@ const Autodeposit = ({ closeDepositModal }) => {
         </form>
       </div>
       {successModal && (
-        <Walletmodal title={"Deposit completed."} icon={<FaCheckCircle />} />
+        <Walletmodal
+          title={"Deposit completed."}
+          icon={<FaCheckCircle className="text-2xl" />}
+        />
       )}
     </div>
   );
