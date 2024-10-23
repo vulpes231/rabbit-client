@@ -222,7 +222,7 @@ const Autodeposit = ({ closeDepositModal }) => {
       </div>
       {successModal && (
         <Walletmodal
-          title={"Deposit completed."}
+          title={"Deposit initiated."}
           icon={<FaCheckCircle className="text-2xl" />}
         />
       )}
