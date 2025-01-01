@@ -2,14 +2,15 @@ import React from "react";
 import { FaPhone, FaTelegram, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
   return (
     <footer className="flex flex-col gap-6 items-center justify-center text-xs mt-10 py-10 bg-white dark:bg-black font-[Roboto]">
       <p className="text-center">
-        Copyright &copy; 2024,{" "}
+        Copyright &copy; {year},{" "}
         <span className="text-red-500 uppercase font-semibold text-opacity-100">
           Rabbithole4ogs
         </span>
-        , <br /> All Rights Reserved.
+        <br /> All Rights Reserved.
       </p>
       <span className="flex gap-6 items-center text-xl">
         <FaTelegram className="text-blue-400 text-2xl cursor-pointer" />

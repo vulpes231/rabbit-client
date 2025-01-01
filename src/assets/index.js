@@ -11,6 +11,7 @@ import profile from "./profile.png";
 import kudo from "./shinichi.png";
 import goku from "./goku.jpg";
 import naegi from "./naegi.png";
+import balloon from "./hny.png";
 
 export {
   logo,
@@ -26,4 +27,5 @@ export {
   kudo,
   naegi,
   goku,
+  balloon,
 };
