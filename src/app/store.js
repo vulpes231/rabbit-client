@@ -10,6 +10,7 @@ import userReducer from "../features/userSlice";
 import chatReducer from "../features/chatSlice";
 import ticketReducer from "../features/ticketSlice";
 import depositReducer from "../features/depositSlice";
+import navReducer from "../features/navSlice";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     chat: chatReducer,
     ticket: ticketReducer,
     deposit: depositReducer,
+    nav: navReducer,
   },
 });
 

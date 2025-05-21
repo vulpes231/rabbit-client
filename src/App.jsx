@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useCallback, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Authnav, Landing } from "./components";
 import Signup from "./pages/Signup";
@@ -25,16 +26,14 @@ import Successpage from "./components/Successpage";
 
 const App = () => {
   const dispatch = useDispatch();
-  const [toggle, setToggle] = useState(false);
-  const [token, setToken] = useState(false);
-  const [activeLink, setActiveLink] = useState("dash");
-  const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
 
-  const handleModeToggle = () => {
-    console.log("clicked");
-    setDarkMode((prev) => !prev);
-  };
+  const [activeLink, setActiveLink] = useState("dash");
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
+  const [toggle, setToggle] = useState(false);
+  const [hasToken, setHasToken] = useState(false);
 
   const accessToken = getAccessToken();
 
@@ -49,21 +48,27 @@ const App = () => {
     setActiveLink(linkId);
   };
 
-  const handleToggle = () => {
-    setToggle((prev) => !prev);
+  const handleModeToggle = () => {
+    console.log("clicked");
+    setDarkMode((prev) => {
+      const newMode = !prev;
+      localStorage.setItem("darkMode", newMode.toString());
+      return newMode;
+    });
   };
+
+  const handleToggle = useCallback(() => {
+    setToggle((prev) => !prev);
+  }, []);
 
   const resetToggle = () => {
     setToggle(false);
   };
 
   useEffect(() => {
-    if (accessToken) {
-      setToken(accessToken);
-    } else {
-      setToken(false);
-    }
-  }, [accessToken, navigate]);
+    const token = getAccessToken();
+    setHasToken(!!token);
+  }, []);
 
   useEffect(() => {
     if (success) {
@@ -73,10 +78,21 @@ const App = () => {
   }, [success, dispatch]);
 
   useEffect(() => {
+    const isDark =
+      localStorage.getItem("darkMode") === "true" ||
+      (!("darkMode" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    setDarkMode(isDark);
+  }, []);
+
+  useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.remove("dark");
-    } else {
       document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
     }
   }, [darkMode]);
 
@@ -106,7 +122,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16">
-      {token ? (
+      {hasToken && (
         <Authnav
           toggle={toggle}
           handleToggle={handleToggle}
@@ -116,11 +132,12 @@ const App = () => {
           handleModeToggle={handleModeToggle}
           handleLogout={handleLogout}
         />
-      ) : (
+      )}
+      {!hasToken && (
         <Navbar
           darkMode={darkMode}
-          handleDarkMode={handleModeToggle}
           toggle={toggle}
+          handleDarkMode={handleModeToggle}
           handleToggle={handleToggle}
         />
       )}

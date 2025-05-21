@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdClose, MdMenu, MdNightlightRound, MdSunny } from "react-icons/md";
 import { loggedLinks } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,15 +7,12 @@ import { MdHome } from "react-icons/md";
 
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import Usermenu from "./Usermenu";
+import { useDispatch, useSelector } from "react-redux";
+import { setDarkMode, setToggle } from "../features/navSlice";
 
-const Authnav = ({
-  handleLinks,
-  toggle,
-  handleToggle,
-  darkMode,
-  handleModeToggle,
-  handleLogout,
-}) => {
+const Authnav = ({ handleLinks, handleLogout }) => {
+  const { toggle, darkMode } = useSelector((state) => state.nav);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const authLinks = loggedLinks.map((link) => {
     return (
@@ -50,6 +47,21 @@ const Authnav = ({
     );
   });
 
+  const handleToggle = () => {
+    dispatch(setToggle());
+  };
+
+  const handleDarkMode = () => {
+    dispatch(setDarkMode());
+  };
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
   return (
     <header className="isolate fixed top-0 start-0 w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-[1020] p-4 flex flex-col gap-6">
       <div className="flex items-center w-100 justify-between">
@@ -76,7 +88,7 @@ const Authnav = ({
         </div>
 
         <div className="flex gap-3 items-center">
-          <span onClick={handleModeToggle} className="inline-flex relative">
+          <span onClick={handleDarkMode} className="inline-flex relative">
             <button className="inline-flex items-center justify-center h-8 w-8 rounded-full overflow-hidden transition-all text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:bg-slate-800">
               {darkMode ? <MdNightlightRound /> : <MdSunny />}
             </button>

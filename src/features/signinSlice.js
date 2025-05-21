@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { devserver, server } from "../constants";
 
 const initialState = {
   loading: false,
-  error: false,
+  loginError: false,
   accessToken: false,
   success: false,
   user: false,
@@ -40,7 +41,7 @@ const signinSlice = createSlice({
     resetLogin(state) {
       state.accessToken = false;
       state.loading = false;
-      state.error = false;
+      state.loginError = false;
       state.success = false;
       state.user = false;
     },
@@ -53,14 +54,14 @@ const signinSlice = createSlice({
       .addCase(signinUser.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
         state.loading = false;
-        state.error = false;
+        state.loginError = false;
         state.success = true;
         state.user = action.payload.userObj;
       })
       .addCase(signinUser.rejected, (state, action) => {
         state.accessToken = false;
         state.loading = false;
-        state.error = action.error.message;
+        state.loginError = action.error.message;
         state.success = false;
         state.user = false;
       });

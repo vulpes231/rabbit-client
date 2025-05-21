@@ -23,29 +23,21 @@ const Channel = () => {
           <List
             icon={<MdHome />}
             channelName={"main"}
-            link={"https://rabbithole4ogs.com/channel/main/messages.html"}
+            link={"https://rabbithole4og.com/chat/messages.html"}
           />
-          <List
-            icon={<FaUserGear />}
-            channelName={"2FA"}
-            link={"https://rabbithole4ogs.com/channel/2fa/messages.html"}
-          />
+          <List icon={<FaUserGear />} channelName={"2FA"} link={""} />
           <List
             icon={<MdAttachEmail />}
             channelName={"letter & attachment"}
-            link={"https://rabbithole4ogs.com/channel/letters/messages.html"}
+            link={""}
           />
           <List icon={<MdLockPerson />} channelName={"custom job "} link={""} />
           <List
             icon={<RiArchiveStackFill />}
             channelName={"log & account "}
-            link={"https://rabbithole4ogs.com/channel/logs/messages.html"}
+            link={""}
           />
-          <List
-            icon={<FaGift />}
-            channelName={"gift item "}
-            link={"https://rabbithole4ogs.com/channel/gift/messages.html"}
-          />
+          <List icon={<FaGift />} channelName={"gift item "} link={""} />
           <List
             icon={<FaEyeLowVision />}
             channelName={"visual eyes only "}
