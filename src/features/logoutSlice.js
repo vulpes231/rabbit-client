@@ -4,8 +4,8 @@ import { devserver, getAccessToken, server } from "../constants";
 
 const initialState = {
   loading: false,
-  error: false,
-  success: false,
+  logoutError: false,
+  loggedOut: false,
 };
 
 export const logoutUser = createAsyncThunk("logout/logoutUser", async () => {
@@ -39,10 +39,10 @@ const logoutSlice = createSlice({
   name: "logout",
   initialState,
   reducers: {
-    reset(state) {
-      state.error = false;
+    resetLogout(state) {
+      state.logoutError = false;
       state.loading = false;
-      state.success = false;
+      state.loggedOut = false;
     },
   },
   extraReducers: (builder) => {
@@ -52,16 +52,16 @@ const logoutSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.loading = false;
-        state.error = false;
-        state.success = true;
+        state.logoutError = false;
+        state.loggedOut = true;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
-        state.success = false;
+        state.logoutError = action.error.message;
+        state.loggedOut = false;
       });
   },
 });
 
-export const { reset } = logoutSlice.actions;
+export const { resetLogout } = logoutSlice.actions;
 export default logoutSlice.reducer;

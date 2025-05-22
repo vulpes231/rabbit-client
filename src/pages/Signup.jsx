@@ -2,25 +2,17 @@ import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser, reset } from "../features/signupSlice";
-import {
-  FaEye,
-  FaUser,
-  FaEyeSlash,
-  FaArrowRight,
-  FaUserPlus,
-  FaKey,
-  FaCheckCircle,
-  FaExclamationCircle,
-} from "react-icons/fa";
-import { MdMail } from "react-icons/md";
+import { signupUser, resetSignup } from "../features/signupSlice";
+import { FaEye, FaEyeSlash, FaArrowRight, FaUserPlus } from "react-icons/fa";
 import Section from "../components/Section";
 import {
   isValidUsername,
   isValidEmail,
   isValidPassword,
 } from "../utils/validation";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import Successmodal from "../components/Successmodal";
+import ErrorModal from "../components/Errormodal";
 
 const Signup = () => {
   const initialState = {
@@ -34,9 +26,11 @@ const Signup = () => {
 
   const [form, setForm] = useState(initialState);
   const [showPass, setShowPass] = useState(false);
-  const [showError, setShowError] = useState(false);
+  const [error, setError] = useState("");
 
-  const { loading, error, success } = useSelector((state) => state.signup);
+  const { loading, signupError, success } = useSelector(
+    (state) => state.signup
+  );
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -55,27 +49,22 @@ const Signup = () => {
 
     // Validate username
     if (!isValidUsername(form.member)) {
-      setShowError(
-        "Username must be at least 4 characters long and can only contain alphabets and numbers."
-      );
-      return; // Prevent further execution
+      setError("Username must be at least 4 characters long.");
+      return;
     }
 
     // Validate email
     if (!isValidEmail(form.mail)) {
-      setShowError("Please enter a valid email address.");
+      setError("Please enter a valid email address.");
       return; // Prevent further execution
     }
 
     // Validate password
     if (!isValidPassword(form.pass)) {
-      setShowError(
-        "Password must be at least 8 characters long and contain at least one uppercase letter and one digit."
-      );
+      setError("Password must be at least 8 characters long.");
       return; // Prevent further execution
     }
 
-    // Dispatch signupUser action
     dispatch(signupUser(form));
   };
 
@@ -90,7 +79,7 @@ const Signup = () => {
     let timeout;
     if (success) {
       timeout = setTimeout(() => {
-        dispatch(reset());
+        dispatch(resetSignup());
         navigate("/signin");
       }, 3000);
     }
@@ -98,10 +87,21 @@ const Signup = () => {
   }, [success, dispatch, navigate]);
 
   useEffect(() => {
-    if (error) {
-      setShowError(error);
+    if (signupError) {
+      setError(signupError);
     }
-  }, [error]);
+  }, [signupError]);
+
+  useEffect(() => {
+    let timeout;
+    if (error) {
+      timeout = setTimeout(() => {
+        dispatch(resetSignup());
+        setError("");
+      }, 3000);
+    }
+    return () => clearTimeout(timeout);
+  }, [error, dispatch, navigate]);
 
   return (
     <Section>
@@ -186,32 +186,6 @@ const Signup = () => {
                   </motion.button>
                 </motion.div>
 
-                {/* Status Messages */}
-                <AnimatePresence>
-                  {showError && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="text-red-500 text-sm bg-red-500/10 p-3 rounded-lg flex items-center gap-2"
-                    >
-                      <FaExclamationCircle />
-                      {showError}
-                    </motion.div>
-                  )}
-                  {success && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="text-green-500 text-sm bg-green-500/10 p-3 rounded-lg flex items-center gap-2"
-                    >
-                      <FaCheckCircle />
-                      Account created successfully!
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
                 {/* Submit Button */}
                 <motion.button
                   onClick={handleSubmit}
@@ -270,6 +244,8 @@ const Signup = () => {
           </motion.form>
         </motion.div>
       </div>
+      {error && <ErrorModal error={error} />}
+      {success && <Successmodal success={"Account created successfully."} />}
     </Section>
   );
 };

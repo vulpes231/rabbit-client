@@ -1,19 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Sidebar } from "../components";
 import Footer from "../components/Footer";
 import { getAccessToken } from "../constants";
 import Dashcontent from "../components/Dashcontent";
 import { getProducts } from "../features/dashSlice";
 
 /* eslint-disable react/prop-types */
-const Dash = ({
-  handleLinks,
-  activeLink,
-  toggle,
-  resetToggle,
-  handleLogout,
-}) => {
+const Dash = ({ activeLink }) => {
   const dispatch = useDispatch();
 
   const accessToken = getAccessToken();
@@ -32,26 +25,9 @@ const Dash = ({
   }, []);
 
   return (
-    <section
-      className={
-        toggle
-          ? "md:ml-[40%] flex-grow flex-col gap-8 font-[Montserrat] px-2"
-          : "ml-0 lg:ml-[250px] flex-grow flex-col gap-8 font-[Montserrat] px-2"
-      }
-    >
-      <div className="flex min-h-screen overflow-auto">
-        <Sidebar
-          toggle={toggle}
-          handleLinks={handleLinks}
-          activeLink={activeLink}
-          resetClick={resetToggle}
-          handleLogout={handleLogout}
-        />
+    <section className={` bg-slate-200 dark:bg-slate-800 `}>
+      <Dashcontent activeLink={activeLink} />
 
-        <>
-          <Dashcontent activeLink={activeLink} />
-        </>
-      </div>
       <Footer />
     </section>
   );

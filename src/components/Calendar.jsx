@@ -64,7 +64,7 @@ const Calendar = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-7 border dark:border-slate-800 border-slate-300 dark:bg-slate-950 bg-white rounded-lg p-3">
+      <div className="grid grid-cols-7 rounded-lg p-3">
         {allDays.map((day, index) => {
           // Check if the day is a holiday
           const holiday = holidays.find(

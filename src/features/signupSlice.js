@@ -4,7 +4,7 @@ import { devserver, server } from "../constants";
 
 const initialState = {
   loading: false,
-  error: false,
+  signupError: false,
   success: false,
 };
 
@@ -36,10 +36,10 @@ const signupSlice = createSlice({
   name: "signup",
   initialState,
   reducers: {
-    reset(state) {
+    resetSignup(state) {
       state.success = false;
       state.loading = false;
-      state.error = false;
+      state.signupError = false;
     },
   },
   extraReducers: (builder) => {
@@ -50,15 +50,15 @@ const signupSlice = createSlice({
       .addCase(signupUser.fulfilled, (state, action) => {
         state.loading = false;
         state.success = action.payload;
-        state.error = false;
+        state.signupError = false;
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
-        state.error = action.error.message;
+        state.signupError = action.error.message;
       });
   },
 });
 
-export const { reset } = signupSlice.actions;
+export const { resetSignup } = signupSlice.actions;
 export default signupSlice.reducer;

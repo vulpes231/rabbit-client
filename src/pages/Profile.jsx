@@ -8,6 +8,7 @@ import { getAccessToken } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../features/userSlice";
 import { getUserBalance } from "../features/walletSlice";
+import { motion } from "framer-motion";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -27,16 +28,26 @@ const Profile = () => {
       dispatch(getUser());
       dispatch(getUserBalance());
     }
-  }, [accessToken]);
+  }, [accessToken, dispatch, navigate]);
 
   return (
-    <section className="font-[Montserrat]">
-      <div className="container px-3 lg:max-w-[1000px] mx-auto mt-28 sm:mt-16 lg:mt-0">
-        <h3 className="uppercase font-semibold text-lg text-center py-5">
-          Profile
-        </h3>
+    <section className="font-[Montserrat] bg-slate-200 dark:bg-slate-800">
+      <div className="container px-3 lg:max-w-[1200px] mx-auto mt-40 sm:mt-28 lg:mt-10">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
+            Profile
+          </h2>
+          <p className="dark:text-[#979797] text-[#505050] max-w-2xl mx-auto">
+            Manage your profile settings.
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-5 pb-5">
           <Userinfo user={user} bal={balance} />
           <Topup bal={balance} />
           <Contactus />

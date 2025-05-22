@@ -25,7 +25,7 @@ const Choosedeposit = ({ closeDepositModal }) => {
   }, [selectedOption]);
 
   return (
-    <div className="w-full h-screen fixed flex items-center justify-center top-0 left-0 bg-white bg-opacity-50">
+    <div className="w-full h-screen fixed flex items-center justify-center top-0 left-0 bg-slate-900/30 dark:bg-white/30 bg-opacity-50">
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 w-full sm:w-[370px] sm:mx-auto shadow rounded-xl p-6 m-4 flex flex-col gap-4">
         <div>
           <h3>Choose deposit method</h3>

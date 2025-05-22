@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { Authnav, Landing } from "./components";
+import { Authnav, Landing, Sidebar } from "./components";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dash from "./pages/Dash";
@@ -14,7 +14,7 @@ import Wallet from "./pages/Wallet";
 import Faq from "./pages/Faq";
 import Profile from "./pages/Profile";
 import { getAccessToken } from "./constants";
-import { logoutUser } from "./features/logoutSlice";
+import { logoutUser, resetLogout } from "./features/logoutSlice";
 import { resetLogin } from "./features/signinSlice";
 import Ticket from "./pages/Ticket";
 import Settings from "./pages/Settings";
@@ -23,46 +23,30 @@ import LogoutModal from "./components/dash/LogoutModal";
 import Completed from "./pages/Completed";
 import Payment from "./pages/Payment";
 import Successpage from "./components/Successpage";
+import { setToggle } from "./features/navSlice";
+import ErrorModal from "./components/Errormodal";
+import Successmodal from "./components/Successmodal";
 
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [activeLink, setActiveLink] = useState("dash");
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("darkMode") === "true";
-  });
-  const [toggle, setToggle] = useState(false);
+  const [error, setError] = useState("");
   const [hasToken, setHasToken] = useState(false);
 
-  const accessToken = getAccessToken();
-
-  const { loading, error, success } = useSelector((state) => state.logout);
+  const { loading, logoutError, loggedOut } = useSelector(
+    (state) => state.logout
+  );
+  const { toggle } = useSelector((state) => state.nav);
 
   const handleLogout = () => {
     console.log("Logging out..");
     dispatch(logoutUser());
   };
 
-  const handleLinks = (linkId) => {
-    setActiveLink(linkId);
-  };
-
-  const handleModeToggle = () => {
-    console.log("clicked");
-    setDarkMode((prev) => {
-      const newMode = !prev;
-      localStorage.setItem("darkMode", newMode.toString());
-      return newMode;
-    });
-  };
-
-  const handleToggle = useCallback(() => {
-    setToggle((prev) => !prev);
-  }, []);
-
-  const resetToggle = () => {
-    setToggle(false);
+  const handleToggle = () => {
+    dispatch(setToggle());
   };
 
   useEffect(() => {
@@ -71,36 +55,40 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (success) {
+    if (loggedOut) {
       sessionStorage.clear();
       dispatch(resetLogin());
     }
-  }, [success, dispatch]);
+  }, [loggedOut, dispatch]);
 
   useEffect(() => {
-    const isDark =
-      localStorage.getItem("darkMode") === "true" ||
-      (!("darkMode" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-    setDarkMode(isDark);
-  }, []);
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("darkMode", "true");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("darkMode", "false");
+    let timeout;
+    if (loggedOut) {
+      timeout = setTimeout(() => {
+        sessionStorage.clear();
+        localStorage.clear();
+        dispatch(resetLogout());
+        window.location.href = "/signin";
+      }, 3000);
     }
-  }, [darkMode]);
+    return () => clearTimeout(timeout);
+  }, [loggedOut, dispatch]);
 
   useEffect(() => {
-    if (success) {
-      window.location.href = "/signin";
+    if (logoutError) {
+      setError(logoutError);
     }
-  }, [success, dispatch]);
+  }, [logoutError, dispatch]);
+
+  useEffect(() => {
+    let timeout;
+    if (error) {
+      timeout = setTimeout(() => {
+        dispatch(resetLogout());
+      }, 3000);
+    }
+    return () => clearTimeout(timeout);
+  }, [error, dispatch]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -122,56 +110,62 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden max-w-full pt-16">
-      {hasToken && (
+      {hasToken ? (
         <Authnav
-          toggle={toggle}
-          handleToggle={handleToggle}
           activeLink={activeLink}
-          handleLinks={handleLinks}
-          darkMode={darkMode}
-          handleModeToggle={handleModeToggle}
+          handleLinks={setActiveLink}
           handleLogout={handleLogout}
         />
+      ) : (
+        <Navbar />
       )}
-      {!hasToken && (
-        <Navbar
-          darkMode={darkMode}
+      {/* {!hasToken && } */}
+      <div
+        className={`${
+          toggle
+            ? "md:ml-[250px] flex-grow flex-col gap-8 font-[Montserrat]"
+            : "ml-0 flex-grow flex-col gap-8 font-[Montserrat]"
+        } bg-slate-200 dark:bg-slate-800 `}
+      >
+        <Sidebar
           toggle={toggle}
-          handleDarkMode={handleModeToggle}
-          handleToggle={handleToggle}
+          handleLinks={setActiveLink}
+          activeLink={activeLink}
+          handleLogout={handleLogout}
+          resetClick={handleToggle}
         />
-      )}
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/team" element={<Contact />} />
 
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/team" element={<Contact />} />
-        <Route
-          path="/dashboard"
-          element={
-            <Dash
-              activeLink={activeLink}
-              resetToggle={resetToggle}
-              handleLinks={handleLinks}
-              toggle={toggle}
-              handleLogout={handleLogout}
-            />
-          }
-        />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/channel" element={<Channel />} />
-        <Route path="/order" element={<Orders />} />
-        <Route path="/tickets" element={<Ticket />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/payment/:transactionId" element={<Payment />} />
-        <Route path="/completed" element={<Completed />} />
-        <Route path="/success" element={<Successpage />} />
-      </Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <Dash
+                activeLink={activeLink}
+                handleLinks={setActiveLink}
+                handleLogout={handleLogout}
+              />
+            }
+          />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/channel" element={<Channel />} />
+          <Route path="/order" element={<Orders />} />
+          <Route path="/tickets" element={<Ticket />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/payment/:transactionId" element={<Payment />} />
+          <Route path="/completed" element={<Completed />} />
+          <Route path="/success" element={<Successpage />} />
+        </Routes>
+      </div>
       {loading && <LogoutModal />}
+      {error && <ErrorModal error={error} />}
+      {loggedOut && <Successmodal success={"Logged out."} />}
     </div>
   );
 };

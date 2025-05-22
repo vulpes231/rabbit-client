@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { MdAttachEmail } from "react-icons/md";
-import { CgPassword, CgUser } from "react-icons/cg";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { MdSecurity, MdEmail, MdLock } from "react-icons/md";
 import Container from "./Container";
 import Button from "./Button";
 import { useDispatch, useSelector } from "react-redux";
-import Customerror from "../Customerror";
 import { editUser, resetEditUser } from "../../features/userSlice";
-
-const styles = {
-  input:
-    "w-full px-2 py-1 bg-transparent border outline-none placeholder:font-extralight placeholder:text-xs",
-};
+import Customerror from "../Customerror";
 
 const Changemail = ({ user }) => {
   const dispatch = useDispatch();
@@ -34,101 +29,130 @@ const Changemail = ({ user }) => {
     }));
   };
 
-  useEffect(() => {
-    if (editUserError) {
-      setError(editUserError);
-    }
-  }, [editUserError]);
-
   const updateUser = (e) => {
     e.preventDefault();
-
-    console.log(form.email);
-
     if (!form.password) {
-      setError("Current password required!");
+      setError("Current password is required");
       return;
     }
-
     if (form.newPass !== form.password2) {
-      setError("Password does not match!");
+      setError("Passwords do not match");
       return;
     }
-    console.log(form);
     dispatch(editUser(form));
   };
 
   useEffect(() => {
-    let timeout;
-    if (editUserError || userEdited) {
-      timeout = 3000;
-      setTimeout(() => {
-        dispatch(resetEditUser());
-      }, timeout);
-    }
-    return () => clearTimeout(timeout);
-  }, [editUserError, userEdited]);
+    if (editUserError) setError(editUserError);
+    if (userEdited) setError("Profile updated successfully");
+
+    const timer = setTimeout(() => {
+      dispatch(resetEditUser());
+      setError(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [editUserError, userEdited, dispatch]);
 
   return (
-    <Container icon={<MdAttachEmail />} title={"Security"}>
-      <span className="flex items-center gap-1 relative">
-        <span className="absolute top-2 right-2">
-          <CgUser />
-        </span>
-        <input
-          type="text"
-          placeholder={user?.email}
-          value={form.email}
-          onChange={handleInput}
-          name="email"
-          className={styles.input}
-          autoComplete="off"
+    <Container
+      icon={<MdSecurity className="text-red-500" />}
+      title="Security Settings"
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="space-y-4"
+      >
+        <div className="space-y-1">
+          <label className="text-xs text-slate-500 dark:text-slate-400">
+            Email Address
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MdEmail className="text-slate-400" />
+            </div>
+            <input
+              type="email"
+              placeholder={user?.email}
+              value={form.email}
+              onChange={handleInput}
+              name="email"
+              className="w-full pl-10 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              autoComplete="off"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <label className="text-xs text-slate-500 dark:text-slate-400">
+            Current Password
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MdLock className="text-slate-400" />
+            </div>
+            <input
+              type="password"
+              placeholder="Enter current password"
+              value={form.password}
+              onChange={handleInput}
+              name="password"
+              className="w-full pl-10 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <label className="text-xs text-slate-500 dark:text-slate-400">
+              New Password
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <MdLock className="text-slate-400" />
+              </div>
+              <input
+                type="password"
+                placeholder="Enter new password"
+                value={form.newPass}
+                onChange={handleInput}
+                name="newPass"
+                className="w-full pl-10 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs text-slate-500 dark:text-slate-400">
+              Confirm Password
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <MdLock className="text-slate-400" />
+              </div>
+              <input
+                type="password"
+                placeholder="Confirm new password"
+                value={form.password2}
+                onChange={handleInput}
+                name="password2"
+                className="w-full pl-10 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+        </div>
+
+        <Customerror error={error} setError={setError} />
+
+        <Button
+          title={
+            !editUserLoading ? "Update Security Settings" : "Processing..."
+          }
+          handleClick={updateUser}
+          className="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg shadow-md"
         />
-      </span>
-      <span className="flex items-center gap-1 relative">
-        <span className="absolute top-2 right-2">
-          <CgPassword />
-        </span>
-        <input
-          type="password"
-          placeholder="Current password"
-          value={form.password}
-          onChange={handleInput}
-          name="password"
-          className={styles.input}
-        />
-      </span>
-      <span className="flex items-center gap-1 relative">
-        <span className="absolute top-2 right-2">
-          <CgPassword />
-        </span>
-        <input
-          type="password"
-          placeholder="New password"
-          value={form.newPass}
-          onChange={handleInput}
-          name="newPass"
-          className={styles.input}
-        />
-      </span>
-      <span className="flex items-center gap-1 relative">
-        <span className="absolute top-2 right-2">
-          <CgPassword />
-        </span>
-        <input
-          type="password"
-          placeholder="Confirm password"
-          value={form.password2}
-          onChange={handleInput}
-          name="password2"
-          className={styles.input}
-        />
-      </span>
-      <Customerror error={error} setError={setError} />
-      <Button
-        title={!editUserLoading ? "update" : "wait..."}
-        handleClick={updateUser}
-      />
+      </motion.div>
     </Container>
   );
 };

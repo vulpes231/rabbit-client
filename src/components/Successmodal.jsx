@@ -30,7 +30,7 @@ const Successmodal = ({ success, setSuccess }) => {
               <div className="flex-1">
                 <div className="flex justify-between items-start">
                   <h3 className="font-semibold text-slate-800 dark:text-white">
-                    Error
+                    Success
                   </h3>
                   <button
                     onClick={() => setSuccess(null)}

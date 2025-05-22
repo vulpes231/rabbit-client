@@ -9,6 +9,8 @@ import Section from "../components/Section";
 import Errormodal from "../components/Errormodal";
 import Successmodal from "../components/Successmodal";
 
+import { format } from "date-fns";
+
 const Signin = () => {
   const initialState = {
     username: "",
@@ -48,6 +50,12 @@ const Signin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    for (const key in form) {
+      if (form[key] === "") {
+        setError(`${key.slice(0, 1).toUpperCase()}${key.slice(1)} required!`);
+        return;
+      }
+    }
     dispatch(signinUser(form));
   };
 
@@ -61,16 +69,18 @@ const Signin = () => {
 
   useEffect(() => {
     if (accessToken && user) {
+      const lastLogin = format(new Date(), "dd/MMM/yyyy hh:mm a");
       try {
         sessionStorage.setItem("accessToken", JSON.stringify(accessToken));
         sessionStorage.setItem("userInfo", JSON.stringify(user));
+        sessionStorage.setItem("lastLogin", JSON.stringify(lastLogin));
       } catch (error) {
         console.error("Failed to save access token:", error);
       }
 
       setTimeout(() => {
         dispatch(resetLogin());
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
       }, 1000);
     }
   }, [accessToken, dispatch, navigate, user]);
@@ -218,7 +228,7 @@ const Signin = () => {
 
                 {/* Sign Up Link */}
                 <p className="text-center text-sm text-slate-600 dark:text-slate-400">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link
                     to="/signup"
                     className="text-red-500 hover:text-red-600 dark:hover:text-red-400 font-medium transition-colors"

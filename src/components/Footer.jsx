@@ -29,7 +29,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full border-t border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-black/80 backdrop-blur-sm mt-20">
+    <footer className="w-full border-t border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 backdrop-blur-sm mt-20">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col items-center justify-center gap-8">
           {/* Social Links with animations */}

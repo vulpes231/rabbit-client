@@ -12,6 +12,7 @@ import {
   MdPhone,
   MdSunny,
   MdNightlightRound,
+  MdGroup,
 } from "react-icons/md";
 import { GrChannel } from "react-icons/gr";
 import { FaInstagram, FaTelegram, FaTwitter, FaDiscord } from "react-icons/fa";
@@ -89,8 +90,8 @@ const Navbar = () => {
           <MdNote className="text-xl" />
         ) : link.title.includes("Channels") ? (
           <GrChannel className="text-xl" />
-        ) : link.title.includes("Contact") ? (
-          <MdPhone className="text-xl" />
+        ) : link.title.includes("Team") ? (
+          <MdGroup className="text-xl" />
         ) : null}
         {link.title}
       </Link>
@@ -121,7 +122,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full py-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-black/80 backdrop-blur-sm z-50 px-4">
+    <header className="fixed top-0 left-0 w-full py-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 z-10 px-4">
       <div className="max-w-7xl mx-auto">
         <nav className="flex items-center justify-between">
           {/* Logo and Desktop Links */}
@@ -139,7 +140,7 @@ const Navbar = () => {
 
           {/* Right Side - Auth Buttons and Dark Mode Toggle */}
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-3">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -202,12 +203,33 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "-100%" }}
             transition={{ type: "spring", damping: 25 }}
-            className="fixed lg:hidden inset-0 top-16 z-40 w-64 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 shadow-xl"
+            className="fixed lg:hidden inset-0 top-[63px] z-40 w-64  border-r border-slate-200 dark:border-slate-800 shadow-xl"
           >
-            <div className="flex flex-col p-4 space-y-2">
+            <div className="flex flex-col p-4 space-y-2 bg-white dark:bg-slate-950 shadow-xl">
               {mobileLinks}
 
-              <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+              <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-4">
+                <motion.div
+                  className="flex items-center gap-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link
+                    className="w-full bg-red-500 text-white h-[38px] rounded-[5px] flex items-center justify-center text-[14px] font-semibold"
+                    to={"/signin"}
+                    onClick={handleToggle}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    className="w-full bg-red-500 text-white h-[38px] rounded-[5px] flex items-center justify-center text-[14px] font-semibold"
+                    to={"/signup"}
+                    onClick={handleToggle}
+                  >
+                    Sign Up
+                  </Link>
+                </motion.div>
                 <div className="flex justify-center gap-6">
                   {socialIcons.map((social, index) => (
                     <motion.a
@@ -221,19 +243,6 @@ const Navbar = () => {
                     </motion.a>
                   ))}
                 </div>
-
-                <motion.p
-                  className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  Your one stop shop for everything an OG needs
-                  <br />
-                  <span className="text-red-500 dark:text-red-400">
-                    We don&apos;t keep logs
-                  </span>
-                </motion.p>
               </div>
             </div>
           </motion.div>
