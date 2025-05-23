@@ -122,7 +122,7 @@ const App = () => {
       {/* {!hasToken && } */}
       <div
         className={`${
-          toggle
+          toggle && hasToken
             ? "md:ml-[250px] flex-grow flex-col gap-8 font-[Montserrat]"
             : "ml-0 flex-grow flex-col gap-8 font-[Montserrat]"
         } bg-slate-200 dark:bg-slate-800 `}
@@ -154,7 +154,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/wallet" element={<Wallet />} />
-          <Route path="/channel" element={<Channel />} />
+          <Route path="/channels" element={<Channel />} />
           <Route path="/order" element={<Orders />} />
           <Route path="/tickets" element={<Ticket />} />
           <Route path="/settings" element={<Settings />} />

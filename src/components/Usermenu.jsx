@@ -68,9 +68,9 @@ const Usermenu = ({ handleLogout }) => {
             {menuItems.map((item, index) => (
               <motion.li
                 key={index}
-                whileHover={{ backgroundColor: "#f3f4f6" }}
+                // whileHover={{ backgroundColor: "" }}
                 whileTap={{ scale: 0.98 }}
-                className="border-b border-slate-100 dark:border-slate-700 last:border-b-0"
+                className="border-b border-slate-100 dark:border-slate-700 last:border-b-0 hover:bg-[#f3f4f6] dark:hover:bg-slate-900/80"
               >
                 {item.path ? (
                   <Link

@@ -96,14 +96,14 @@ const Sidebar = ({ toggle, handleLinks, activeLink, resetClick }) => {
       <motion.aside
         initial={{ x: -300, opacity: 0 }}
         animate={{
-          x: toggle ? 0 : -300,
-          opacity: toggle ? 1 : 0,
-          width: toggle ? "250px" : "100px",
+          x: toggle && accessToken ? 0 : -300,
+          opacity: toggle && accessToken ? 1 : 0,
+          width: toggle && accessToken ? "250px" : "100px",
         }}
         exit={{ x: -300, opacity: 0 }}
         transition={{ type: "spring", damping: 25 }}
         className={`fixed h-full top-[100px] left-0 z-[1000] border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900  overflow-y-auto max-h-[calc(100vh-58px)] ${
-          toggle ? "flex" : "hidden"
+          toggle && accessToken ? "flex" : "hidden"
         }`}
       >
         <div className="px-4 gap-2 flex flex-col h-full ">

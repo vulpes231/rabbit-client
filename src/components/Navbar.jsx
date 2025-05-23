@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { logo } from "../assets";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MdClose,
@@ -22,15 +22,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDarkMode, setToggle } from "../features/navSlice";
 
 const Navbar = () => {
-  const [activeLink, setActiveLink] = useState("home");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const activeLink =
+    navLinks.find((link) =>
+      link.path === "/"
+        ? location.pathname === "/" || location.pathname === ""
+        : location.pathname.startsWith(link.path)
+    )?.id || "home";
   const [hoveredLink, setHoveredLink] = useState(null);
 
   const { toggle, darkMode } = useSelector((state) => state.nav);
   const dispatch = useDispatch();
 
-  const handleLink = (linkId) => {
-    setActiveLink(linkId);
+  const handleLink = (e, linkId, path) => {
+    e.preventDefault();
     dispatch(setToggle());
+    // Ensure home always navigates to "/"
+    const targetPath = linkId === "home" ? "/" : path;
+    navigate(targetPath);
   };
 
   const links = navLinks.map((link) => (
@@ -41,27 +51,27 @@ const Navbar = () => {
       className="relative"
     >
       <Link
-        to={link.path}
-        onClick={() => handleLink(link.id)}
+        // to={link.path}
+        onClick={(e) => handleLink(e, link.id, link.path)}
         className={`flex items-center gap-2 uppercase text-xs font-medium p-2 transition-colors ${
           activeLink === link.id
-            ? "text-red-500 dark:text-red-400"
+            ? "text-red-500 border-b border-red-600"
             : "text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
         }`}
       >
-        {link.title.includes("Home") ? (
+        {link.id === "home" ? (
           <MdHome className="text-lg" />
-        ) : link.title.includes("FAQs") ? (
+        ) : link.id === "faq" ? (
           <MdNote className="text-lg" />
-        ) : link.title.includes("Channels") ? (
+        ) : link.id === "channels" ? (
           <GrChannel className="text-lg" />
-        ) : link.title.includes("Contact") ? (
+        ) : link.id === "team" ? (
           <MdPhone className="text-lg" />
         ) : null}
         {link.title}
       </Link>
 
-      {hoveredLink === link.id && (
+      {/* {hoveredLink === link.id && (
         <motion.div
           layoutId="navHover"
           className="absolute bottom-0 left-0 w-full h-0.5 bg-red-500 dark:bg-red-400"
@@ -69,29 +79,29 @@ const Navbar = () => {
           animate={{ opacity: 1 }}
           transition={{ type: "spring", bounce: 0.25 }}
         />
-      )}
+      )} */}
     </motion.div>
   ));
 
   const mobileLinks = navLinks.map((link) => (
     <motion.div key={link.id} whileHover={{ x: 5 }} whileTap={{ scale: 0.95 }}>
       <Link
-        to={link.path}
-        onClick={() => handleLink(link.id)}
+        // to={link.path}
+        onClick={(e) => handleLink(e, link.id, link.path)}
         className={`flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg transition-colors ${
           activeLink === link.id
-            ? "bg-red-500/10 text-red-500 dark:text-red-400"
+            ? "text-red-500"
             : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
         }`}
       >
-        {link.title.includes("Home") ? (
-          <MdHome className="text-xl" />
-        ) : link.title.includes("FAQs") ? (
-          <MdNote className="text-xl" />
-        ) : link.title.includes("Channels") ? (
-          <GrChannel className="text-xl" />
-        ) : link.title.includes("Team") ? (
-          <MdGroup className="text-xl" />
+        {link.id === "home" ? (
+          <MdHome className="text-lg" />
+        ) : link.id === "faq" ? (
+          <MdNote className="text-lg" />
+        ) : link.id === "channels" ? (
+          <GrChannel className="text-lg" />
+        ) : link.id === "team" ? (
+          <MdPhone className="text-lg" />
         ) : null}
         {link.title}
       </Link>
@@ -122,7 +132,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full py-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 z-10 px-4">
+    <header className="fixed top-0 left-0 w-full py-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900 z-50 px-4">
       <div className="max-w-7xl mx-auto">
         <nav className="flex items-center justify-between">
           {/* Logo and Desktop Links */}
@@ -165,7 +175,7 @@ const Navbar = () => {
               >
                 <Link
                   to="/signup"
-                  className="font-medium text-sm bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 transition-all px-6 py-2 rounded-lg shadow-lg shadow-red-500/20"
+                  className="font-medium text-sm bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 transition-all px-6 py-2 rounded-lg"
                 >
                   Sign Up
                 </Link>
@@ -203,9 +213,9 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "-100%" }}
             transition={{ type: "spring", damping: 25 }}
-            className="fixed lg:hidden inset-0 top-[63px] z-40 w-64  border-r border-slate-200 dark:border-slate-800 shadow-xl"
+            className="fixed lg:hidden inset-0 top-[63px] w-64"
           >
-            <div className="flex flex-col p-4 space-y-2 bg-white dark:bg-slate-950 shadow-xl">
+            <div className="flex flex-col p-4 space-y-2 bg-white dark:bg-slate-950">
               {mobileLinks}
 
               <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-4">

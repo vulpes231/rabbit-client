@@ -1,8 +1,8 @@
 export const navLinks = [
   { id: "home", title: "Home", path: "/" },
   { id: "faq", title: "FAQs", path: "/faq" },
-  { id: "channels", title: "Channels", path: "/channel" },
-  { id: "contact", title: "Team ", path: "/team" },
+  { id: "channels", title: "Channels", path: "/channels" },
+  { id: "team", title: "Team ", path: "/team" },
 ];
 
 export const loggedLinks = [
@@ -27,7 +27,7 @@ export const sidebarLinks = [
   { id: "2fa", title: "2FA Bypassers", path: "" },
 ];
 
-export const server = "https://rabbit-server.onrender.com";
+export const server = "https://server.rhs40gs.store";
 export const devserver = "http://localhost:4000";
 
 export const products = [
